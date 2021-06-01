@@ -7,13 +7,11 @@ const cloudinary = require('../utils/cloudinary')
 // @desc Upload images to cloudanary
 // @access Private
 exports.uploadImages = asyncHandler(async (req, res, next) => {
-    // console.log(req.files);
-    const imageData = [];
-    for (const file of req.files) {
-        const result = await cloudinary.uploader.upload(file.path);
+    let picturesPromiseList = req.files.map((pic) =>
+        cloudinary.uploader.upload(pic.path)
+    );
 
-        imageData.push(result);
-    }
+    let responses = await Promise.all(picturesPromiseList);
 
-    res.status(200).json({ msg: "All image(s) uploaded successfully.", images: imageData });
+    res.status(200).json({ msg: "All image(s) uploaded successfully.", images: responses });
 });
