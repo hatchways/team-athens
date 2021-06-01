@@ -53,7 +53,7 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
         <form onSubmit={handleSubmit} className={classes.form} noValidate>
           <TextField
             id="username"
-            label={<Typography className={classes.label}>Username</Typography>}
+            label={<Typography className={classes.label}>Your name</Typography>}
             fullWidth
             margin="normal"
             InputProps={{
@@ -70,7 +70,7 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
           />
           <TextField
             id="email"
-            label={<Typography className={classes.label}>E-mail address</Typography>}
+            label={<Typography className={classes.label}>Your e-mail address</Typography>}
             fullWidth
             margin="normal"
             InputProps={{

@@ -58,7 +58,7 @@ export default function Register(): JSX.Element {
           <Grid container>
             <Grid item xs>
               <Typography className={classes.welcome} component="h1" variant="h5">
-                Sign in
+                Sign up
               </Typography>
             </Grid>
           </Grid>
