@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import { CircularProgress } from '@material-ui/core';
+import LogInWithDemoUser from '../../../components/LoginWithDemoUser/LogInWithDemoUser';
 
 interface Props {
   handleSubmit: (
@@ -105,6 +106,7 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
             <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
               {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Create an account'}
             </Button>
+            <LogInWithDemoUser></LogInWithDemoUser>
           </Box>
         </form>
       )}
