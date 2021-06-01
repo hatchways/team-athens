@@ -21,6 +21,10 @@ const useStyles = makeStyles(() => ({
     color: '#000000',
     fontWeight: 700,
     fontFamily: "'Open Sans'",
+    textAlign: 'center',
+  },
+  closeSignUpButton: {
+    textAlign: 'right',
   },
 }));
 
