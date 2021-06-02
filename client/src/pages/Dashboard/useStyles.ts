@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { findByLabelText } from '@testing-library/dom';
 
 const drawerWidth = 240;
 
@@ -42,6 +43,24 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     paddingLeft: '1rem',
     fontSize: 16,
+  },
+  pageContent: {
+    width: '85%',
+    margin: '4rem auto',
+  },
+  addLinkFormSection: {
+    margin: '0 auto',
+    flexDirection: 'column',
+    width: '75%',
+    display: 'flex',
+  },
+  addLinkForm: {
+    backgroundColor: 'pink',
+    alignItems: 'center',
+    borderRadius: '1rem',
+  },
+  addLinkFormTitle: {
+    margin: '0 auto',
   },
 }));
 
