@@ -9,8 +9,7 @@ const { join } = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
-const authRouter = require("./routes/auth");
-const userRouter = require("./routes/user");
+const routes = require("./routes/index");
 
 const { json, urlencoded } = express;
 
@@ -41,8 +40,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/auth", authRouter);
-app.use("/users", userRouter);
+//define routers once
+app.use("/", routes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
