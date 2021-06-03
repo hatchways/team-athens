@@ -31,19 +31,6 @@ theme.overrides = {
       marginBottom: '20px',
     },
   },
-  MuiInput: {
-    root: {
-      '&:before': {
-        borderBottom: `none !important`,
-      },
-      '&:after': {
-        borderBottom: `none`,
-      },
-      '&:hover:not($disabled):not($focused):not($error):before': {
-        borderBottom: `none`,
-      },
-    },
-  },
   MuiInputLabel: {
     root: {
       width: '100%',
