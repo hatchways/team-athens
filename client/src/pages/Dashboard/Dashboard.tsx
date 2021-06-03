@@ -5,28 +5,21 @@ import useStyles from './useStyles';
 import { useAuth } from '../../context/useAuthContext';
 import { useSocket } from '../../context/useSocketContext';
 import { useHistory } from 'react-router-dom';
-import ChatSideBanner from '../../components/ChatSideBanner/ChatSideBanner';
 import { useEffect, useState } from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import { Paper } from '@material-ui/core';
-import Image from 'material-ui-image';
 import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
 import LogoImage from './../../Images/logo.png';
 import Badge from '@material-ui/core/Badge';
-import MailIcon from '@material-ui/icons/Mail';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import { shadows } from '@material-ui/system';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -37,6 +30,7 @@ import AddIcon from '@material-ui/icons/Add';
 import ClothesImage from '../../Images/clothes.png';
 import FurnitureImage from '../../Images/furniture.png';
 import LuxuryImage from '../../Images/luxury.png';
+import NavBar from './NavBar/NavBar';
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
@@ -68,26 +62,7 @@ export default function Dashboard(): JSX.Element {
   return (
     <Grid container component="main" className={`${classes.root} ${classes.dashboard}`}>
       <CssBaseline />
-      <AppBar position="static">
-        <Toolbar className={classes.customizeToolbar}>
-          <Typography className={classes.logo}>Deals Mate</Typography>
-          <Box className={classes.headerButtonGroup}>
-            <Button color="inherit">Shopping List</Button>
-            <Button color="inherit">Friends</Button>
-            <Button color="inherit">
-              <Badge variant="dot" color="secondary" invisible={false}>
-                Notifications
-              </Badge>
-            </Button>
-          </Box>
-          <Box className={classes.userPanel}>
-            <Avatar alt="Profile Image" />
-            <Typography variant="h5" className={classes.userText}>
-              {loggedInUser.username}
-            </Typography>
-          </Box>
-        </Toolbar>
-      </AppBar>
+      <NavBar loggedInUser={loggedInUser} />
       {/* <Paper>
         <Image src={LogoImage} />
       </Paper> */}
