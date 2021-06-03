@@ -15,6 +15,6 @@ router.route('/').delete(protect, (req,res)=>{res.send()});
 router.route('/').get(protect,(req,res)=>{res.send()});
 
 //get by id
-router.route('/:id').get(protect,(req,res)=>{res.send()});
+router.route('/:listId(\\d+)').get(protect,(req,res)=>{res.send()});
 
 module.exports = router;
