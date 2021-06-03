@@ -52,7 +52,7 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
             fullWidth
             margin="normal"
             InputProps={{
-              classes: { input: classes.inputs },
+              classes: { input: classes.inputs, underline: classes.inputsUnderline },
             }}
             name="email"
             autoComplete="email"
@@ -69,7 +69,7 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
             fullWidth
             margin="normal"
             InputProps={{
-              classes: { input: classes.inputs },
+              classes: { input: classes.inputs, underline: classes.inputsUnderline },
             }}
             type="password"
             autoComplete="current-password"

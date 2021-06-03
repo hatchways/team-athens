@@ -57,7 +57,7 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
             fullWidth
             margin="normal"
             InputProps={{
-              classes: { input: classes.inputs },
+              classes: { input: classes.inputs, underline: classes.inputsUnderline },
             }}
             name="username"
             autoComplete="username"
@@ -74,7 +74,7 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
             fullWidth
             margin="normal"
             InputProps={{
-              classes: { input: classes.inputs },
+              classes: { input: classes.inputs, underline: classes.inputsUnderline },
             }}
             name="email"
             autoComplete="email"
@@ -90,7 +90,7 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
             fullWidth
             margin="normal"
             InputProps={{
-              classes: { input: classes.inputs },
+              classes: { input: classes.inputs, underline: classes.inputsUnderline },
             }}
             type="password"
             autoComplete="current-password"
