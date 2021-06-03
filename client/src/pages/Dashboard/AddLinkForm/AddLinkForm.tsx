@@ -29,10 +29,17 @@ export default function Dashboard(): JSX.Element {
             label="Paste your link here"
             variant="standard"
             className={classes.urlFormInput}
+            InputProps={{ disableUnderline: true }}
           />
           <FormControl variant="standard" className={classes.selectField}>
             <InputLabel id="list-select-field">Select list</InputLabel>
-            <Select labelId="list-select-field" id="demo-simple-select-filled" value={age} onChange={handleChange}>
+            <Select
+              labelId="list-select-field"
+              id="demo-simple-select-filled"
+              value={age}
+              onChange={handleChange}
+              disableUnderline={true}
+            >
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>

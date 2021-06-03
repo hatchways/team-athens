@@ -44,16 +44,6 @@ export default function Dashboard(): JSX.Element {
     <Grid container component="main" className={`${classes.root} ${classes.dashboard}`}>
       <CssBaseline />
       <NavBar loggedInUser={loggedInUser} />
-      {/* <Paper>
-        <Image src={LogoImage} />
-      </Paper> */}
-      {/* <Grid item className={classes.drawerWrapper}> */}
-      {/* <ChatSideBanner loggedInUser={loggedInUser} /> */}
-      {/* </Grid> */}
-
-      {/* <Paper variant="outlined">
-        <Image src={LogoImage} className={classes.logo} />
-      </Paper> */}
 
       <Grid className={classes.pageContent}>
         <AddLinkForm />
@@ -62,13 +52,13 @@ export default function Dashboard(): JSX.Element {
           <Typography variant="h5" align={'left'} className={classes.shoppingListsTitle}>
             My Shopping Lists:
           </Typography>
-          {/*  */}
+
           <Grid container className={classes.cardsContainer}>
             <ShoppingListCard title="Clothes" itemCount={34} image={ClothesImage} />
             <ShoppingListCard title="Furniture" itemCount={12} image={FurnitureImage} />
             <ShoppingListCard title="Luxury" itemCount={8} image={LuxuryImage} />
 
-            {/* /////////////////// */}
+            {/* Add new list button */}
             <Card className={classes.shoppingListCard}>
               <CardActionArea className={classes.shoppingListButton}>
                 <Grid>
