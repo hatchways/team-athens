@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import LogoImage from './../../../Images/logo.png';
 
 const drawerWidth = 240;
 
@@ -24,7 +25,12 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     flexGrow: 1,
-    color: textColor,
+  },
+  imageContainer: {
+    width: 250,
+    height: 32,
+    backgroundImage: `url(${LogoImage})`,
+    backgroundSize: 'cover',
   },
   headerButtonGroup: {
     marginRight: '3rem',

@@ -1,7 +1,6 @@
 import useStyles from './useStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
@@ -30,7 +29,9 @@ export default function NavBar({ loggedInUser }: any): JSX.Element {
   return (
     <AppBar position="static" className={classes.navRoot}>
       <Toolbar className={classes.customizeToolbar}>
-        <Typography className={classes.logo}>Deals Mate</Typography>
+        <Box className={classes.logo}>
+          <Box className={classes.imageContainer}></Box>
+        </Box>
         <Box className={classes.headerButtonGroup}>
           <Button>Shopping List</Button>
           <Button>Friends</Button>
