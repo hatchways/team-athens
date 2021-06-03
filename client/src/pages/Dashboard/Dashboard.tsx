@@ -26,6 +26,17 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { shadows } from '@material-ui/system';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import AddIcon from '@material-ui/icons/Add';
+
+import ClothesImage from '../../Images/clothes.png';
+import FurnitureImage from '../../Images/furniture.png';
+import LuxuryImage from '../../Images/luxury.png';
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
@@ -53,6 +64,7 @@ export default function Dashboard(): JSX.Element {
   // 550 775 950
   // 550 225 175
   // 56% 24% 20%
+  //.
   return (
     <Grid container component="main" className={`${classes.root} ${classes.dashboard}`}>
       <CssBaseline />
@@ -89,30 +101,144 @@ export default function Dashboard(): JSX.Element {
 
       <Grid className={classes.pageContent}>
         <Grid className={classes.addLinkFormSection}>
-          <Typography variant="h3" className={classes.addLinkFormTitle}>
+          <Typography variant="h5" className={classes.addLinkFormTitle} align={'center'}>
             Add new item:
           </Typography>
-          <Grid>
-            <form className={classes.addLinkForm} noValidate autoComplete="off">
-              <TextField id="standard-basic" label="Paste your link here" variant="standard" />
-              <FormControl variant="standard">
-                <InputLabel id="demo-simple-select-filled-label">Age</InputLabel>
-                <Select
-                  labelId="demo-simple-select-filled-label"
-                  id="demo-simple-select-filled"
-                  value={age}
-                  onChange={handleChange}
-                >
+          <form className={classes.addLinkForm} noValidate autoComplete="off">
+            <Grid container>
+              <TextField
+                id="standard-basic"
+                label="Paste your link here"
+                variant="standard"
+                className={classes.urlFormInput}
+              />
+              <FormControl variant="standard" className={classes.selectField}>
+                <InputLabel id="list-select-field">Select list</InputLabel>
+                <Select labelId="list-select-field" id="demo-simple-select-filled" value={age} onChange={handleChange}>
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={'Shoes'}>Shoes</MenuItem>
+                  <MenuItem value={'Tech'}>Tech</MenuItem>
                 </Select>
               </FormControl>
-              <Button color="inherit">Add</Button>
-            </form>
+              <Button className={classes.formButton} color="secondary" variant="contained">
+                Add
+              </Button>
+            </Grid>
+          </form>
+        </Grid>
+
+        <Grid className={classes.shoppingListsContentArea}>
+          <Typography variant="h5" align={'left'} className={classes.shoppingListsTitle}>
+            My Shopping Lists:
+          </Typography>
+          {/*  */}
+          <Grid container className={classes.cardsContainer}>
+            <Card className={classes.shoppingListCard}>
+              <CardActionArea className={classes.shoppingListButton}>
+                <CardMedia className={classes.media} image={ClothesImage} title="Card image" />
+                <CardContent>
+                  <Typography gutterBottom variant="h6" component="h2" align={'center'}>
+                    Clothes
+                  </Typography>
+                  <Typography variant="caption" color="textSecondary" component="p" align={'center'}>
+                    34 items
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+            <Card className={classes.shoppingListCard}>
+              <CardActionArea className={classes.shoppingListButton}>
+                <CardMedia className={classes.media} image={ClothesImage} title="Card image" />
+                <CardContent>
+                  <Typography gutterBottom variant="h6" component="h2" align={'left'}>
+                    Clothes
+                  </Typography>
+                  <Typography variant="caption" color="textSecondary" component="p" align={'center'}>
+                    34 items
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+            <Card className={classes.shoppingListCard}>
+              <CardActionArea className={classes.shoppingListButton}>
+                <CardMedia className={classes.media} image={ClothesImage} title="Card image" />
+                <CardContent>
+                  <Typography gutterBottom variant="h6" component="h2" align={'left'}>
+                    Clothes
+                  </Typography>
+                  <Typography variant="caption" color="textSecondary" component="p" align={'center'}>
+                    34 items
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+            <Card className={classes.shoppingListCard}>
+              <CardActionArea className={classes.shoppingListButton}>
+                <CardMedia className={classes.media} image={ClothesImage} title="Card image" />
+                <CardContent>
+                  <Typography gutterBottom variant="h6" component="h2" align={'left'}>
+                    Clothes
+                  </Typography>
+                  <Typography variant="caption" color="textSecondary" component="p" align={'center'}>
+                    34 items
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+            <Card className={classes.shoppingListCard}>
+              <CardActionArea className={classes.shoppingListButton}>
+                <CardMedia className={classes.media} image={ClothesImage} title="Card image" />
+                <CardContent>
+                  <Typography gutterBottom variant="h6" component="h2" align={'left'}>
+                    Clothes
+                  </Typography>
+                  <Typography variant="caption" color="textSecondary" component="p" align={'center'}>
+                    34 items
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+            <Card className={classes.shoppingListCard}>
+              <CardActionArea className={classes.shoppingListButton}>
+                <CardMedia className={classes.media} image={ClothesImage} title="Card image" />
+                <CardContent>
+                  <Typography gutterBottom variant="h6" component="h2" align={'left'}>
+                    Clothes
+                  </Typography>
+                  <Typography variant="caption" color="textSecondary" component="p" align={'center'}>
+                    34 items
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+            <Card className={classes.shoppingListCard}>
+              <CardActionArea className={classes.shoppingListButton}>
+                <CardMedia className={classes.media} image={ClothesImage} title="Card image" />
+                <CardContent>
+                  <Typography gutterBottom variant="h6" component="h2" align={'left'}>
+                    Clothes
+                  </Typography>
+                  <Typography variant="caption" color="textSecondary" component="p" align={'center'}>
+                    34 items
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+            {/* /////////////////// */}
+            <Card className={classes.shoppingListCard}>
+              <CardActionArea className={classes.shoppingListButton}>
+                <Grid>
+                  <AddIcon color="secondary" className={classes.addNewListIcon} />
+                </Grid>
+                <CardContent>
+                  <Typography gutterBottom variant="h6" component="h2" align={'center'}>
+                    ADD NEW LIST
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
           </Grid>
         </Grid>
       </Grid>
