@@ -10,7 +10,6 @@ export const theme = createMuiTheme({
     },
   },
   palette: {
-    // primary: { main: '#3A8DFF' },
     primary: { main: '#DF1B1B' },
   },
   shape: {
@@ -34,19 +33,14 @@ theme.overrides = {
   },
   MuiInput: {
     root: {
-      textAlign: 'center',
-      border: 'none',
-      boxShadow: '0px 0px 40px #dadce0',
-      top: '20px',
-      borderRadius: '4px',
       '&:before': {
         borderBottom: `none !important`,
       },
       '&:after': {
-        borderBottom: `0px solid ${theme.palette.secondary.main}`,
+        borderBottom: `none`,
       },
       '&:hover:not($disabled):not($focused):not($error):before': {
-        borderBottom: `0px solid ${theme.palette.secondary.main}`,
+        borderBottom: `none`,
       },
     },
   },

@@ -26,10 +26,6 @@ const useStyles = makeStyles(() => ({
   closeLoginButton: {
     textAlign: 'right',
   },
-  dialog: {
-    // width: '584.67px',
-    // height: '584px',
-  },
 }));
 
 export default useStyles;

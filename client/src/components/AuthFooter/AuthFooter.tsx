@@ -14,11 +14,11 @@ const AuthFooter = ({ linkTo, asideText, linkText }: Props): JSX.Element => {
 
   return (
     <Box p={1} className={classes.authHeader}>
-      <Typography className={classes.accAside} style={{ display: 'inline' }}>
+      <Typography className={classes.accAside} display={'inline'}>
         {asideText}
       </Typography>
       <Link to={linkTo} className={classes.link}>
-        <Typography color="primary" style={{ display: 'inline' }}>
+        <Typography color="primary" display={'inline'}>
           {linkText}
         </Typography>
       </Link>

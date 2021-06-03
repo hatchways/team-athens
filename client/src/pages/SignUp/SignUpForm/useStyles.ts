@@ -16,7 +16,10 @@ const useStyles = makeStyles((theme) => ({
     padding: '5px',
     border: 'none',
     minHeight: '40px',
+    lineHeight: '60px',
     textAlign: 'center',
+    borderRadius: '6px',
+    boxShadow: '0px 0px 20px #f5f0f0',
   },
   submit: {
     margin: theme.spacing(3, 2, 2),

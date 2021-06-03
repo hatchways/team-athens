@@ -56,6 +56,7 @@ export default function Register(): JSX.Element {
         disableBackdropClick={true}
         disableEscapeKeyDown={true}
         PaperProps={{ elevation: 0 }}
+        maxWidth={'lg'}
       >
         <DialogContent dividers>
           <Grid className={classes.closeSignUpButton}>
