@@ -6,9 +6,14 @@ import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
 import Badge from '@material-ui/core/Badge';
+import Chip from '@material-ui/core/Chip';
 
 export default function NavBar({ loggedInUser }: any): JSX.Element {
   const classes = useStyles();
+
+  const handleProfileClick = () => {
+    console.log('click');
+  };
 
   return (
     <AppBar position="static">
@@ -23,12 +28,15 @@ export default function NavBar({ loggedInUser }: any): JSX.Element {
             </Badge>
           </Button>
         </Box>
-        <Box className={classes.userPanel}>
-          <Avatar alt="Profile Image" />
-          <Typography variant="h5" className={classes.userText}>
-            {loggedInUser.username}
-          </Typography>
-        </Box>
+
+        <Chip
+          label={loggedInUser.username}
+          className={classes.userChip}
+          color="primary"
+          clickable
+          onClick={handleProfileClick}
+          avatar={<Avatar style={{ height: '38px', width: '38px' }} src="/static/images/avatar/1.jpg" />}
+        />
       </Toolbar>
     </AppBar>
   );

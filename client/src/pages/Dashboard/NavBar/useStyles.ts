@@ -23,17 +23,14 @@ const useStyles = makeStyles((theme) => ({
   logo: {
     flexGrow: 1,
   },
-  userPanel: {
-    display: 'flex',
-    alignItems: 'center',
-  },
   headerButtonGroup: {
-    marginRight: '4rem',
+    marginRight: '3rem',
   },
-  userText: {
+  userChip: {
     fontWeight: 700,
     paddingLeft: '1rem',
-    fontSize: 16,
+    fontSize: '1rem',
+    height: 46,
   },
 }));
 
