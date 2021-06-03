@@ -31,6 +31,7 @@ import ClothesImage from '../../Images/clothes.png';
 import FurnitureImage from '../../Images/furniture.png';
 import LuxuryImage from '../../Images/luxury.png';
 import NavBar from './NavBar/NavBar';
+import AddLinkForm from './AddLinkForm/AddLinkForm';
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
@@ -75,34 +76,7 @@ export default function Dashboard(): JSX.Element {
       </Paper> */}
 
       <Grid className={classes.pageContent}>
-        <Grid className={classes.addLinkFormSection}>
-          <Typography variant="h5" className={classes.addLinkFormTitle} align={'center'}>
-            Add new item:
-          </Typography>
-          <form className={classes.addLinkForm} noValidate autoComplete="off">
-            <Grid container>
-              <TextField
-                id="standard-basic"
-                label="Paste your link here"
-                variant="standard"
-                className={classes.urlFormInput}
-              />
-              <FormControl variant="standard" className={classes.selectField}>
-                <InputLabel id="list-select-field">Select list</InputLabel>
-                <Select labelId="list-select-field" id="demo-simple-select-filled" value={age} onChange={handleChange}>
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={'Shoes'}>Shoes</MenuItem>
-                  <MenuItem value={'Tech'}>Tech</MenuItem>
-                </Select>
-              </FormControl>
-              <Button className={classes.formButton} color="secondary" variant="contained">
-                Add
-              </Button>
-            </Grid>
-          </form>
-        </Grid>
+        <AddLinkForm />
 
         <Grid className={classes.shoppingListsContentArea}>
           <Typography variant="h5" align={'left'} className={classes.shoppingListsTitle}>
