@@ -16,13 +16,13 @@ export default function NavBar({ loggedInUser }: any): JSX.Element {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" className={classes.navRoot}>
       <Toolbar className={classes.customizeToolbar}>
         <Typography className={classes.logo}>Deals Mate</Typography>
         <Box className={classes.headerButtonGroup}>
-          <Button color="inherit">Shopping List</Button>
-          <Button color="inherit">Friends</Button>
-          <Button color="inherit">
+          <Button>Shopping List</Button>
+          <Button>Friends</Button>
+          <Button>
             <Badge variant="dot" color="secondary" invisible={false}>
               Notifications
             </Badge>
