@@ -21,6 +21,14 @@ const useStyles = makeStyles(() => ({
     color: '#000000',
     fontWeight: 700,
     fontFamily: "'Open Sans'",
+    textAlign: 'center',
+  },
+  closeLoginButton: {
+    textAlign: 'right',
+  },
+  dialog: {
+    // width: '584.67px',
+    // height: '584px',
   },
 }));
 
