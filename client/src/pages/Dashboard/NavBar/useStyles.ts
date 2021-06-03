@@ -19,9 +19,6 @@ const useStyles = makeStyles((theme) => ({
     //   width: '300px',
     // },
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
   title: {
     flexGrow: 1,
   },
@@ -41,6 +38,13 @@ const useStyles = makeStyles((theme) => ({
     color: textColor,
     '&:hover, &:active, &:focus': {
       backgroundColor: backgroundColor,
+    },
+  },
+  popOverBody: {
+    display: 'flex',
+    flexDirection: 'column',
+    '& Button': {
+      padding: ' 0.5rem 1rem',
     },
   },
 }));
