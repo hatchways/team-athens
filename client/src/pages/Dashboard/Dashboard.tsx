@@ -7,35 +7,22 @@ import { useSocket } from '../../context/useSocketContext';
 import { useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
-import Avatar from '@material-ui/core/Avatar';
-import LogoImage from './../../Images/logo.png';
-import Badge from '@material-ui/core/Badge';
-import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import AddIcon from '@material-ui/icons/Add';
 
 import ClothesImage from '../../Images/clothes.png';
 import FurnitureImage from '../../Images/furniture.png';
 import LuxuryImage from '../../Images/luxury.png';
+
 import NavBar from './NavBar/NavBar';
 import AddLinkForm from './AddLinkForm/AddLinkForm';
+import ShoppingListCard from './ShoppingListCard/ShoppingListCard';
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
-  const [age, setAge] = useState('');
 
   const { loggedInUser } = useAuth();
   const { initSocket } = useSocket();
@@ -46,20 +33,13 @@ export default function Dashboard(): JSX.Element {
     initSocket();
   }, [initSocket]);
 
-  const handleChange = (event: any) => {
-    setAge(event.target.value);
-  };
-
   if (loggedInUser === undefined) return <CircularProgress />;
   if (!loggedInUser) {
     history.push('/login');
     // loading for a split seconds until history.push works
     return <CircularProgress />;
   }
-  // 550 775 950
-  // 550 225 175
-  // 56% 24% 20%
-  //.
+
   return (
     <Grid container component="main" className={`${classes.root} ${classes.dashboard}`}>
       <CssBaseline />
@@ -84,97 +64,10 @@ export default function Dashboard(): JSX.Element {
           </Typography>
           {/*  */}
           <Grid container className={classes.cardsContainer}>
-            <Card className={classes.shoppingListCard}>
-              <CardActionArea className={classes.shoppingListButton}>
-                <CardMedia className={classes.media} image={ClothesImage} title="Card image" />
-                <CardContent>
-                  <Typography gutterBottom variant="h6" component="h2" align={'center'}>
-                    Clothes
-                  </Typography>
-                  <Typography variant="caption" color="textSecondary" component="p" align={'center'}>
-                    34 items
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-            <Card className={classes.shoppingListCard}>
-              <CardActionArea className={classes.shoppingListButton}>
-                <CardMedia className={classes.media} image={ClothesImage} title="Card image" />
-                <CardContent>
-                  <Typography gutterBottom variant="h6" component="h2" align={'left'}>
-                    Clothes
-                  </Typography>
-                  <Typography variant="caption" color="textSecondary" component="p" align={'center'}>
-                    34 items
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-            <Card className={classes.shoppingListCard}>
-              <CardActionArea className={classes.shoppingListButton}>
-                <CardMedia className={classes.media} image={ClothesImage} title="Card image" />
-                <CardContent>
-                  <Typography gutterBottom variant="h6" component="h2" align={'left'}>
-                    Clothes
-                  </Typography>
-                  <Typography variant="caption" color="textSecondary" component="p" align={'center'}>
-                    34 items
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-            <Card className={classes.shoppingListCard}>
-              <CardActionArea className={classes.shoppingListButton}>
-                <CardMedia className={classes.media} image={ClothesImage} title="Card image" />
-                <CardContent>
-                  <Typography gutterBottom variant="h6" component="h2" align={'left'}>
-                    Clothes
-                  </Typography>
-                  <Typography variant="caption" color="textSecondary" component="p" align={'center'}>
-                    34 items
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-            <Card className={classes.shoppingListCard}>
-              <CardActionArea className={classes.shoppingListButton}>
-                <CardMedia className={classes.media} image={ClothesImage} title="Card image" />
-                <CardContent>
-                  <Typography gutterBottom variant="h6" component="h2" align={'left'}>
-                    Clothes
-                  </Typography>
-                  <Typography variant="caption" color="textSecondary" component="p" align={'center'}>
-                    34 items
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-            <Card className={classes.shoppingListCard}>
-              <CardActionArea className={classes.shoppingListButton}>
-                <CardMedia className={classes.media} image={ClothesImage} title="Card image" />
-                <CardContent>
-                  <Typography gutterBottom variant="h6" component="h2" align={'left'}>
-                    Clothes
-                  </Typography>
-                  <Typography variant="caption" color="textSecondary" component="p" align={'center'}>
-                    34 items
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-            <Card className={classes.shoppingListCard}>
-              <CardActionArea className={classes.shoppingListButton}>
-                <CardMedia className={classes.media} image={ClothesImage} title="Card image" />
-                <CardContent>
-                  <Typography gutterBottom variant="h6" component="h2" align={'left'}>
-                    Clothes
-                  </Typography>
-                  <Typography variant="caption" color="textSecondary" component="p" align={'center'}>
-                    34 items
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
+            <ShoppingListCard title="Clothes" itemCount={34} image={ClothesImage} />
+            <ShoppingListCard title="Furniture" itemCount={12} image={FurnitureImage} />
+            <ShoppingListCard title="Luxury" itemCount={8} image={LuxuryImage} />
+
             {/* /////////////////// */}
             <Card className={classes.shoppingListCard}>
               <CardActionArea className={classes.shoppingListButton}>

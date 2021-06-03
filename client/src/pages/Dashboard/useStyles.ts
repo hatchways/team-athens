@@ -18,25 +18,6 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
     },
   },
-  media: {
-    height: '80%',
-  },
-  shoppingListCard: {
-    width: '270px',
-    height: '380px',
-    borderRadius: '0.8rem',
-  },
-  shoppingListsContentArea: {
-    margin: '4rem',
-    gap: '1.5rem',
-  },
-  shoppingListsTitle: {
-    fontWeight: 700,
-  },
-  shoppingListButton: {
-    height: '100%',
-    textAlign: 'center',
-  },
   addNewListIcon: {
     fontSize: '4rem',
   },
@@ -44,6 +25,23 @@ const useStyles = makeStyles((theme) => ({
     gap: '2.5rem',
     justifyContent: 'space-around',
     margin: '2rem auto',
+  },
+  // duplicate styling here
+  shoppingListButton: {
+    height: '100%',
+    textAlign: 'center',
+  },
+  shoppingListsTitle: {
+    fontWeight: 700,
+  },
+  shoppingListsContentArea: {
+    margin: '4rem',
+    gap: '1.5rem',
+  },
+  shoppingListCard: {
+    width: '270px',
+    height: '380px',
+    borderRadius: '0.8rem',
   },
 }));
 
