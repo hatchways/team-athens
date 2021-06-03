@@ -46,7 +46,7 @@ const AddProductForm = ({ handleSubmit, productLists }: Props): JSX.Element => {
             fullWidth
             margin="normal"
             InputProps={{
-              classes: { input: classes.inputs },
+              classes: { input: classes.inputs, underline: classes.inputsUnderline },
             }}
             name="productUrl"
             autoFocus
@@ -62,7 +62,7 @@ const AddProductForm = ({ handleSubmit, productLists }: Props): JSX.Element => {
             fullWidth
             margin="normal"
             InputProps={{
-              classes: { input: classes.inputs },
+              classes: { input: classes.inputs, underline: classes.inputsUnderline },
             }}
             name="productListId"
             autoFocus
