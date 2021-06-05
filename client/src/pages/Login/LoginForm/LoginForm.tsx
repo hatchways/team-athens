@@ -89,7 +89,7 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
             <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
               {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Login'}
             </Button>
-            <LogInWithDemoUser></LogInWithDemoUser>
+            <LogInWithDemoUser />
           </Box>
           <div style={{ height: 95 }} />
         </form>
