@@ -1,8 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import LogoImage from './../../../Images/logo.png';
 
-const drawerWidth = 240;
-
 const backgroundColor = 'white';
 const textColor = 'black';
 const useStyles = makeStyles((theme) => ({
@@ -13,12 +11,6 @@ const useStyles = makeStyles((theme) => ({
   },
   navRoot: {
     backgroundColor: backgroundColor,
-  },
-  drawerWrapper: {
-    width: drawerWidth,
-    // [theme.breakpoints.up('md')]: {
-    //   width: '300px',
-    // },
   },
   title: {
     flexGrow: 1,
