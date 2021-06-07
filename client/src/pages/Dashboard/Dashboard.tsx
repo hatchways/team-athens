@@ -45,7 +45,7 @@ export default function Dashboard(): JSX.Element {
       <CssBaseline />
       <NavBar loggedInUser={loggedInUser} />
 
-      <Grid className={classes.pageContent}>
+      <Grid className={classes.pageContent} md={11} lg={10} xl={9}>
         <AddLinkForm />
 
         <Grid className={classes.shoppingListsContentArea}>
@@ -53,24 +53,33 @@ export default function Dashboard(): JSX.Element {
             My Shopping Lists:
           </Typography>
 
-          <Grid container className={classes.cardsContainer}>
+          <Grid
+            container
+            className={classes.cardsContainer}
+            direction="row"
+            justify="flex-start"
+            alignItems="flex-start"
+            spacing={2}
+          >
             <ShoppingListCard title="Clothes" itemCount={34} image={ClothesImage} />
             <ShoppingListCard title="Furniture" itemCount={12} image={FurnitureImage} />
             <ShoppingListCard title="Luxury" itemCount={8} image={LuxuryImage} />
 
             {/* Add new list button */}
-            <Card className={classes.shoppingListCard}>
-              <CardActionArea className={classes.shoppingListButton}>
-                <Grid>
-                  <AddIcon color="secondary" className={classes.addNewListIcon} />
-                </Grid>
-                <CardContent>
-                  <Typography gutterBottom variant="h6" component="h2" align={'center'}>
-                    ADD NEW LIST
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
+            <Grid item>
+              <Card className={classes.shoppingListCard}>
+                <CardActionArea className={classes.shoppingListButton}>
+                  <Grid>
+                    <AddIcon color="secondary" className={classes.addNewListIcon} />
+                  </Grid>
+                  <CardContent>
+                    <Typography gutterBottom variant="h6" component="h2" align={'center'}>
+                      ADD NEW LIST
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

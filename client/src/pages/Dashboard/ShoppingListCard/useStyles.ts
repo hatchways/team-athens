@@ -9,10 +9,6 @@ const useStyles = makeStyles((theme) => ({
     height: '380px',
     borderRadius: '0.8rem',
   },
-  shoppingListsContentArea: {
-    margin: '4rem',
-    gap: '1.5rem',
-  },
   shoppingListsTitle: {
     fontWeight: 700,
   },
