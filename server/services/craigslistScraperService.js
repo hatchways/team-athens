@@ -1,15 +1,5 @@
 const puppeteer = require("puppeteer");
 
-/*
-price -> .price
-title -> #titletextonly
-main title -> .swipe-wrap>div>img
-post details -> #postingbody
-*/
-
-
-
-
 exports.getProductDetail = async (productUrl) => {
   if (productUrl) {
     try {
@@ -19,8 +9,8 @@ exports.getProductDetail = async (productUrl) => {
 
       const productData = await page.evaluate(() => {
         //product description
-        // .replaceAll('\n', ' ') for removing the new lines
-        const postBody = document.querySelector("#postingbody").innerText;
+        // uncomment if we decide to include post description later
+        // const postBody = document.querySelector("#postingbody").innerText.replaceAll('\n', ' ');
 
         //product price
         let price = "unavailable";
@@ -40,7 +30,6 @@ exports.getProductDetail = async (productUrl) => {
         return {
           productTitle: title,
           productImage: image,
-          productDetails: postBody,
           productPrice: price,
         };
       });
