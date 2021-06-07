@@ -4,17 +4,6 @@ const useStyles = makeStyles((theme) => ({
   addLinkFormSection: {
     margin: '0 auto',
     flexDirection: 'column',
-    width: '75%',
-    display: 'flex',
-    [theme.breakpoints.between('xs', 'sm')]: {
-      width: '100%',
-    },
-    [theme.breakpoints.between('md', 'lg')]: {
-      width: '55%',
-    },
-    [theme.breakpoints.up('xl')]: {
-      width: '45%',
-    },
   },
   addLinkForm: {
     alignItems: 'center',
@@ -28,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   urlFormInput: {
     flexGrow: 5.6,
+    padding: '0rem 0 0.55rem 0',
   },
   formButton: {
     flexGrow: 2,

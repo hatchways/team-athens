@@ -18,7 +18,7 @@ export default function Dashboard(): JSX.Element {
   };
 
   return (
-    <Grid className={classes.addLinkFormSection}>
+    <Grid className={classes.addLinkFormSection} container sm={10}>
       <Typography variant="h5" className={classes.addLinkFormTitle} align={'center'}>
         Add new item:
       </Typography>
