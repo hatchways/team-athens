@@ -45,7 +45,7 @@ const AddProductPreview = ({
 
   if (productDetails != undefined) {
     return (
-      <Grid container component="main" className={classes.root}>
+      <Grid container component="main">
         <CssBaseline />
         <Dialog
           onClose={handleCloseProductPreviewModal}

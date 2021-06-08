@@ -46,7 +46,7 @@ export default function Dashboard(): JSX.Element {
         <AddProduct
           showAddProductModal={showAddProductModal}
           setShowAddProductModal={setShowAddProductModal}
-        ></AddProduct>
+         />
       </Grid>
     </Grid>
   );

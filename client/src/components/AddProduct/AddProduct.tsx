@@ -6,7 +6,8 @@ import AddProductForm from './AddProductForm/AddProductForm';
 import AddProductPreview from './AddProductPreview/AddProductPreview';
 import { ProductDetails } from '../../interface/ProductDetails';
 import { useSnackBar } from '../../context/useSnackbarContext';
-import { getAllList } from '../../helpers/APICalls/lists';
+import { getAllLists } from '../../helpers/APICalls/lists';
+import productDetails from '../../helpers/APICalls/productDetails';
 
 interface Props {
   showAddProductModal: boolean;
@@ -14,9 +15,9 @@ interface Props {
 }
 
 const getProductLists = async () => {
-  // FIXME uncomment to fetch from ami
+  // FIXME uncomment to fetch from api
   // let lists: any[] = [];
-  // await getAllList().then((data: any) => {
+  // await getAllLists().then((data: any) => {
   //   if (data.error) {
   //     console.log(data.error.message);
   //   } else if (data.success) {
@@ -114,7 +115,7 @@ const AddProduct = ({ showAddProductModal, setShowAddProductModal }: Props): JSX
   });
 
   return (
-    <Grid container component="main" className={classes.root}>
+    <Grid container component="main">
       <CssBaseline />
       <Dialog
         onClose={handleCloseAddProductModal}
@@ -143,7 +144,7 @@ const AddProduct = ({ showAddProductModal, setShowAddProductModal }: Props): JSX
         setShowPreviewModal={setShowPreviewModal}
         productDetails={detailsOfProduct}
         handleSubmit={submitItem}
-      ></AddProductPreview>
+       />
     </Grid>
   );
 };
