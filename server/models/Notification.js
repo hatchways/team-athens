@@ -16,16 +16,16 @@ const notificationSchema = new mongoose.Schema({
   },
   product: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
+    required: false,
     ref: 'products',
   },
   old_price: {
     type: Number,
-    required: true,
+    required: false,
   },
   new_price: {
     type: Number,
-    required: true,
+    required: false,
   },
   read: {
     type: Boolean,
