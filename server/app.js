@@ -12,6 +12,7 @@ const logger = require("morgan");
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const imagesRouter = require("./routes/imageUpload");
+const { initScrapingJobs } = require("./utils/taskQueue");
 
 const { json, urlencoded } = express;
 
@@ -24,6 +25,8 @@ const io = socketio(server, {
     origin: "*"
   }
 });
+
+initScrapingJobs();
 
 io.on("connection", socket => {
   console.log("connected");
