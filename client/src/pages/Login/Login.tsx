@@ -1,15 +1,15 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { FormikHelpers } from 'formik';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import login from '../../helpers/APICalls/login';
 import LoginForm from './LoginForm/LoginForm';
-import AuthHeader from '../../components/AuthHeader/AuthHeader';
+import AuthFooter from '../../components/AuthFooter/AuthFooter';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
+import { Dialog, DialogActions, DialogContent, Icon } from '@material-ui/core';
+import React, { useState } from 'react';
 
 export default function Login(): JSX.Element {
   const classes = useStyles();
@@ -36,25 +36,44 @@ export default function Login(): JSX.Element {
     });
   };
 
+  const [open, setOpen] = React.useState(true);
+
+  const handleOpenLoginModal = () => {
+    setOpen(true);
+  };
+
+  const handleCloseLoginModal = () => {
+    setOpen(false);
+  };
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid item xs={12} sm={8} md={7} elevation={6} component={Paper} square>
-        <Box className={classes.authWrapper}>
-          <AuthHeader linkTo="/signup" asideText="Don't have an account?" btnText="Create account" />
-          <Box width="100%" maxWidth={450} p={3} alignSelf="center">
-            <Grid container>
-              <Grid item xs>
-                <Typography className={classes.welcome} component="h1" variant="h5">
-                  Welcome back!
-                </Typography>
-              </Grid>
+      <Dialog
+        onClose={handleCloseLoginModal}
+        open={open}
+        disableBackdropClick={true}
+        disableEscapeKeyDown={true}
+        PaperProps={{ elevation: 0 }}
+        maxWidth={'lg'}
+      >
+        <DialogContent dividers>
+          <Grid className={classes.closeLoginButton}>
+            <Icon onClick={handleCloseLoginModal}>close</Icon>
+          </Grid>
+          <Grid container>
+            <Grid item xs>
+              <Typography className={classes.welcome} component="h1" variant="h5">
+                Sign in
+              </Typography>
             </Grid>
-            <LoginForm handleSubmit={handleSubmit} />
-          </Box>
-          <Box p={1} alignSelf="center" />
-        </Box>
-      </Grid>
+          </Grid>
+          <LoginForm handleSubmit={handleSubmit} />
+        </DialogContent>
+        <DialogActions style={{ display: 'block' }}>
+          <AuthFooter linkTo="/signup" asideText="Don't have an account?" linkText="Create account" />
+        </DialogActions>
+      </Dialog>
     </Grid>
   );
 }
