@@ -54,7 +54,7 @@ const initScrapingJobs = async () => {
    * fetch lists
    * for list of list
    *   for each product of list's product
-   *      createScrapingJob({product: product, user_id: list.id})
+   *      createScrapingJob({product: product, user_id: list.user_id})
    */
 }
 
