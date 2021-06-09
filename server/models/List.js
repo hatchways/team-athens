@@ -7,7 +7,11 @@ const listSchema = new mongoose.Schema({
     },
     products: [{ 
         type: Schema.ObjectId, 
-        ref: 'products' }]
+        ref: 'products' }],
+    userId: {
+      type: String,
+      required: true
+    }
   });
 
 module.exports = mongoose.model("lists", listSchema); 
