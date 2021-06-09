@@ -2,7 +2,7 @@ const expressAsyncHandler = require("express-async-handler");
 const Notification = require("../models/Notification");
 const User = require("../models/User");
 
-exports.getAll = expressAsyncHandler((req, res, next) => {
+exports.getAll = expressAsyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
 
   if (!user) {
@@ -20,7 +20,7 @@ exports.getAll = expressAsyncHandler((req, res, next) => {
   });
 });
 
-exports.getUnread = expressAsyncHandler((req, res, next) => {
+exports.getUnread = expressAsyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
 
   if (!user) {
@@ -39,7 +39,7 @@ exports.getUnread = expressAsyncHandler((req, res, next) => {
   });
 });
 
-exports.markAsread = expressAsyncHandler((req, res, next) => {
+exports.markAsread = expressAsyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
 
   if (!user) {
@@ -85,9 +85,9 @@ exports.markAsread = expressAsyncHandler((req, res, next) => {
 });
 
 // i'm not sure this is useful as notifications are going to be created on some internal events
-exports.create = expressAsyncHandler((req, res, next) => {
+exports.create = expressAsyncHandler(async (req, res, next) => {
   Notification.create(req.body, (error, reply) => {
-    if(error) {
+    if (error) {
       res.status(500).json({
         error: {
           message: error,
