@@ -74,9 +74,9 @@ const AddProductForm = ({ handleSubmit, productLists, setListId }: Props): JSX.E
             placeholder="Past your link here"
             select
           >
-            {productLists?.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
+            {productLists?.map((list) => (
+              <MenuItem key={list._id} value={list._id}>
+                {list.name}
               </MenuItem>
             ))}
           </TextField>
