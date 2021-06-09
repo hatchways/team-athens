@@ -131,7 +131,7 @@ const initScrapingJobs = async () => {
         if (product) {
           createScrapingJob({
             product: product,
-            user_id: list.user_id
+            user_id: list.userId
           });
         } else {
           console.error(`can't found product with _id=${productId}`);
