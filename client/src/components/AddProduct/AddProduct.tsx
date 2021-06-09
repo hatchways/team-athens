@@ -8,6 +8,8 @@ import { ProductDetails } from '../../interface/ProductDetails';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import { getAllLists } from '../../helpers/APICalls/lists';
 import productDetails from '../../helpers/APICalls/productDetails';
+import { createProduct } from '../../helpers/APICalls/product';
+import { Product } from '../../interface/Product';
 
 interface Props {
   showAddProductModal: boolean;
@@ -15,40 +17,18 @@ interface Props {
 }
 
 const getProductLists = async () => {
-  // FIXME uncomment to fetch from api
-  // let lists: any[] = [];
-  // await getAllLists().then((data: any) => {
-  //   if (data.error) {
-  //     console.log(data.error.message);
-  //   } else if (data.success) {
-  //     lists = data.success;
-  //   } else {
-  //     console.error({ data });
-  //     console.error('An unexpected error occurred');
-  //   }
-  // });
-  // return lists;
-
-  // BEGIN FOR DEMO ONLY
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve([
-        {
-          value: 'list-1',
-          label: 'Beauty',
-        },
-        {
-          value: 'list-2',
-          label: 'Clothes',
-        },
-        {
-          value: 'list-3',
-          label: 'Electronics',
-        },
-      ]);
-    }, 2000);
+  let lists: any[] = [];
+  await getAllLists().then((data: any) => {
+    if (data.error) {
+      console.log(data.error.message);
+    } else if (data.success) {
+      lists = data.success;
+    } else {
+      console.error({ data });
+      console.error('An unexpected error occurred');
+    }
   });
-  // END FOR DEMO ONLY
+  return lists;
 };
 
 const AddProduct = ({ showAddProductModal, setShowAddProductModal }: Props): JSX.Element => {
@@ -60,54 +40,53 @@ const AddProduct = ({ showAddProductModal, setShowAddProductModal }: Props): JSX
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [detailsOfProduct, setDetailsOfProduct] = useState<ProductDetails>();
   const [productLists, setProductLists] = useState<any[]>([]);
+  const [listId, setListId] = useState<string>('');
 
   const { updateSnackBarMessage } = useSnackBar();
 
-  const submitItem = () => {
-    // FIXME send itemData to api
-    // BEGIN FOR DEMO ONLY
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        console.log('Submited');
+  const submitItem = (productDetails: ProductDetails, listID: string) => {
+    // send productData to the api
+    const newProduct = {
+      name: productDetails.productTitle,
+      description: productDetails.productFeatures,
+      url: productDetails.url,
+      price: productDetails.productPrice,
+      pictureUrl: productDetails.productImage,
+    } as unknown as Product;
+
+    createProduct(newProduct, listID).then((data: any) => {
+      if (data.error) {
+        updateSnackBarMessage(data.error.message);
+      } else if (data.success) {
         setShowAddProductModal(false);
         setShowPreviewModal(false);
         updateSnackBarMessage('Submit OK');
-        resolve(1);
-      }, 5000);
+      } else {
+        console.error({ data });
+        updateSnackBarMessage('An unexpected error occurred. Please try again');
+      }
     });
-    // ENF FOR DEMO ONLY
   };
 
   const handleSubmit = (
-    { productUrl, productListId }: { productUrl: string; productListId: string },
-    { setSubmitting }: FormikHelpers<{ productUrl: string; productListId: string }>,
+    { productUrl, listId }: { productUrl: string; listId: string },
+    { setSubmitting }: FormikHelpers<{ productUrl: string; listId: string }>,
   ) => {
-    // FIXME Get detail of the product from the api
-    // productDetails(productUrl).then((data: any) => {
-    //   if (data.error) {
-    //     setSubmitting(false);
-    //     updateSnackBarMessage(data.error.message);
-    //   } else if (data.success) {
-    //     setDetailsOfProduct(data.success);
-    //     setShowPreviewModal(true);
-    //   } else {
-    //     console.error({ data });
-    //     setSubmitting(false);
-    //     updateSnackBarMessage('An unexpected error occurred. Please try again');
-    //   }
-    // });
-
-    // BEGIN FOR DEMO PURPOSE ONLY
-    const demoProductDetail: ProductDetails = {
-      productFeatures: ['feature 1', 'feature 2'],
-      productPrice: '$128.58',
-      productImage: 'https://images-na.ssl-images-amazon.com/images/I/91K9SyGiyzL._AC_SX679_.jpg',
-      productTitle: 'Acer R240HY bidx 23.8-Inch IPS HDMI DVI VGA (1920 x 1080) Widescreen Monitor, Black',
-      url: 'https://www.amazon.com/Acer-R240HY-bidx-23-8-Inch-Widescreen/dp/B0148NNKTC/ref=lp_16225007011_1_9',
-    };
-    setDetailsOfProduct(demoProductDetail);
-    setShowPreviewModal(true);
-    //END FOR DEMO PURPOSE ONLY
+    // Get detail of the product from the api
+    productDetails(productUrl).then((data: any) => {
+      if (data.error) {
+        setSubmitting(false);
+        updateSnackBarMessage(data.error.message);
+      } else if (data.success) {
+        setDetailsOfProduct(data.success);
+        setListId(listId);
+        setShowPreviewModal(true);
+      } else {
+        console.error({ data });
+        setSubmitting(false);
+        updateSnackBarMessage('An unexpected error occurred. Please try again');
+      }
+    });
   };
 
   getProductLists().then((data) => {
@@ -134,17 +113,20 @@ const AddProduct = ({ showAddProductModal, setShowAddProductModal }: Props): JSX
                 Add new item:
               </Typography>
             </Grid>
-            <AddProductForm handleSubmit={handleSubmit} productLists={productLists}></AddProductForm>
+            <AddProductForm handleSubmit={handleSubmit} productLists={productLists} setListId={setListId} />
           </Grid>
         </DialogContent>
       </Dialog>
 
-      <AddProductPreview
-        showPreviewModal={showPreviewModal}
-        setShowPreviewModal={setShowPreviewModal}
-        productDetails={detailsOfProduct}
-        handleSubmit={submitItem}
-       />
+      {detailsOfProduct && (
+        <AddProductPreview
+          showPreviewModal={showPreviewModal}
+          setShowPreviewModal={setShowPreviewModal}
+          productDetails={detailsOfProduct}
+          handleSubmit={submitItem}
+          listId={listId}
+        />
+      )}
     </Grid>
   );
 };

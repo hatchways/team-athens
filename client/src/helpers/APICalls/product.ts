@@ -1,18 +1,18 @@
 import { FetchOptions } from '../../interface/FetchOptions';
-import { ProductDetails } from '../../interface/ProductDetails';
+import { Product } from '../../interface/Product';
 
-const productDetails = async (url: string): Promise<ProductDetails> => {
+const createProduct = async (product: Product, listID: string): Promise<Product> => {
   const fetchOptions: FetchOptions = {
-    method: 'GET',
+    method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ productUrl: url }),
+    body: JSON.stringify(product),
     credentials: 'include',
   };
-  return await fetch(`/scrape`, fetchOptions)
+  return await fetch(`/product/${listID}`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },
     }));
 };
 
-export default productDetails;
+export { createProduct };

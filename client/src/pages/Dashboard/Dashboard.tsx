@@ -43,10 +43,7 @@ export default function Dashboard(): JSX.Element {
       </Grid>
       <Grid>
         <Button onClick={openAddProductModal}>Add Product</Button>
-        <AddProduct
-          showAddProductModal={showAddProductModal}
-          setShowAddProductModal={setShowAddProductModal}
-         />
+        <AddProduct showAddProductModal={showAddProductModal} setShowAddProductModal={setShowAddProductModal} />
       </Grid>
     </Grid>
   );

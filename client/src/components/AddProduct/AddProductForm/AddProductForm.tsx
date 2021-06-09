@@ -7,34 +7,35 @@ interface Props {
   handleSubmit: (
     {
       productUrl,
-      productListId,
+      listId,
     }: {
       productUrl: string;
-      productListId: string;
+      listId: string;
     },
     {
       setStatus,
       setSubmitting,
     }: FormikHelpers<{
       productUrl: string;
-      productListId: string;
+      listId: string;
     }>,
   ) => void;
   productLists: any[] | undefined;
+  setListId: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const AddProductForm = ({ handleSubmit, productLists }: Props): JSX.Element => {
+const AddProductForm = ({ handleSubmit, productLists, setListId }: Props): JSX.Element => {
   const classes = useStyles();
 
   return (
     <Formik
       initialValues={{
         productUrl: '',
-        productListId: '',
+        listId: '',
       }}
       validationSchema={Yup.object().shape({
         productUrl: Yup.string().required('Product url is required'),
-        productListId: Yup.string().required('Please select a list for the product'),
+        listId: Yup.string().required('Please select a list for the product'),
       })}
       onSubmit={handleSubmit}
     >
@@ -64,11 +65,11 @@ const AddProductForm = ({ handleSubmit, productLists }: Props): JSX.Element => {
             InputProps={{
               classes: { input: classes.inputs, underline: classes.inputsUnderline },
             }}
-            name="productListId"
+            name="listId"
             autoFocus
-            helperText={touched.productListId ? errors.productListId : ''}
-            error={touched.productListId && Boolean(errors.productListId)}
-            value={values.productListId}
+            helperText={touched.listId ? errors.listId : ''}
+            error={touched.listId && Boolean(errors.listId)}
+            value={values.listId}
             onChange={handleChange}
             placeholder="Past your link here"
             select
