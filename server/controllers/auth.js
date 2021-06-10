@@ -1,21 +1,32 @@
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
+const {
+  userJoin
+} = require("../utils/socketsServer/socketServer");
 
 // @route POST /auth/register
 // @desc Register user
 // @access Public
 exports.registerUser = asyncHandler(async (req, res, next) => {
-  const { username, email, password } = req.body;
+  const {
+    username,
+    email,
+    password
+  } = req.body;
 
-  const emailExists = await User.findOne({ email });
+  const emailExists = await User.findOne({
+    email
+  });
 
   if (emailExists) {
     res.status(400);
     throw new Error("A user with that email already exists");
   }
 
-  const usernameExists = await User.findOne({ username });
+  const usernameExists = await User.findOne({
+    username
+  });
 
   if (usernameExists) {
     res.status(400);
@@ -56,9 +67,14 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
 // @desc Login user
 // @access Public
 exports.loginUser = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
+  const {
+    email,
+    password
+  } = req.body;
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({
+    email
+  });
 
   if (user && (await user.matchPassword(password))) {
     const token = generateToken(user._id);
@@ -68,6 +84,10 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
       httpOnly: true,
       maxAge: secondsInWeek * 1000
     });
+
+    // add user to online users list
+    userJoin(user);
+
 
     res.status(200).json({
       success: {

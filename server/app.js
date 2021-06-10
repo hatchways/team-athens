@@ -13,6 +13,7 @@ const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const notificationRouter = require('./routes/notifications');
 const imagesRouter = require("./routes/imageUpload");
+const { initSocketServer } = require("./utils/socketsServer/socketServer");
 
 const { json, urlencoded } = express;
 
@@ -27,6 +28,7 @@ const io = socketio(server, {
 });
 
 io.on("connection", socket => {
+  initSocketServer(socket);
   console.log("connected");
 });
 
