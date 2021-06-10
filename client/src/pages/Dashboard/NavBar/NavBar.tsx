@@ -27,7 +27,7 @@ export default function NavBar({ loggedInUser }: any): JSX.Element {
   const id = open ? 'user-chip-popover' : undefined;
 
   return (
-    <AppBar position="static" className={classes.navRoot}>
+    <AppBar position="static" className={classes.navRoot} elevation={2}>
       <Toolbar className={classes.customizeToolbar}>
         <Box className={classes.logo}>
           <Box className={classes.imageContainer}></Box>
