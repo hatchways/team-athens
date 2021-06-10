@@ -3,15 +3,20 @@ let socket = null;
 
 const initSocketServer = (_socket) => {
   socket = _socket;
-  socket.on('disconnect', (reason)=>{
+  socket.on('disconnect', (reason) => {
+    userLeave(socket.id);
     console.log(`${socket.id} disconnected for ${reason}`);
   });
 }
 
 const userJoin = (user) => {
 
+  socket.emit('notification', {
+    message: "product on sale",
+    date: (new Date()).toString()
+  });
   const search = connectedUsers.find(connectedUser => {
-    return connectedUser.user._id == user._id
+    return String(connectedUser.user._id) == String(user._id)
   });
 
   if (search) {
@@ -42,10 +47,32 @@ const userLeave = (id) => {
   }
 }
 
+const sendNotification = ({
+  userID,
+  message,
+  title
+}) => {
+  let socket_id = null;
+
+  const search = connectedUsers.find(connectedUser => {
+    return String(connectedUser.user._id) == String(userID)
+  });
+
+  if (search) {
+    socket_id = search.socket_id;
+    socket.to(socket_id).emit('notificatiation', {
+      message: message,
+      title: title
+    });
+  }
+
+}
+
 module.exports = {
   initSocketServer,
   userJoin,
   getConnectedUsers,
   getCurrentUser,
   userLeave,
+  sendNotification,
 };
