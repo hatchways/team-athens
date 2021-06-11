@@ -55,6 +55,13 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
             InputProps={{
               classes: { input: classes.inputs, underline: classes.inputsUnderline },
             }}
+            InputLabelProps={{
+              classes: {
+                root: classes.inputLabelRoot,
+                shrink: classes.inputLabelShrink,
+                formControl: classes.inputLabelFormControl,
+              },
+            }}
             name="email"
             autoComplete="email"
             autoFocus
@@ -71,6 +78,14 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
             margin="normal"
             InputProps={{
               classes: { input: classes.inputs, underline: classes.inputsUnderline },
+            }}
+            InputLabelProps={{
+              classes: {
+                root: classes.inputLabelRoot,
+                shrink: classes.inputLabelShrink,
+                formControl: classes.inputLabelFormControl,
+              },
+              shrink: true,
             }}
             type="password"
             autoComplete="current-password"
