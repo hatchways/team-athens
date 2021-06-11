@@ -19,7 +19,15 @@ const userSchema = new mongoose.Schema({
   register_date: {
     type: Date,
     default: Date.now
-  }
+  },
+  followers: [{
+    type: mongoose.Types.ObjectId,
+    ref: "users",
+  }],
+  followings: [{
+    type: mongoose.Types.ObjectId,
+    ref: "users",
+  }],
 });
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
