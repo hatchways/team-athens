@@ -5,7 +5,11 @@ import useStyles from './useStyles';
 import { useAuth } from '../../context/useAuthContext';
 import { useSocket } from '../../context/useSocketContext';
 import { useHistory } from 'react-router-dom';
+
+import ChatSideBanner from '../../components/ChatSideBanner/ChatSideBanner';
 import { useEffect, useState } from 'react';
+import AddProduct from '../../components/AddProduct/AddProduct';
+import { Button } from '@material-ui/core';
 
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -28,6 +32,12 @@ export default function Dashboard(): JSX.Element {
   const { initSocket } = useSocket();
 
   const history = useHistory();
+
+  const [showAddProductModal, setShowAddProductModal] = useState(false);
+
+  const openAddProductModal = () => {
+    setShowAddProductModal(true);
+  };
 
   useEffect(() => {
     initSocket();
@@ -82,6 +92,10 @@ export default function Dashboard(): JSX.Element {
             </Grid>
           </Grid>
         </Grid>
+      </Grid>
+      <Grid>
+        <Button onClick={openAddProductModal}>Add Product</Button>
+        <AddProduct showAddProductModal={showAddProductModal} setShowAddProductModal={setShowAddProductModal} />
       </Grid>
     </Grid>
   );
