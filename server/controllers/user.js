@@ -31,8 +31,7 @@ exports.followUser = asyncHandler(async (req, res, next) => {
 
   // early exit
   if (otherUsername === currentUsername) {
-    res.status(403).json("you can't follow yourself");
-    next();
+    return res.status(403).json("you can't follow yourself");
   }
   try {
     const user = await User.findOne({ username: otherUsername });
@@ -40,8 +39,7 @@ exports.followUser = asyncHandler(async (req, res, next) => {
 
     // check if ur already following this user
     if (user.followers.includes(currentuser._id)) {
-      res.status(403).json("you already follow this user");
-      next();
+      return res.status(403).json("you already follow this user");
     }
     // follow
     await user.updateOne({ $push: { followers: currentuser._id } });
@@ -62,8 +60,7 @@ exports.unfollowUser = asyncHandler(async (req, res, next) => {
   const otherUsername = req.params.username;
 
   if (otherUsername === currentUsername) {
-    res.status(403).json("you can't unfollow yourself");
-    next();
+    return res.status(403).json("you can't unfollow yourself");
   }
 
   try {
@@ -71,8 +68,7 @@ exports.unfollowUser = asyncHandler(async (req, res, next) => {
     const currentuser = await User.findOne({ username: currentUsername });
 
     if (!user.followers.includes(currentuser._id)) {
-      res.status(403).json("you are not following this user");
-      next();
+      return res.status(403).json("you are not following this user");
     }
 
     await user.updateOne({ $pull: { followers: currentuser._id } });
