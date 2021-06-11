@@ -49,6 +49,14 @@ const AddProductForm = ({ handleSubmit, productLists, setListId }: Props): JSX.E
             InputProps={{
               classes: { input: classes.inputs, underline: classes.inputsUnderline },
             }}
+            InputLabelProps={{
+              classes: {
+                root: classes.inputLabelRoot,
+                shrink: classes.inputLabelShrink,
+                formControl: classes.inputLabelFormControl,
+              },
+              shrink: true,
+            }}
             name="productUrl"
             autoFocus
             helperText={touched.productUrl ? errors.productUrl : ''}
@@ -64,6 +72,13 @@ const AddProductForm = ({ handleSubmit, productLists, setListId }: Props): JSX.E
             margin="normal"
             InputProps={{
               classes: { input: classes.inputs, underline: classes.inputsUnderline },
+            }}
+            InputLabelProps={{
+              classes: {
+                root: classes.inputLabelRoot,
+                shrink: classes.inputLabelShrink,
+                formControl: classes.inputLabelFormControl,
+              },
             }}
             name="listId"
             autoFocus

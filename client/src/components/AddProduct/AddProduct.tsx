@@ -10,6 +10,7 @@ import { getAllLists } from '../../helpers/APICalls/lists';
 import productDetails from '../../helpers/APICalls/productDetails';
 import { createProduct } from '../../helpers/APICalls/product';
 import { Product } from '../../interface/Product';
+import { useEffect } from 'react';
 
 interface Props {
   showAddProductModal: boolean;
@@ -43,6 +44,10 @@ const AddProduct = ({ showAddProductModal, setShowAddProductModal }: Props): JSX
   const [listId, setListId] = useState<string>('');
 
   const { updateSnackBarMessage } = useSnackBar();
+
+  const saveList = (list: any) => {
+    setProductLists(list);
+  };
 
   const submitItem = (productDetails: ProductDetails, listID: string) => {
     // send productData to the api
@@ -89,8 +94,10 @@ const AddProduct = ({ showAddProductModal, setShowAddProductModal }: Props): JSX
     });
   };
 
-  getProductLists().then((data) => {
-    setProductLists(data as any[]);
+  useEffect(() => {
+    getProductLists().then((data) => {
+      saveList(data);
+    });
   });
 
   return (

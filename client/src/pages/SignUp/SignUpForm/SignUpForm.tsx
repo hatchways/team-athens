@@ -60,6 +60,14 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
             InputProps={{
               classes: { input: classes.inputs, underline: classes.inputsUnderline },
             }}
+            InputLabelProps={{
+              classes: {
+                root: classes.inputLabelRoot,
+                shrink: classes.inputLabelShrink,
+                formControl: classes.inputLabelFormControl,
+              },
+              shrink: true,
+            }}
             name="username"
             autoComplete="username"
             autoFocus
@@ -77,6 +85,13 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
             InputProps={{
               classes: { input: classes.inputs, underline: classes.inputsUnderline },
             }}
+            InputLabelProps={{
+              classes: {
+                root: classes.inputLabelRoot,
+                shrink: classes.inputLabelShrink,
+                formControl: classes.inputLabelFormControl,
+              },
+            }}
             name="email"
             autoComplete="email"
             helperText={touched.email ? errors.email : ''}
@@ -92,6 +107,13 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
             margin="normal"
             InputProps={{
               classes: { input: classes.inputs, underline: classes.inputsUnderline },
+            }}
+            InputLabelProps={{
+              classes: {
+                root: classes.inputLabelRoot,
+                shrink: classes.inputLabelShrink,
+                formControl: classes.inputLabelFormControl,
+              },
             }}
             type="password"
             autoComplete="current-password"
