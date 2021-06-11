@@ -1,70 +1,83 @@
-const connectedUsers = [];
-let socket = null;
+const socketio = require("socket.io");
 
-const initSocketServer = (_socket) => {
-  socket = _socket;
-  socket.on('disconnect', (reason) => {
-    userLeave(socket.id);
-    console.log(`${socket.id} disconnected for ${reason}`);
+const connectedUsers = {};
+let socket = null;
+let io = null;
+
+const initSocketServer = (server, req) => {
+
+  if(!io) {
+    io = socketio(server, {
+      cors: {
+        origin: "*"
+      }
+    });
+    req.io = io;
+  }
+
+  io.on("connection", _socket => {
+    socket = _socket;
+
+    console.log(`${socket.id} connected`);
+
+    socket.on('disconnect', (reason) => {
+      userLeave(socket.id);
+      socket.disconnect();
+      console.log(`${socket.id} disconnected for ${reason}`);
+    });
+
   });
 }
 
 const userJoin = (user) => {
 
-  socket.emit('notification', {
-    message: "product on sale",
-    date: (new Date()).toString()
-  });
-  const search = connectedUsers.find(connectedUser => {
-    return String(connectedUser.user._id) == String(user._id)
-  });
+  connectedUsers[socket.id] = user;
 
-  if (search) {
-    search.socket_id = socket.id;
-    console.log(`${user._id} has updated his socket_id`);
-  } else {
-    connectedUsers.push({
-      socket_id: socket.id,
-      user: user
+  console.log(connectedUsers);
+
+  setTimeout(() => {
+    sendNotification({
+      message: `${user.username}: This is a notification from the api socket"`,
+      title: "Notification test"
     });
-    console.log(`${user._id} has just joined the network`);
-  }
+  }, 1000);
+
+  console.log(`${user._id} has just joined the network`);
 
   return connectedUsers;
 }
 
-const getCurrentUser = (id) => {
-  return connectedUsers.find(connectedUser => connectedUser.socket_id == id)
+const getCurrentUser = (socket_id) => {
+
+  if(connectedUsers.hasOwnProperty(socket_id)) {
+    return connectedUsers[socket_id]; 
+  }
+
+  return undefined;
 }
 
 const getConnectedUsers = () => connectedUsers;
 
-const userLeave = (id) => {
-  const index = connectedUsers.find(connectedUser => connectedUser.socket_id == id);
+const userLeave = (socket_id) => {
 
-  if (index !== -1) {
-    return connectedUsers.splice(index, 1)[0];
+  console.log(connectedUsers);
+  if(connectedUsers.hasOwnProperty(socket_id)) {
+    delete connectedUsers[socket_id]; 
   }
+
+  return connectedUsers;
+
 }
 
 const sendNotification = ({
-  userID,
   message,
   title
 }) => {
-  let socket_id = null;
-
-  const search = connectedUsers.find(connectedUser => {
-    return String(connectedUser.user._id) == String(userID)
+  socket.emit('notification', {
+    message: message,
+    title: title,
+    date: (new Date()).toString(),
   });
-
-  if (search) {
-    socket_id = search.socket_id;
-    socket.to(socket_id).emit('notificatiation', {
-      message: message,
-      title: title
-    });
-  }
 
 }
 

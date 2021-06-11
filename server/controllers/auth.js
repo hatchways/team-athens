@@ -48,6 +48,9 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
       maxAge: secondsInWeek * 1000
     });
 
+    // add user to online users list
+    userJoin(user);
+
     res.status(201).json({
       success: {
         user: {
@@ -114,6 +117,8 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
     res.status(401);
     throw new Error("Not authorized");
   }
+
+  userJoin(user);
 
   res.status(200).json({
     success: {
