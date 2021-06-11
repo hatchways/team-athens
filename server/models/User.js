@@ -20,14 +20,14 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  followers: {
-    type: Array,
-    default: [],
-  },
-  followings: {
-    type: Array,
-    default: [],
-  },
+  followers: [{
+    type: mongoose.Types.ObjectId,
+    ref: "users",
+  }],
+  followings: [{
+    type: mongoose.Types.ObjectId,
+    ref: "users",
+  }],
 });
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
