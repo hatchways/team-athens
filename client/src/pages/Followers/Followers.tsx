@@ -32,7 +32,7 @@ export default function Followers(): JSX.Element {
   const [tabValue, setTabValue] = useState(0);
   const [followingsData, setFollowingsData] = useState([]);
   const [followersData, setFollowersData] = useState([]);
-
+  const [dataChanged, setDataChanged] = useState(false);
   const handleTabChange = (event: any, newValue: number) => {
     setTabValue(newValue);
   };
@@ -44,7 +44,8 @@ export default function Followers(): JSX.Element {
     getFollowersData().then((data: any) => {
       setFollowersList(data);
     });
-  }, []);
+    setDataChanged(false); //reset flag
+  }, [dataChanged]);
 
   // followings data
   const setFollowingsList = (list: any) => {
@@ -65,16 +66,20 @@ export default function Followers(): JSX.Element {
     followUserFunc(username);
   };
   const followUserFunc = async (username: string) => {
-    return await followUser(loggedInUser?.username, username);
+    const res = await followUser(loggedInUser?.username, username);
+    if (res.success) {
+      setDataChanged(true);
+    }
   };
   //unfollow button
   const handelUnfollowBtn = (username: string) => {
     unfollowUserFunc(username);
   };
   const unfollowUserFunc = async (username: string) => {
-    const val = await unfollowUser(loggedInUser?.username, username);
-    console.log(val);
-    return val;
+    const res = await unfollowUser(loggedInUser?.username, username);
+    if (res.success) {
+      setDataChanged(true);
+    }
   };
 
   const drawList = (data: any) => {
