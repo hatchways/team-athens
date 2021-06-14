@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { useAuth } from '../../context/useAuthContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function NavBar(): JSX.Element {
   const classes = useStyles();
@@ -42,12 +43,14 @@ export default function NavBar(): JSX.Element {
   return (
     <AppBar position="static" className={classes.navRoot} elevation={2}>
       <Toolbar className={classes.customizeToolbar}>
-        <Box className={classes.logo}>
+        <Box className={classes.logo} component={Link} to="/dashboard">
           <Box className={classes.imageContainer}></Box>
         </Box>
         <Box className={classes.headerButtonGroup}>
           <Button>Shopping List</Button>
-          <Button>Friends</Button>
+          <Button component={Link} to="/followers">
+            Friends
+          </Button>
           <Button>
             <Badge variant="dot" color="secondary" invisible={false}>
               Notifications
