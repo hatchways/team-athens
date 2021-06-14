@@ -94,11 +94,11 @@ const AddProduct = ({ showAddProductModal, setShowAddProductModal }: Props): JSX
     });
   };
 
-  useEffect(() => {
-    getProductLists().then((data) => {
-      saveList(data);
-    });
-  });
+  // useEffect(() => {
+  //   getProductLists().then((data) => {
+  //     saveList(data);
+  //   });
+  // });
 
   return (
     <Grid container component="main">

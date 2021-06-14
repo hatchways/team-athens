@@ -23,68 +23,92 @@ import Box from '@material-ui/core/Box';
 import NavBar from '../../components/NavBar/NavBar';
 import { Typography } from '@material-ui/core';
 
+import { getFollowings, getFollowers, followUser, unfollowUser } from '../../helpers/APICalls/followers';
+
 export default function Followers(): JSX.Element {
   const classes = useStyles();
-
-  // const { loggedInUser } = useAuth();
+  const { loggedInUser } = useAuth();
 
   const [tabValue, setTabValue] = useState(0);
-  const [checked, setChecked] = useState([1]);
+  const [followingsData, setFollowingsData] = useState([]);
+  const [followersData, setFollowersData] = useState([]);
 
-  const handleChange = (event: any, newValue: number) => {
+  const handleTabChange = (event: any, newValue: number) => {
     setTabValue(newValue);
   };
-  const handleToggle = (tabValue: number) => () => {
-    const currentIndex = checked.indexOf(tabValue);
-    const newChecked = [...checked];
+  //fetch data
+  useEffect(() => {
+    getFollowingsData().then((data: any) => {
+      setFollowingsList(data);
+    });
+    getFollowersData().then((data: any) => {
+      setFollowersList(data);
+    });
+  }, []);
 
-    if (currentIndex === -1) {
-      newChecked.push(tabValue);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
+  // followings data
+  const setFollowingsList = (list: any) => {
+    setFollowingsData(list);
+  };
+  const getFollowingsData = async () => {
+    return await getFollowings(loggedInUser?.username);
+  };
+  // followers data
+  const getFollowersData = async () => {
+    return await getFollowers(loggedInUser?.username);
+  };
+  const setFollowersList = (list: any) => {
+    setFollowersData(list);
+  };
+  //follow button
+  const handelFollowBtn = (username: string) => {
+    followUserFunc(username);
+  };
+  const followUserFunc = async (username: string) => {
+    return await followUser(loggedInUser?.username, username);
+  };
+  //unfollow button
+  const handelUnfollowBtn = (username: string) => {
+    unfollowUserFunc(username);
+  };
+  const unfollowUserFunc = async (username: string) => {
+    const val = await unfollowUser(loggedInUser?.username, username);
+    console.log(val);
+    return val;
   };
 
-  const generateListItem = (labelId: string) => {
+  const drawList = (data: any) => {
+    const buttonText = tabValue === 0 ? 'Unfollow' : 'Follow';
+
     return (
       <List disablePadding className="listStyles">
-        <ListItem divider key={tabValue} button className={classes.listItem}>
-          <ListItemAvatar>
-            <Avatar alt={`Avatar n°${tabValue + 1}`} src={`/static/images/avatar/${tabValue + 1}.jpg`} />
-          </ListItemAvatar>
-          <ListItemText id={labelId} primary={`Line item ${tabValue + 1}`} />
-          <ListItemSecondaryAction>
-            <Button variant="contained" color="default" className={classes.followButton} disableElevation>
-              Follow
-            </Button>
-          </ListItemSecondaryAction>
-        </ListItem>
+        {data.map((value: any) => {
+          const labelId = `checkbox-list-label-${value}`;
+          const buttonFunction =
+            tabValue === 0 ? () => handelUnfollowBtn(value.username) : () => handelFollowBtn(value.username);
+
+          return (
+            <ListItem key={value._id} role={undefined} dense button onClick={() => console.log('list item pressed')}>
+              <ListItemAvatar>
+                <Avatar alt={`Avatar n°${tabValue + 1}`} src={`/static/images/avatar/${tabValue + 1}.jpg`} />
+              </ListItemAvatar>
+              <ListItemText id={labelId} primary={`${value.username}`} />
+              <ListItemSecondaryAction>
+                <Button
+                  variant="contained"
+                  color="default"
+                  className={classes.followButton}
+                  disableElevation
+                  onClick={buttonFunction}
+                >
+                  {buttonText}
+                </Button>
+              </ListItemSecondaryAction>
+            </ListItem>
+          );
+        })}
       </List>
     );
-  };
-
-  const drawFollowing = () => {
-    // get followings array
-
-    //
-
-    const list = [0, 1, 2, 3].map((tabValue) => {
-      const labelId = `checkbox-list-secondary-label-`;
-      return generateListItem(labelId);
-    });
-
-    return list;
-  };
-
-  const drawSuggested = () => {
-    const list = [0, 1, 2, 3].map((tabValue) => {
-      const labelId = `checkbox-list-secondary-label-`;
-      return generateListItem(labelId);
-    });
-
-    return list;
   };
 
   return (
@@ -98,7 +122,7 @@ export default function Followers(): JSX.Element {
         <Tabs
           value={tabValue}
           indicatorColor="secondary"
-          onChange={handleChange}
+          onChange={handleTabChange}
           aria-label="socials tabs"
           variant="fullWidth"
         >
@@ -106,7 +130,7 @@ export default function Followers(): JSX.Element {
           <Tab label="Suggested" />
         </Tabs>
         <Paper square className={classes.tabContent} elevation={2}>
-          {tabValue === 0 ? drawFollowing() : drawSuggested()}
+          {tabValue === 0 ? drawList(followingsData) : drawList(followersData)}
         </Paper>
       </Box>
     </Grid>
