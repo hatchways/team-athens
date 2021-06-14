@@ -31,7 +31,11 @@ exports.followUser = asyncHandler(async (req, res, next) => {
 
   // early exit
   if (otherUsername === currentUsername) {
-    return res.status(403).json("you can't follow yourself");
+    return res.status(403).json({
+      msg: "you can't follow yourself",
+      err: null,
+      success: false,
+    });
   }
   try {
     const user = await User.findOne({ username: otherUsername });
@@ -39,16 +43,28 @@ exports.followUser = asyncHandler(async (req, res, next) => {
 
     // check if ur already following this user
     if (user.followers.includes(currentuser._id)) {
-      return res.status(403).json("you already follow this user");
+      return res.status(403).json({
+        msg: "you already follow this user",
+        err: null,
+        success: false,
+      });
     }
     // follow
     await user.updateOne({ $push: { followers: currentuser._id } });
     await currentuser.updateOne({ $push: { followings: user._id } });
 
-    res.status(200).json(`${currentuser.username} is now following ${user.username}`)
+    res.status(200).json({
+      msg: `${currentuser.username} is now following ${user.username}`,
+      err: null,
+      success: true,
+    });
 
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({
+      msg: "error",
+      err: err,
+      success: false,
+    });
   }
 });
 
@@ -60,7 +76,11 @@ exports.unfollowUser = asyncHandler(async (req, res, next) => {
   const otherUsername = req.params.username;
 
   if (otherUsername === currentUsername) {
-    return res.status(403).json("you can't unfollow yourself");
+    return res.status(403).json({
+      msg: "you can't unfollow yourself",
+      err: null,
+      success: false,
+    });
   }
 
   try {
@@ -68,13 +88,21 @@ exports.unfollowUser = asyncHandler(async (req, res, next) => {
     const currentuser = await User.findOne({ username: currentUsername });
 
     if (!user.followers.includes(currentuser._id)) {
-      return res.status(403).json("you are not following this user");
+      return res.status(403).json({
+        msg: "you are not following this user",
+        err: null,
+        success: false,
+      });
     }
 
     await user.updateOne({ $pull: { followers: currentuser._id } });
     await currentuser.updateOne({ $pull: { followings: user._id } });
 
-    res.status(200).json(`${currentuser.username} has unfollowed ${user.username}`)
+    res.status(200).json({
+      msg: `${currentuser.username} has unfollowed ${user.username}`,
+      err: null,
+      success: true,
+    });
   } catch (err) {
     res.status(500).json(err);
   }
