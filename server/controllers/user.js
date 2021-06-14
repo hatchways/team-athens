@@ -169,3 +169,40 @@ exports.followings = asyncHandler(async (req, res, next) => {
     res.status(500).json(err)
   }
 });
+
+// @route GET /users/:username/followSuggestions
+// @desc Get follow Suggestions list
+// @access Private
+exports.followSugestions = asyncHandler(async (req, res, next) => {
+  try {
+    const username = req.params.username;
+    const currentUser = await User.findOne({ username: username });
+
+    const followers = currentUser.followers;
+
+    // filter users that u already follow
+    //get all users
+    const users = User.find();
+
+    const filteredUsers = users.filter(userFilter);
+
+    const userFilter = (user) => {
+      if (user._id === currentUser._id) return false;
+      for (const u of followers)
+        if (user._id == u._id) return false;
+      return true;
+    };
+
+    console.log(filteredUsers);
+
+    // // get all user data
+    // const usersData = [];
+    // for (const f of filteredUsers) {
+    //   usersData.push(await User.findById({ _id: f }));
+    // }
+
+    res.status(200).json(filteredUsers);
+  } catch (err) {
+    res.status(500).json(err)
+  }
+});
