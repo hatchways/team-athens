@@ -102,7 +102,14 @@ exports.followings = asyncHandler(async (req, res, next) => {
     const username = req.params.username;
 
     const currentUser = await User.findOne({ username: username });
-    res.status(200).json(currentUser.followings);
+
+    // // get all user data
+    const followings = [];
+    for (const f of currentUser.followings) {
+      followings.push(await User.findById({ _id: f }));
+    }
+
+    res.status(200).json(followings);
   } catch (err) {
     res.status(500).json(err)
   }
