@@ -88,7 +88,14 @@ exports.followers = asyncHandler(async (req, res, next) => {
     const username = req.params.username;
 
     const currentUser = await User.findOne({ username: username });
-    res.status(200).json(currentUser.followers);
+
+    // // get all user data
+    const followers = [];
+    for (const f of currentUser.followers) {
+      followers.push(await User.findById({ _id: f }));
+    }
+
+    res.status(200).json(followers);
   } catch (err) {
     res.status(500).json(err)
   }
