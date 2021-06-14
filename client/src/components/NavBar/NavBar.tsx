@@ -9,10 +9,23 @@ import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
 import Popover from '@material-ui/core/Popover';
 import { useState } from 'react';
+import { useAuth } from '../../context/useAuthContext';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { useHistory } from 'react-router-dom';
 
-export default function NavBar({ loggedInUser }: any): JSX.Element {
+export default function NavBar(): JSX.Element {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const { loggedInUser } = useAuth();
+  const history = useHistory();
+
+  if (loggedInUser === undefined) return <CircularProgress />;
+  if (!loggedInUser) {
+    history.push('/login');
+    // loading for a split seconds until history.push works
+    return <CircularProgress />;
+  }
 
   const handleProfileClick = (event: { currentTarget: any }) => {
     console.log('click');
