@@ -3,11 +3,14 @@ import { useState } from 'react';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import login from '../../helpers/APICalls/login';
+import useStyle from './useStyles';
 
 export default function LogInWithDemoUser(): JSX.Element {
   const { updateLoginContext } = useAuth();
   const { updateSnackBarMessage } = useSnackBar();
   const [isSubmitting, setSubmitting] = useState(false);
+
+  const classes = useStyle();
 
   const autoLogin = () => {
     const { email, password } = {
@@ -33,7 +36,14 @@ export default function LogInWithDemoUser(): JSX.Element {
 
   return (
     <Box>
-      <Button type="button" size="large" variant="contained" color="primary" onClick={autoLogin}>
+      <Button
+        type="button"
+        size="large"
+        variant="contained"
+        color="primary"
+        onClick={autoLogin}
+        className={classes.submit}
+      >
         {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Login For Demo'}
       </Button>
     </Box>

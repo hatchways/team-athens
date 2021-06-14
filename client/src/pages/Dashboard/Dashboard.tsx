@@ -6,9 +6,12 @@ import useStyles from './useStyles';
 import { useAuth } from '../../context/useAuthContext';
 import { useSocket } from '../../context/useSocketContext';
 import { useHistory } from 'react-router-dom';
+
+import ChatSideBanner from '../../components/ChatSideBanner/ChatSideBanner';
 import { useEffect, useState } from 'react';
 import Modal from '@material-ui/core/Modal';
-
+import AddProduct from '../../components/AddProduct/AddProduct';
+import { Button } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -31,6 +34,12 @@ export default function Dashboard(): JSX.Element {
   const { initSocket } = useSocket();
 
   const history = useHistory();
+
+  const [showAddProductModal, setShowAddProductModal] = useState(false);
+
+  const openAddProductModal = () => {
+    setShowAddProductModal(true);
+  };
 
   useEffect(() => {
     initSocket();
@@ -75,8 +84,6 @@ export default function Dashboard(): JSX.Element {
               <ShoppingListCard title="Clothes" itemCount={34} image={ClothesImage} />
               <ShoppingListCard title="Furniture" itemCount={12} image={FurnitureImage} />
               <ShoppingListCard title="Luxury" itemCount={8} image={LuxuryImage} />
-
-              {/* Add new list button */}
               <Grid item>
                 <Card className={classes.shoppingListCard}>
                   <CardActionArea className={classes.shoppingListButton} onClick={() => handleOpen()}>
@@ -94,13 +101,12 @@ export default function Dashboard(): JSX.Element {
             </Grid>
           </Grid>
         </Grid>
+        <Grid>
+          <Button onClick={openAddProductModal}>Add Product</Button>
+          <AddProduct showAddProductModal={showAddProductModal} setShowAddProductModal={setShowAddProductModal} />
+        </Grid>
       </Grid>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
+      <Modal open={open} onClose={handleClose}>
         <AddListComponent />
       </Modal>
     </div>

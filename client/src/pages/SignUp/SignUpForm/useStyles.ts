@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 49,
     fontSize: 16,
     fontWeight: 'bold',
+    borderRadius: '50px',
+    textTransform: 'uppercase',
   },
   inputsUnderline: {
     '&&&:before': {
@@ -36,6 +38,17 @@ const useStyles = makeStyles((theme) => ({
     '&&:after': {
       borderBottom: 'none',
     },
+  },
+  inputLabelRoot: {
+    width: '100%',
+    textAlign: 'center',
+    color: 'black',
+  },
+  inputLabelFormControl: {
+    transform: 'none',
+  },
+  inputLabelShrink: {
+    transform: 'none',
   },
 }));
 
