@@ -123,7 +123,17 @@ exports.followers = asyncHandler(async (req, res, next) => {
       followers.push(await User.findById({ _id: f }));
     }
 
-    res.status(200).json(followers);
+    const sanitizedData = followers.map(val => {
+      return {
+        username: val.username,
+        email: val.email,
+        _id: val._id,
+        followings: val.followings,
+        followers: val.followers,
+      };
+    });
+
+    res.status(200).json(sanitizedData);
   } catch (err) {
     res.status(500).json(err)
   }
@@ -144,7 +154,17 @@ exports.followings = asyncHandler(async (req, res, next) => {
       followings.push(await User.findById({ _id: f }));
     }
 
-    res.status(200).json(followings);
+    const sanitizedData = followings.map(val => {
+      return {
+        username: val.username,
+        email: val.email,
+        _id: val._id,
+        followings: val.followings,
+        followers: val.followers,
+      };
+    });
+
+    res.status(200).json(sanitizedData);
   } catch (err) {
     res.status(500).json(err)
   }
