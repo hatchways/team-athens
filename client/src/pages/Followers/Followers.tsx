@@ -30,10 +30,11 @@ import {
   unfollowUser,
   getSuggestions,
 } from '../../helpers/APICalls/followers';
-
+import { useSnackBar } from '../../context/useSnackbarContext';
 export default function Followers(): JSX.Element {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
+  const { updateSnackBarMessage } = useSnackBar();
 
   const [tabValue, setTabValue] = useState(0);
   const [followingsData, setFollowingsData] = useState([]);
@@ -84,6 +85,7 @@ export default function Followers(): JSX.Element {
   const followUserFunc = async (username: string) => {
     const res = await followUser(loggedInUser?.username, username);
     if (res.success) {
+      updateSnackBarMessage(`You are now Following ${username}`);
       setDataChanged(true);
     }
   };
@@ -94,6 +96,7 @@ export default function Followers(): JSX.Element {
   const unfollowUserFunc = async (username: string) => {
     const res = await unfollowUser(loggedInUser?.username, username);
     if (res.success) {
+      updateSnackBarMessage(`You have Unfollowed ${username}`);
       setDataChanged(true);
     }
   };
