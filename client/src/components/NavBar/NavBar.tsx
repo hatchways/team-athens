@@ -43,9 +43,9 @@ export default function NavBar(): JSX.Element {
   return (
     <AppBar position="static" className={classes.navRoot} elevation={2}>
       <Toolbar className={classes.customizeToolbar}>
-        <Box className={classes.logo} component={Link} to="/dashboard">
+        <Link className={classes.logo} to="/dashboard">
           <Box className={classes.imageContainer}></Box>
-        </Box>
+        </Link>
         <Box className={classes.headerButtonGroup}>
           <Button>Shopping List</Button>
           <Button component={Link} to="/followers">
