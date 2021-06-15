@@ -7,7 +7,7 @@ import AddListComponent from '../AddListComponent/AddListComponent';
 import React, { useState } from 'react';
 import { Dialog, DialogContent, Icon, DialogActions } from '@material-ui/core';
 
-export default function Register(): JSX.Element {
+export default function Register(props: AddListProps): JSX.Element {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(true);
@@ -18,6 +18,7 @@ export default function Register(): JSX.Element {
 
   const handleCloseModal = () => {
     setOpen(false);
+    props.onClose();
   };
 
   const handleSubmit = () => {
@@ -53,4 +54,8 @@ export default function Register(): JSX.Element {
       </Dialog>
     </Grid>
   );
+}
+
+interface AddListProps {
+  onClose: () => void;
 }

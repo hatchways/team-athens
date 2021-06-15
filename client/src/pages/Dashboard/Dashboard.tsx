@@ -107,7 +107,7 @@ export default function Dashboard(): JSX.Element {
         </Grid>
       </Grid>
       <Modal open={open} onClose={handleClose}>
-        <AddListComponent />
+        <AddListComponent onClose={handleClose} />
       </Modal>
     </div>
   );
