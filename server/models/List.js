@@ -8,10 +8,11 @@ const listSchema = new mongoose.Schema({
     products: [{ 
         type: Schema.ObjectId, 
         ref: 'products' }],
-    userId: {
-      type: String,
-      required: true
-    }
+    userId: [{
+      type: Schema.ObjectId, 
+      required: true,
+      ref: 'user'
+    }]
   });
 
 module.exports = mongoose.model("lists", listSchema); 
