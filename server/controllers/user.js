@@ -181,7 +181,7 @@ exports.followSugestions = asyncHandler(async (req, res, next) => {
 
       let foundFollower = false
       // check if it's in the followers list
-      for (let follower of currentUser.followers) {
+      for (let follower of currentUser.followings) {
         if (user._id.equals(follower)) {
           foundFollower = true;
         }
