@@ -85,6 +85,14 @@ export default function Followers(): JSX.Element {
   const drawList = (data: any) => {
     const buttonText = tabValue === 0 ? 'Unfollow' : 'Follow';
 
+    if (data.length === 0) {
+      return (
+        <Box p={2}>
+          <Typography>Nothing to see here</Typography>
+        </Box>
+      );
+    }
+
     return (
       <List disablePadding className="listStyles">
         {data.map((value: any) => {
