@@ -128,7 +128,8 @@ exports.followers = asyncHandler(async (req, res, next) => {
     // // get all user data
     const followers = [];
     for (const f of currentUser.followers) {
-      followers.push(await User.find({ _id: f }, projection));
+      const t = await User.find({ _id: f }, projection);
+      followers.push(t[0]);
     }
 
     res.status(200).json(followers);
@@ -149,7 +150,8 @@ exports.followings = asyncHandler(async (req, res, next) => {
     // // get all user data
     const followings = [];
     for (const f of currentUser.followings) {
-      followings.push(await User.find({ _id: f }, projection));
+      const t = await User.find({ _id: f }, projection);
+      followings.push(t[0]);
     }
 
     res.status(200).json(followings);
