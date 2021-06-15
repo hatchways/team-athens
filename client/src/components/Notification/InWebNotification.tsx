@@ -8,10 +8,10 @@ export default function InWebNotification(): JSX.Element {
   const [notification, setNotification] =
     useState<{ message: any; title: string; date: Date } | null | undefined>(null);
 
-  socket?.on('notification', (_notification_) => {
-    console.log(socket.id);
-    setNotification(_notification_);
-    updateSnackBarMessage(_notification_?.message);
+  socket?.on('notification', (notification) => {
+    console.log(socket?.id);
+    setNotification(notification);
+    updateSnackBarMessage(notification?.message);
   });
   return <div></div>;
 }

@@ -1,91 +1,71 @@
 const socketio = require("socket.io");
-
-const connectedUsers = {};
-let socket = null;
-let io = null;
+const connectedUsers = {online: []};
 
 const initSocketServer = (server, req) => {
 
-  if(!io) {
-    io = socketio(server, {
-      cors: {
-        origin: "*"
-      }
-    });
-    req.io = io;
-  }
+  const io = socketio(server, {
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST"],
+      transports: ['websocket', 'polling'],
+      credentials: true
+    },
+  });
+  req.io = io;
 
-  io.on("connection", _socket => {
-    socket = _socket;
+  io.on("connection", (socket) => {
+    req.socket = socket;
 
     console.log(`${socket.id} connected`);
 
-    socket.on('disconnect', (reason) => {
-      userLeave(socket.id);
-      socket.disconnect();
+    socket.on("disconnect", (reason) => {
+
       console.log(`${socket.id} disconnected for ${reason}`);
+      const index = connectedUsers.online.findIndex((userOnline)=>{
+        return userOnline.socket_id === socket.id;
+      });
+
+      if(index !== -1) {
+        connectedUsers.online.splice(index, 1);
+      }
+
+      socket.disconnect();
+      console.log(connectedUsers);
+    });
+
+    socket.on("userJoin", (user) => {
+      if(user === undefined) return;
+
+      const index = connectedUsers.online.findIndex((userOnline)=>{
+        return String(userOnline.id) === String(user.id);
+      });
+
+      if(index === -1) {
+        user.socket_id = socket.id;
+        connectedUsers.online.push(user);
+      }
+
+      sendNotification(socket, {
+        message: `${user.username}: This is a notification from the api socket`,
+        title: "Notification test",
+      });
+
+      console.log(connectedUsers);
     });
 
   });
-}
+};
 
-const userJoin = (user) => {
-
-  connectedUsers[socket.id] = user;
-
-  console.log(connectedUsers);
-
-  setTimeout(() => {
-    sendNotification({
-      message: `${user.username}: This is a notification from the api socket"`,
-      title: "Notification test"
-    });
-  }, 1000);
-
-  console.log(`${user._id} has just joined the network`);
-
-  return connectedUsers;
-}
-
-const getCurrentUser = (socket_id) => {
-
-  if(connectedUsers.hasOwnProperty(socket_id)) {
-    return connectedUsers[socket_id]; 
-  }
-
-  return undefined;
-}
-
-const getConnectedUsers = () => connectedUsers;
-
-const userLeave = (socket_id) => {
-
-  console.log(connectedUsers);
-  if(connectedUsers.hasOwnProperty(socket_id)) {
-    delete connectedUsers[socket_id]; 
-  }
-
-  return connectedUsers;
-
-}
-
-const sendNotification = ({
-  message,
-  title
-}) => {
-  socket.emit('notification', {
+// socket could be passed with req.socket
+const sendNotification = (socket, { message, title }) => {
+  socket.emit("notification", {
     message: message,
     title: title,
-    date: (new Date()).toString(),
+    date: new Date().toString(),
   });
-
-}
+};
 
 module.exports = {
   initSocketServer,
-  userJoin,
-  getConnectedUsers,
-  getCurrentUser,
-  userLeave,
   sendNotification,
 };

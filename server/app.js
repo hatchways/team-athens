@@ -2,7 +2,6 @@ const colors = require("colors");
 const path = require("path");
 const http = require("http");
 const express = require("express");
-const socketio = require("socket.io");
 const { notFound, errorHandler } = require("./middleware/error");
 const connectDB = require("./db");
 const { join } = require("path");
@@ -20,12 +19,6 @@ const { json, urlencoded } = express;
 connectDB();
 const app = express();
 const server = http.createServer(app);
-
-// const io = socketio(server, {
-//   cors: {
-//     origin: "*"
-//   }
-// });
 
 if (process.env.NODE_ENV === "development") {
   app.use(logger("dev"));
