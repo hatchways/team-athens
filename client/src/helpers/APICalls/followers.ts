@@ -27,6 +27,19 @@ const getFollowers = async (username: any): Promise<AuthApiData> => {
     }));
 };
 
+const getSuggestions = async (username: any): Promise<AuthApiData> => {
+  const fetchOptions: FetchOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  };
+  return await fetch(`/users/${username}/followSugestions`, fetchOptions)
+    .then((res) => res.json())
+    .catch(() => ({
+      error: { message: 'Unable to connect to server. Please try again' },
+    }));
+};
+
 const followUser = async (myUsername: any, theirUserName: any): Promise<AuthApiData> => {
   const body = {
     username: myUsername,
@@ -61,4 +74,4 @@ const unfollowUser = async (myUsername: any, theirUserName: any): Promise<AuthAp
     }));
 };
 
-export { getFollowings, getFollowers, followUser, unfollowUser };
+export { getFollowings, getFollowers, followUser, unfollowUser, getSuggestions };

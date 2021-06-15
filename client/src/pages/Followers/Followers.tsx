@@ -23,7 +23,13 @@ import Box from '@material-ui/core/Box';
 import NavBar from '../../components/NavBar/NavBar';
 import { Typography } from '@material-ui/core';
 
-import { getFollowings, getFollowers, followUser, unfollowUser } from '../../helpers/APICalls/followers';
+import {
+  getFollowings,
+  getFollowers,
+  followUser,
+  unfollowUser,
+  getSuggestions,
+} from '../../helpers/APICalls/followers';
 
 export default function Followers(): JSX.Element {
   const classes = useStyles();
@@ -32,6 +38,7 @@ export default function Followers(): JSX.Element {
   const [tabValue, setTabValue] = useState(0);
   const [followingsData, setFollowingsData] = useState([]);
   const [followersData, setFollowersData] = useState([]);
+  const [followSugestionsData, setFollowSugestionsData] = useState([]);
   const [dataChanged, setDataChanged] = useState(false);
   const handleTabChange = (event: any, newValue: number) => {
     setTabValue(newValue);
@@ -41,8 +48,8 @@ export default function Followers(): JSX.Element {
     getFollowingsData().then((data: any) => {
       setFollowingsList(data);
     });
-    getFollowersData().then((data: any) => {
-      setFollowersList(data);
+    getFollowSugestionsData().then((data: any) => {
+      setFollowSugestionsList(data);
     });
     setDataChanged(false); //reset flag
   }, [dataChanged]);
@@ -61,6 +68,15 @@ export default function Followers(): JSX.Element {
   const setFollowersList = (list: any) => {
     setFollowersData(list);
   };
+
+  // follow suggetions data
+  const getFollowSugestionsData = async () => {
+    return await getSuggestions(loggedInUser?.username);
+  };
+  const setFollowSugestionsList = (list: any) => {
+    setFollowSugestionsData(list);
+  };
+
   //follow button
   const handelFollowBtn = (username: string) => {
     followUserFunc(username);
@@ -135,7 +151,7 @@ export default function Followers(): JSX.Element {
           <Tab label="Suggested" />
         </Tabs>
         <Paper square className={classes.tabContent} elevation={2}>
-          {tabValue === 0 ? drawList(followingsData) : drawList(followersData)}
+          {tabValue === 0 ? drawList(followingsData) : drawList(followSugestionsData)}
         </Paper>
       </Box>
     </Grid>
