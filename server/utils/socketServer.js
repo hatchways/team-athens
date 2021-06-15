@@ -1,4 +1,5 @@
 const socketio = require("socket.io");
+const User = require("../models/User");
 const connectedUsers = {online: []};
 
 const initSocketServer = (server, req) => {
@@ -13,10 +14,12 @@ const initSocketServer = (server, req) => {
   });
   req.io = io;
 
-  io.on("connection", (socket) => {
-    req.socket = socket;
+  function userIsAuthenticated() {
+    return req.user;
+  }
 
-    console.log(`${socket.id} connected`);
+  io.on("connection", async (socket) => {
+    req.socket = socket;
 
     socket.on("disconnect", (reason) => {
 
@@ -33,8 +36,18 @@ const initSocketServer = (server, req) => {
       console.log(connectedUsers);
     });
 
-    socket.on("userJoin", (user) => {
-      if(user === undefined) return;
+    if(userIsAuthenticated()) {
+
+      const user = await User.findById(req.user.id);
+
+      if(!user) return;
+
+      const userData = {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        socket_id: socket.id
+      };
 
       const index = connectedUsers.online.findIndex((userOnline)=>{
         return String(userOnline.id) === String(user.id);
@@ -42,7 +55,7 @@ const initSocketServer = (server, req) => {
 
       if(index === -1) {
         user.socket_id = socket.id;
-        connectedUsers.online.push(user);
+        connectedUsers.online.push(userData);
       }
 
       sendNotification(socket, {
@@ -51,7 +64,7 @@ const initSocketServer = (server, req) => {
       });
 
       console.log(connectedUsers);
-    });
+    }
 
   });
 };

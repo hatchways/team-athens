@@ -1,6 +1,5 @@
 import { useState, useContext, createContext, FunctionComponent, useCallback, useEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { useAuth } from './useAuthContext';
 
 interface ISocketContext {
   socket: Socket | undefined;
@@ -14,7 +13,6 @@ export const SocketContext = createContext<ISocketContext>({
 
 export const SocketProvider: FunctionComponent = ({ children }): JSX.Element => {
   const [socket, setSocket] = useState<Socket | undefined>(undefined);
-  const { loggedInUser } = useAuth();
 
   const initSocket = useCallback(() => {
     console.log('trying to connect');
@@ -24,10 +22,6 @@ export const SocketProvider: FunctionComponent = ({ children }): JSX.Element => 
       }),
     );
   }, []);
-
-  useEffect(() => {
-    socket?.emit('userJoin', loggedInUser);
-  }, [loggedInUser, socket]);
 
   return <SocketContext.Provider value={{ socket, initSocket }}>{children}</SocketContext.Provider>;
 };
