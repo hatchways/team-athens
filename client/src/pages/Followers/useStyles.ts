@@ -2,7 +2,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // minHeight: '100vh',
     justifyContent: 'center',
   },
   cardBox: {
@@ -20,12 +19,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-  tabContent: {
-    // listStyleType: 'none',
-  },
-  listStyles: {
-    // height: '450px',
-  },
+  tabContent: {},
+  listStyles: {},
   listItem: {
     padding: theme.spacing(3),
   },
