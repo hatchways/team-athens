@@ -178,31 +178,39 @@ exports.followSugestions = asyncHandler(async (req, res, next) => {
     const username = req.params.username;
     const currentUser = await User.findOne({ username: username });
 
-    const followers = currentUser.followers;
-
-    // filter users that u already follow
-    //get all users
-    const users = User.find();
-
-    const filteredUsers = users.filter(userFilter);
-
-    const userFilter = (user) => {
-      if (user._id === currentUser._id) return false;
-      for (const u of followers)
-        if (user._id == u._id) return false;
-      return true;
+    const projection = {
+      username: 1,
+      email: 1,
+      _id: 1,
+      followings: 1,
+      followers: 1,
     };
+    // filter users that u already follow
+    const allUsers = await User.find({}, projection);
 
-    console.log(filteredUsers);
+    const filteredUsers = [];
 
-    // // get all user data
-    // const usersData = [];
-    // for (const f of filteredUsers) {
-    //   usersData.push(await User.findById({ _id: f }));
-    // }
+    for (let user of allUsers) {
+      //check if self
+      if (user._id.equals(currentUser._id)) {
+        continue;
+      }
+
+      let foundFollower = false
+      // check if it's in the followers list
+      for (let follower of currentUser.followers) {
+        if (user._id.equals(follower)) {
+          foundFollower = true;
+        }
+      }
+
+      if (!foundFollower)
+        filteredUsers.push(user);
+    }
 
     res.status(200).json(filteredUsers);
   } catch (err) {
+    console.log(err)
     res.status(500).json(err)
   }
 });
