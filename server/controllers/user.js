@@ -1,6 +1,14 @@
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
 
+const projection = {
+  username: 1,
+  email: 1,
+  _id: 1,
+  followings: 1,
+  followers: 1,
+};
+
 // @route POST /users
 // @desc Search for users
 // @access Private
@@ -120,20 +128,10 @@ exports.followers = asyncHandler(async (req, res, next) => {
     // // get all user data
     const followers = [];
     for (const f of currentUser.followers) {
-      followers.push(await User.findById({ _id: f }));
+      followers.push(await User.find({ _id: f }, projection));
     }
 
-    const sanitizedData = followers.map(val => {
-      return {
-        username: val.username,
-        email: val.email,
-        _id: val._id,
-        followings: val.followings,
-        followers: val.followers,
-      };
-    });
-
-    res.status(200).json(sanitizedData);
+    res.status(200).json(followers);
   } catch (err) {
     res.status(500).json(err)
   }
@@ -151,20 +149,10 @@ exports.followings = asyncHandler(async (req, res, next) => {
     // // get all user data
     const followings = [];
     for (const f of currentUser.followings) {
-      followings.push(await User.findById({ _id: f }));
+      followings.push(await User.find({ _id: f }, projection));
     }
 
-    const sanitizedData = followings.map(val => {
-      return {
-        username: val.username,
-        email: val.email,
-        _id: val._id,
-        followings: val.followings,
-        followers: val.followers,
-      };
-    });
-
-    res.status(200).json(sanitizedData);
+    res.status(200).json(followings);
   } catch (err) {
     res.status(500).json(err)
   }
@@ -178,13 +166,6 @@ exports.followSugestions = asyncHandler(async (req, res, next) => {
     const username = req.params.username;
     const currentUser = await User.findOne({ username: username });
 
-    const projection = {
-      username: 1,
-      email: 1,
-      _id: 1,
-      followings: 1,
-      followers: 1,
-    };
     // filter users that u already follow
     const allUsers = await User.find({}, projection);
 
