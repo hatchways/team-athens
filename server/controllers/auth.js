@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const List = require("../models/List");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
 
@@ -31,6 +32,18 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
   if (user) {
     const token = generateToken(user._id);
     const secondsInWeek = 604800;
+
+    // create default lists
+    const shoppingList = await List.create({
+      name: 'Shopping',
+      userId: user._id,
+      products: [],
+    });
+    const wishlist = await List.create({
+      name: 'Wishlist',
+      userId: user._id,
+      products: [],
+    });
 
     res.cookie("token", token, {
       httpOnly: true,
