@@ -102,6 +102,7 @@ const createScrapingJob = ({
     }
   };
 
+  // "At every 15th minute" this defines at what interval a task will be executed
   const cron = '*/15 * * * *';
 
   const job = new Queue(product._id, queueOptions);
