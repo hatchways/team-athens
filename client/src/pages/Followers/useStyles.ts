@@ -18,9 +18,6 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: 'red',
     },
   },
-
-  tabContent: {},
-  listStyles: {},
   listItem: {
     padding: theme.spacing(3),
   },

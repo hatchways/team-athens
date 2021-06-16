@@ -142,7 +142,7 @@ export default function Followers(): JSX.Element {
           <Tab label="Following" />
           <Tab label="Suggested" />
         </Tabs>
-        <Paper square className={classes.tabContent} elevation={2}>
+        <Paper square elevation={2}>
           {tabValue === 0 ? drawList(followingsData) : drawList(followSugestionsData)}
         </Paper>
       </Box>
