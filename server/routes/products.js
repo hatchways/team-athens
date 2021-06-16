@@ -12,7 +12,7 @@ router.route('/:listId').post(protect, (req, res) => create(req, res));
 router.route('/:listId').put(protect, (req, res) => update(req, res));
 
 //delete
-router.route('/:listId').delete(protect, (req, res) => deleteItem(req, res));
+router.route('/:listId/:productId').delete(protect, (req, res) => deleteItem(req, res));
 
 //get all
 router.route('/:listId').get(protect, (req, res) => getAll(req, res));
