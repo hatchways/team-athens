@@ -34,20 +34,21 @@ exports.searchUsers = asyncHandler(async (req, res, next) => {
 // @desc Follow a user
 // @access Private
 exports.followUser = asyncHandler(async (req, res, next) => {
-  const currentUsername = req.body.username;
+  const currentUserId = req.user.id;
   const otherUsername = req.params.username;
 
-  // early exit
-  if (otherUsername === currentUsername) {
-    return res.status(403).json({
-      msg: "you can't follow yourself",
-      err: null,
-      success: false,
-    });
-  }
   try {
     const user = await User.findOne({ username: otherUsername });
-    const currentuser = await User.findOne({ username: currentUsername });
+    const currentuser = await User.findOne({ _id: currentUserId });
+
+    // early exit
+    if (otherUsername === currentuser.username) {
+      return res.status(403).json({
+        msg: "you can't follow yourself",
+        err: null,
+        success: false,
+      });
+    }
 
     // check if ur already following this user
     if (user.followers.includes(currentuser._id)) {
@@ -80,20 +81,20 @@ exports.followUser = asyncHandler(async (req, res, next) => {
 // @desc Unfollow a user
 // @access Private
 exports.unfollowUser = asyncHandler(async (req, res, next) => {
-  const currentUsername = req.body.username;
+  const currentUserId = req.user.id;
   const otherUsername = req.params.username;
-
-  if (otherUsername === currentUsername) {
-    return res.status(403).json({
-      msg: "you can't unfollow yourself",
-      err: null,
-      success: false,
-    });
-  }
 
   try {
     const user = await User.findOne({ username: otherUsername });
-    const currentuser = await User.findOne({ username: currentUsername });
+    const currentuser = await User.findOne({ _id: currentUserId });
+
+    if (otherUsername === currentuser.username) {
+      return res.status(403).json({
+        msg: "you can't unfollow yourself",
+        err: null,
+        success: false,
+      });
+    }
 
     if (!user.followers.includes(currentuser._id)) {
       return res.status(403).json({
@@ -121,9 +122,7 @@ exports.unfollowUser = asyncHandler(async (req, res, next) => {
 // @access Private
 exports.followers = asyncHandler(async (req, res, next) => {
   try {
-    const username = req.params.username;
-
-    const currentUser = await User.findOne({ username: username });
+    const currentUser = await User.findOne({ _id: req.user.id });
 
     // // get all user data
     const followers = [];
@@ -138,14 +137,12 @@ exports.followers = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @route GET /users/:username/followings
+// @route GET /users/followings
 // @desc Get followings list
 // @access Private
 exports.followings = asyncHandler(async (req, res, next) => {
   try {
-    const username = req.params.username;
-
-    const currentUser = await User.findOne({ username: username });
+    const currentUser = await User.findOne({ _id: req.user.id });
 
     // // get all user data
     const followings = [];
@@ -160,13 +157,12 @@ exports.followings = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @route GET /users/:username/followSuggestions
+// @route GET /users/followSuggestions
 // @desc Get follow Suggestions list
 // @access Private
 exports.followSugestions = asyncHandler(async (req, res, next) => {
   try {
-    const username = req.params.username;
-    const currentUser = await User.findOne({ username: username });
+    const currentUser = await User.findOne({ _id: req.user.id });
 
     // filter users that u already follow
     const allUsers = await User.find({}, projection);
