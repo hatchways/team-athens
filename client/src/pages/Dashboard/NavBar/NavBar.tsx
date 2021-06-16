@@ -9,6 +9,7 @@ import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
 import Popover from '@material-ui/core/Popover';
 import { useState } from 'react';
+import NotificationPopover from '../../../components/Notification/NotificationPopver';
 
 export default function NavBar({ loggedInUser }: any): JSX.Element {
   const classes = useStyles();
@@ -35,11 +36,7 @@ export default function NavBar({ loggedInUser }: any): JSX.Element {
         <Box className={classes.headerButtonGroup}>
           <Button>Shopping List</Button>
           <Button>Friends</Button>
-          <Button>
-            <Badge variant="dot" color="secondary" invisible={false}>
-              Notifications
-            </Badge>
-          </Button>
+          <NotificationPopover />
         </Box>
 
         <Chip
