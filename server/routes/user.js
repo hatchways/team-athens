@@ -10,10 +10,10 @@ router.put('/:username/follow', protect, followUser);
 
 router.put('/:username/unfollow', protect, unfollowUser);
 
-router.get('/:username/followers', protect, followers);
+router.get('/followers', protect, followers);
 
-router.get('/:username/followings', protect, followings);
+router.get('/followings', protect, followings);
 
-router.get('/:username/followSugestions', protect, followSugestions);
+router.get('/followSugestions', protect, followSugestions);
 
 module.exports = router;
