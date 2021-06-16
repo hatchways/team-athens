@@ -127,9 +127,9 @@ exports.followers = asyncHandler(async (req, res, next) => {
 
     // // get all user data
     const followers = [];
-    for (const f of currentUser.followers) {
-      const t = await User.find({ _id: f }, projection);
-      followers.push(t[0]);
+    for (const follower of currentUser.followers) {
+      const user = await User.find({ _id: follower }, projection);
+      followers.push(user[0]);
     }
 
     res.status(200).json(followers);
@@ -174,15 +174,16 @@ exports.followSugestions = asyncHandler(async (req, res, next) => {
     const filteredUsers = [];
 
     for (let user of allUsers) {
+      const userId = user._id;
       //check if self
-      if (user._id.equals(currentUser._id)) {
+      if (userId.equals(currentUser._id)) {
         continue;
       }
 
       let foundFollower = false
       // check if it's in the followers list
       for (let follower of currentUser.followings) {
-        if (user._id.equals(follower)) {
+        if (userId.equals(follower)) {
           foundFollower = true;
         }
       }
