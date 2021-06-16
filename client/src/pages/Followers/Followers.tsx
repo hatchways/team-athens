@@ -49,11 +49,11 @@ export default function Followers(): JSX.Element {
     setFollowingsData(list);
   };
   const getFollowingsData = async () => {
-    return await getFollowings(loggedInUser?.username);
+    return await getFollowings();
   };
   // follow suggetions data
   const getFollowSugestionsData = async () => {
-    return await getSuggestions(loggedInUser?.username);
+    return await getSuggestions();
   };
   const setFollowSugestionsList = (list: any) => {
     setFollowSugestionsData(list);
@@ -64,7 +64,7 @@ export default function Followers(): JSX.Element {
     followUserFunc(username);
   };
   const followUserFunc = async (username: string) => {
-    const res = await followUser(loggedInUser?.username, username);
+    const res = await followUser(username);
     if (res.success) {
       updateSnackBarMessage(`You are now Following ${username}`);
       setDataChanged(true);
@@ -75,7 +75,7 @@ export default function Followers(): JSX.Element {
     unfollowUserFunc(username);
   };
   const unfollowUserFunc = async (username: string) => {
-    const res = await unfollowUser(loggedInUser?.username, username);
+    const res = await unfollowUser(username);
     if (res.success) {
       updateSnackBarMessage(`You have Unfollowed ${username}`);
       setDataChanged(true);
@@ -92,7 +92,6 @@ export default function Followers(): JSX.Element {
         </Box>
       );
     }
-
     return (
       <List disablePadding className="listStyles">
         {data.map((value: any) => {
