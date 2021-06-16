@@ -69,7 +69,7 @@ exports.update = expressAsyncHandler(async (req, res, next) => {
 exports.deleteItem = expressAsyncHandler(async (req, res, next) => {
     await auth(req.user.id);
 
-    await crudServices.updateOneWithDynamic(List, { _id: req.body.list_id }, { $pull: { products: req.body.id } });
+    await crudServices.updateOneWithDynamic(List, { userId: req.user.id, _id: req.body.list_id }, { $pull: { products: req.body.id } });
     await crudServices.remove(Product, { _id: req.body.id })
 
     res.status(200).send({
