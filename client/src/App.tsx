@@ -10,7 +10,6 @@ import { SnackBarProvider } from './context/useSnackbarContext';
 import { ProtectedRoute } from './helpers/ProtectedRoute';
 
 import './App.css';
-import InWebNotification from './components/Notification/InWebNotification';
 
 function App(): JSX.Element {
   return (
@@ -19,7 +18,6 @@ function App(): JSX.Element {
         <SnackBarProvider>
           <AuthProvider>
             <SocketProvider>
-              <InWebNotification />
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
