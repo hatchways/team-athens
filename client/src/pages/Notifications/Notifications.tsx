@@ -20,6 +20,7 @@ import {
 } from '@material-ui/core';
 import NavBar from '../../components/NavBar/NavBar';
 import { getFollowings, followUser, unfollowUser, getSuggestions } from '../../helpers/APICalls/followers';
+import { Fragment } from 'react';
 
 export default function Notifications(): JSX.Element {
   const classes = useStyles();
@@ -71,20 +72,23 @@ export default function Notifications(): JSX.Element {
           return (
             <ListItem key={value._id} role={undefined} dense button onClick={() => console.log('list item pressed')}>
               <ListItemAvatar>
-                <Avatar alt={`Avatar n°1`} src={`/static/images/avatar/1.jpg`} />
+                <Avatar variant="square" alt={`Avatar n°1`} src={`/static/images/avatar/1.jpg`} />
               </ListItemAvatar>
-              <ListItemText id={labelId} primary={`${value.username}`} />
-              <ListItemSecondaryAction>
-                <Button
-                  variant="contained"
-                  color="default"
-                  className={classes.followButton}
-                  disableElevation
-                  onClick={() => console.log('botton click')}
-                >
-                  Read
-                </Button>
-              </ListItemSecondaryAction>
+              <ListItemText
+                id={labelId}
+                primary={<Typography className={classes.notificationTitle}>Item title {value.title}</Typography>}
+                secondary={
+                  <Fragment>
+                    <Typography className={classes.notificationSubtitle}>subtitle {value.message}</Typography>
+                    <Box className={classes.priceSection}>
+                      <Typography className={classes.oldPrice}>$33{value.oldPrice}</Typography>
+                      <Typography color="secondary" className={classes.newPrice}>
+                        $43{value.newPrice}
+                      </Typography>
+                    </Box>
+                  </Fragment>
+                }
+              />
             </ListItem>
           );
         })}
@@ -100,8 +104,15 @@ export default function Notifications(): JSX.Element {
         <Typography align="center" variant="h5" className={classes.pageTitle}>
           Notifications
         </Typography>
+
+        <Typography className={classes.notificationsSectionTitle}>New Prices!</Typography>
         <Paper square className={classes.tabContent} elevation={2}>
-          {drawList([])}
+          {drawList([0, 1, 2])}
+        </Paper>
+
+        <Typography className={classes.notificationsSectionTitle}>Old Notifications</Typography>
+        <Paper square className={classes.tabContent} elevation={2}>
+          {drawList([0, 1, 2])}
         </Paper>
       </Box>
     </Grid>

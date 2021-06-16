@@ -28,6 +28,25 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
     marginBottom: '2rem',
   },
+  notificationTitle: {
+    fontWeight: 700,
+  },
+  notificationSubtitle: {
+    fontWeight: 300,
+  },
+  priceSection: {
+    display: 'flex',
+    fontWeight: 700,
+  },
+  oldPrice: {
+    textDecoration: 'line-through',
+  },
+  newPrice: {},
+  notificationsSectionTitle: {
+    fontWeight: 700,
+    margin: theme.spacing(3, 0, 1, 2),
+  },
+  oldNotificationsTitle: {},
 }));
 
 export default useStyles;
