@@ -32,27 +32,6 @@ export default function NotificationPopover() {
     setUnreadNotifications(notifications || []);
   };
 
-  // demo only
-  const testNotifications = [
-    {
-      _id: 'dfdfdgt354544343',
-      title: 'New Price!',
-      message: 'Nike Air Max 270 AH8050-002',
-      old_price: '$200',
-      new_price: '$175',
-      url: 'https://distance.eu/nike-air-max-270-ah8050-002',
-      image:
-        'https://cdn-distance.pl/media/catalog/product/cache/07f4dbefc5ed4df4ee2ce08604f55f57/b/u/buty-air-max-270-ah8050002-7_1.jpg',
-    } as Notification,
-    {
-      _id: 'dfdfdgtghju6673',
-      title: 'New follower!',
-      message: 'Johnathan Lee started following you',
-      url: "View Johnathan Lee's profile",
-      image: 'https://avatars.dicebear.com/api/male/c.svg',
-    } as Notification,
-  ];
-
   socket?.on('notification', (notification) => {
     setUnreadNotifications([notification, ...unreadNotifications]);
   });
@@ -63,8 +42,7 @@ export default function NotificationPopover() {
         updateSnackBarMessage('An error occurs when getting unread notifications');
       }
       if (data.success) {
-        setUnread(testNotifications); // demo only
-        // setUnread(data.success.notifications);
+        setUnread(data.success.notifications);
       }
     });
   });
