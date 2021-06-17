@@ -14,17 +14,20 @@ const notificationSchema = new mongoose.Schema({
     required: true,
     ref: 'users',
   },
-  product: {
-    type: mongoose.Schema.Types.ObjectId,
+  image: {
+    type: String,
     required: false,
-    ref: 'products',
+  },
+  url: {
+    type: String,
+    required: false,
   },
   old_price: {
-    type: Number,
+    type: String,
     required: false,
   },
   new_price: {
-    type: Number,
+    type: String,
     required: false,
   },
   read: {
