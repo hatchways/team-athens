@@ -1,5 +1,6 @@
 import { FetchOptions } from '../../interface/FetchOptions';
-import { NotificationApiData } from '../../interface/NotificationApData';
+import { NotificationApiData } from '../../interface/NotificationApiData';
+
 
 const getUnreadNotification = async (): Promise<NotificationApiData> => {
   const fetchOptions: FetchOptions = {
@@ -8,6 +9,19 @@ const getUnreadNotification = async (): Promise<NotificationApiData> => {
     credentials: 'include',
   };
   return await fetch(`/notifications/unread`, fetchOptions)
+    .then((res) => res.json())
+    .catch(() => ({
+      error: { message: 'Unable to connect to server. Please try again' },
+    }));
+};
+
+const getAllNotifications = async (): Promise<NotificationApiData> => {
+  const fetchOptions: FetchOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  };
+  return await fetch(`/notifications`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },
@@ -40,4 +54,4 @@ const markAsRead = async (notificationID: string): Promise<NotificationApiData> 
     }));
 };
 
-export { getUnreadNotification, markAllAsRead, markAsRead };
+export { getUnreadNotification, markAllAsRead, markAsRead, getAllNotifications };

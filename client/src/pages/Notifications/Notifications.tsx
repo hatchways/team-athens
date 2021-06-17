@@ -14,48 +14,83 @@ import {
   ListItemText,
   ListItemAvatar,
   Avatar,
-  Button,
   Box,
   Typography,
+  IconButton,
+  Button,
 } from '@material-ui/core';
+
 import NavBar from '../../components/NavBar/NavBar';
-import { getFollowings, followUser, unfollowUser, getSuggestions } from '../../helpers/APICalls/followers';
+import {
+  getUnreadNotification,
+  markAllAsRead,
+  markAsRead,
+  getAllNotifications,
+} from '../../helpers/APICalls/notification';
 import { Fragment } from 'react';
+import { Notification } from '../../interface/Notification';
+import { NotificationApiData } from '../../interface/NotificationApiData';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { ContactSupportOutlined } from '@material-ui/icons';
 
 export default function Notifications(): JSX.Element {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
   const { updateSnackBarMessage } = useSnackBar();
 
-  const [notificationsData, setNotificationsData] = useState([]);
-  //fetch data
+  const [allNotifications, setAllNotifications] = useState<Notification[]>([]);
+  const [readNotifications, setReadNotifications] = useState<Notification[]>([]);
+  const [dataChanged, setDataChanged] = useState(false);
+
+  // demo only
+  const testNotifications = [
+    {
+      _id: 'dfdfdgt354544343',
+      title: 'New Price!',
+      message: 'Nike Air Max 270 AH8050-002',
+      old_price: '$200',
+      new_price: '$175',
+      url: 'https://distance.eu/nike-air-max-270-ah8050-002',
+      image:
+        'https://cdn-distance.pl/media/catalog/product/cache/07f4dbefc5ed4df4ee2ce08604f55f57/b/u/buty-air-max-270-ah8050002-7_1.jpg',
+    } as Notification,
+    {
+      _id: 'dfdfdgtghju6673',
+      title: 'New follower!',
+      message: 'Johnathan Lee started following you',
+      url: '',
+      image: 'https://avatars.dicebear.com/api/male/c.svg',
+    } as Notification,
+  ];
+
   useEffect(() => {
-    getFollowingsData().then((data: any) => {
-      setFollowingsList(data);
+    getAllNotifications().then((data: NotificationApiData) => {
+      if (data.error) {
+        updateSnackBarMessage('An error occurs when getting all notifications');
+      }
+      if (data.success) {
+        setAllNotifications(testNotifications); // demo only
+        // setUnreadNotifications(data.success.notifications);
+      }
+      setDataChanged(false);
     });
-  }, []);
+  }, [dataChanged]);
 
-  // followings data
-  const setFollowingsList = (list: any) => {
-    // setFollowingsData(list);
-  };
-  const getFollowingsData = async () => {
-    return await getFollowings();
-  };
+  const handleMarkAsRead = (notificationId: string) => {
+    markAsRead(notificationId).then((data) => {
+      if (data.error) {
+        console.error(data.error);
+        updateSnackBarMessage('An error occurs when getting unread notifications');
+      }
+      if (data.success) {
+        setDataChanged(true);
+      }
+    });
 
-  //follow button
-  const handelFollowBtn = (username: string) => {
-    followUserFunc(username);
-  };
-  const followUserFunc = async (username: string) => {
-    const res = await followUser(username);
-    if (res.success) {
-      updateSnackBarMessage(`You are now Following ${username}`);
-      // setDataChanged(true);
-    }
+    return undefined;
   };
 
-  const drawList = (data: any) => {
+  const drawList = (data: Notification[]) => {
     if (data.length === 0) {
       return (
         <Box p={2}>
@@ -66,29 +101,40 @@ export default function Notifications(): JSX.Element {
 
     return (
       <List disablePadding className="listStyles">
-        {data.map((value: any) => {
-          const labelId = `checkbox-list-label-${value}`;
+        {data.map((notification: Notification) => {
+          const labelId = `checkbox-list-label-${notification}`;
 
           return (
-            <ListItem key={value._id} role={undefined} dense button onClick={() => console.log('list item pressed')}>
+            <ListItem
+              key={notification._id}
+              role={undefined}
+              dense
+              button
+              onClick={() => (notification.url ? window.open(notification.url) : console.log('clicked, no url'))}
+            >
               <ListItemAvatar>
-                <Avatar variant="square" alt={`Avatar n°1`} src={`/static/images/avatar/1.jpg`} />
+                <Avatar variant="square" alt={`Avatar n°1`} src={notification.image} />
               </ListItemAvatar>
               <ListItemText
                 id={labelId}
-                primary={<Typography className={classes.notificationTitle}>Item title {value.title}</Typography>}
+                primary={<Typography className={classes.notificationTitle}>{notification.title}</Typography>}
                 secondary={
                   <Fragment>
-                    <Typography className={classes.notificationSubtitle}>subtitle {value.message}</Typography>
+                    <Typography className={classes.notificationSubtitle}>{notification.message}</Typography>
                     <Box className={classes.priceSection}>
-                      <Typography className={classes.oldPrice}>$33{value.oldPrice}</Typography>
+                      <Typography className={classes.oldPrice}>{notification.old_price}</Typography>
                       <Typography color="secondary" className={classes.newPrice}>
-                        $43{value.newPrice}
+                        {notification.new_price}
                       </Typography>
                     </Box>
                   </Fragment>
                 }
               />
+              <ListItemSecondaryAction>
+                <Button aria-label="delete" onClick={() => console.log('click')}>
+                  <DeleteIcon />
+                </Button>
+              </ListItemSecondaryAction>
             </ListItem>
           );
         })}
@@ -105,14 +151,9 @@ export default function Notifications(): JSX.Element {
           Notifications
         </Typography>
 
-        <Typography className={classes.notificationsSectionTitle}>New Prices!</Typography>
+        {/* <Typography className={classes.notificationsSectionTitle}>Unread Notifications</Typography> */}
         <Paper square className={classes.tabContent} elevation={2}>
-          {drawList([0, 1, 2])}
-        </Paper>
-
-        <Typography className={classes.notificationsSectionTitle}>Old Notifications</Typography>
-        <Paper square className={classes.tabContent} elevation={2}>
-          {drawList([0, 1, 2])}
+          {drawList(allNotifications)}
         </Paper>
       </Box>
     </Grid>
