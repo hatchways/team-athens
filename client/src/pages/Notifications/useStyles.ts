@@ -47,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 1, 2),
   },
   oldNotificationsTitle: {},
+  markAllButton: {
+    textAlign: 'right',
+  },
 }));
 
 export default useStyles;
