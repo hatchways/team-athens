@@ -10,6 +10,7 @@ import { getUnreadNotification, markAllAsRead, markAsRead } from '../../helpers/
 import NotificationTemplate from './NotificationTemplate/NotificationTemplate';
 import { useSocket } from '../../context/useSocketContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
+import { Icon } from '@material-ui/core';
 
 export default function NotificationPopover() {
   const classes = useStyles();
@@ -88,27 +89,29 @@ export default function NotificationPopover() {
           Notifications
         </Badge>
       </Button>
-      {unreadNotifications.length > 0 && (
-        <Popover
-          id={id}
-          open={open}
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-          }}
-          PaperProps={{ className: classes.popover }}
-        >
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        PaperProps={{ className: classes.popover }}
+      >
+        {unreadNotifications.length > 0 && (
           <Grid className={classes.markAllAsReadButton}>
             <Button onClick={markAllAsReadClickHandler}>Mark all as read</Button>
           </Grid>
+        )}
 
-          {unreadNotifications.map(function (notification) {
+        {unreadNotifications.length > 0 &&
+          unreadNotifications.map(function (notification) {
             return (
               <NotificationTemplate
                 notification={notification}
@@ -117,8 +120,16 @@ export default function NotificationPopover() {
               />
             );
           })}
-        </Popover>
-      )}
+
+        {unreadNotifications.length <= 0 && (
+          <div className={classes.noNotification}>
+            <div>
+              <Icon fontSize={'large'}>notifications_off</Icon>
+            </div>
+            No notification
+          </div>
+        )}
+      </Popover>
     </div>
   );
 }

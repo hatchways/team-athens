@@ -44,10 +44,12 @@ const NotificationTemplate = ({ notification, markAsReadHandler }: Props): JSX.E
               {notification?.url}
             </a>
           </div>
-          <div>
-            <strong className={classes.oldPrice}>{notification.old_price}</strong>{' '}
-            <strong className={classes.newPrice}>{notification.new_price}</strong>
-          </div>
+          {notification.old_price && notification.new_price && (
+            <div>
+              <strong className={classes.oldPrice}>{notification.old_price}</strong>{' '}
+              <strong className={classes.newPrice}>{notification.new_price}</strong>
+            </div>
+          )}
         </Grid>
         <Grid className={classes.closeIconContainer}>
           <Icon onClick={() => markAsReadHandler(notification._id)}>close</Icon>

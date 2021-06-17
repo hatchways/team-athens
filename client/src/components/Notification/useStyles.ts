@@ -15,6 +15,11 @@ const useStyles = makeStyles((theme) => ({
   markAllAsReadButton: {
     textAlign: 'right',
   },
+  noNotification: {
+    textAlign: 'center',
+    fontSize: '2em',
+    padding: '10px',
+  },
 }));
 
 export default useStyles;
