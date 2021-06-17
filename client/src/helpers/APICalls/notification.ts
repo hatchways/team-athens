@@ -1,5 +1,5 @@
 import { FetchOptions } from '../../interface/FetchOptions';
-import { NotificationApiData } from '../../interface/NotificationApData';
+import { NotificationApiData } from '../../interface/NotificationApiData';
 
 const getUnreadNotification = async (): Promise<NotificationApiData> => {
   const fetchOptions: FetchOptions = {
