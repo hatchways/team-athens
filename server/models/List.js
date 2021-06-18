@@ -11,7 +11,6 @@ const listSchema = new mongoose.Schema({
   }],
   userIds: [{
     type: mongoose.Schema.ObjectId,
-    required: true,
     ref: 'users'
   }],
   imageUrl: {
