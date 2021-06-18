@@ -97,26 +97,13 @@ exports.markAsread = expressAsyncHandler(async (req, res, next) => {
 
   notification.read = true;
   notification.read_date = new Date().toString();
-  await Notification.updateOne(
-    {
-      _id: notificationId,
+  await notification.save();
+
+  res.status(200).json({
+    success: {
+      message: "Notification updated",
     },
-    (error, reply) => {
-      if (error) {
-        res.status(500).json({
-          error: {
-            message: error,
-          },
-        });
-      } else {
-        res.status(201).json({
-          success: {
-            message: "Notification updated",
-          },
-        });
-      }
-    }
-  );
+  });
 });
 
 // i'm not sure this is useful as notifications are going to be created on some internal events
