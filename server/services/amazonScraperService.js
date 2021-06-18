@@ -8,21 +8,26 @@ exports.getProductDetail = async (productUrl) => {
       await page.goto(productUrl, { waitUntil: "domcontentloaded" });
 
       const productData = await page.evaluate(() => {
-        const featuresUlElem = document
-          .querySelector("div#feature-bullets")
-          .querySelector("ul");
-        const featuresLiElem = Array.from(
-          featuresUlElem.querySelectorAll("li")
-        );
-
-        const features = featuresLiElem.map((liElem) => {
-          return liElem.innerText;
-        });
-
         let price = "unavailable";
 
         try {
-          price = document.querySelector("span#priceblock_ourprice").innerText;
+          try {
+            // this become the regular price when product in sale
+            price = document.querySelector(
+              "span.priceBlockStrikePriceString.a-text-strike"
+            ).innerText;
+          } catch (error) {
+            price = document.querySelector(
+              "span#priceblock_ourprice"
+            ).innerText;
+          }
+
+          // check if price is not like $xx.xx - $xx.xx format
+          const regex = /(.\d+\.\d+)\s-\s(.\d+\.\d+)/gm;
+          if (price.match(regex)) {
+            let match = regex.exec(price);
+            price = match[2];
+          }
         } catch (error) {
           console.log("Price not availble for this product");
           throw new Error(error);
@@ -31,7 +36,6 @@ exports.getProductDetail = async (productUrl) => {
         return {
           productImage: document.querySelector("img#landingImage").src,
           productTitle: document.querySelector("span#productTitle").innerText,
-          productFeatures: features,
           productPrice: price,
         };
       });
