@@ -1,21 +1,31 @@
 const express = require('express');
 const router = express.Router();
 const protect = require('../middleware/auth');
-const { get, getAll, create, deleteItem, update } = require('../controllers/list')
+const { getById, getAllLists, createList, deleteList, updateList } = require('../controllers/list')
 
-//create
-router.route('/').post(protect, (req, res) => create(req, res));
+// @route POST /lists
+// @desc Create a new list
+// @access Private
+router.route('/').post(protect, createList);
 
-//update
-router.route('/').put(protect, (req, res) => update(req, res));
+// @route PUT /lists
+// @desc Update a list
+// @access Private
+router.route('/').put(protect, updateList);
 
-//delete
-router.route('/').delete(protect, (req, res) => deleteItem(req, res));
+// @route DELETE /lists/:listId
+// @desc Delete a list using it's id
+// @access Private
+router.route('/:listId').delete(protect, deleteList);
 
-//get all
-router.route('/').get(protect, (req, res) => getAll(req, res));
+// @route GET /lists
+// @desc Get all lists for current user
+// @access Private
+router.route('/').get(protect, getAllLists);
 
-//get by id
-router.route('/:listId').get(protect, (req, res) => get(req, res));
+// @route GET /lists/:listId
+// @desc Get a list using it's
+// @access Private
+router.route('/:listId').get(protect, getById);
 
 module.exports = router;
