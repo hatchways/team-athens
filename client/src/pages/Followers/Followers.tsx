@@ -29,20 +29,22 @@ export default function Followers(): JSX.Element {
   const [tabValue, setTabValue] = useState(0);
   const [followingsData, setFollowingsData] = useState([]);
   const [followSugestionsData, setFollowSugestionsData] = useState([]);
-  const [dataChanged, setDataChanged] = useState(false);
   const handleTabChange = (event: any, newValue: number) => {
     setTabValue(newValue);
   };
   //fetch data
   useEffect(() => {
+    updateData();
+  }, []);
+
+  const updateData = () => {
     getFollowingsData().then((data: any) => {
       setFollowingsList(data);
     });
     getFollowSugestionsData().then((data: any) => {
       setFollowSugestionsList(data);
     });
-    setDataChanged(false); //reset flag
-  }, [dataChanged]);
+  };
 
   // followings data
   const setFollowingsList = (list: any) => {
@@ -67,7 +69,7 @@ export default function Followers(): JSX.Element {
     const res = await followUser(username);
     if (res.success) {
       updateSnackBarMessage(`You are now Following ${username}`);
-      setDataChanged(true);
+      updateData();
     }
   };
   //unfollow button
@@ -78,7 +80,7 @@ export default function Followers(): JSX.Element {
     const res = await unfollowUser(username);
     if (res.success) {
       updateSnackBarMessage(`You have Unfollowed ${username}`);
-      setDataChanged(true);
+      updateData();
     }
   };
 
