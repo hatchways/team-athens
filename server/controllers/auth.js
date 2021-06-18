@@ -32,6 +32,20 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     const token = generateToken(user._id);
     const secondsInWeek = 604800;
 
+    // create default lists
+    const shoppingList = await List.create({
+      name: 'Shopping',
+      creator: user._id,
+      products: [],
+      userIds: []
+    });
+    const wishlist = await List.create({
+      name: 'Wishlist',
+      creator: user._id,
+      products: [],
+      userIds: []
+    });
+
     res.cookie("token", token, {
       httpOnly: true,
       maxAge: secondsInWeek * 1000
