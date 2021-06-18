@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '60px',
     textAlign: 'center',
     borderRadius: '6px',
-    boxShadow: '0px 0px 20px #f5f0f0',
   },
   submit: {
     margin: theme.spacing(3, 2, 2),
@@ -30,13 +29,19 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  inputsUnderline: {
-    '&&&:before': {
-      borderBottom: 'none',
-    },
-    '&&:after': {
-      borderBottom: 'none',
-    },
+  welcome: {
+    fontSize: 26,
+    paddingBottom: 20,
+    color: '#000000',
+    fontWeight: 700,
+    fontFamily: "'Open Sans'",
+    textAlign: 'center',
+  },
+  closeSignUpButton: {
+    textAlign: 'right',
+  },
+  modalBoxContainer: {
+    margin: theme.spacing(10, 'auto'),
   },
 }));
 
