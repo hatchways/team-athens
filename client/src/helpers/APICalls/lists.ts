@@ -1,9 +1,8 @@
-import { AuthApiData } from '../../interface/AuthApiData';
 import { FetchOptions } from '../../interface/FetchOptions';
-
+import { List } from '../../interface/List';
 interface ListData {
   success?: boolean;
-  lists: [];
+  lists: List[];
 }
 
 const getAllLists = async (): Promise<ListData> => {
