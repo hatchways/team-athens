@@ -1,7 +1,12 @@
 import { AuthApiData } from '../../interface/AuthApiData';
 import { FetchOptions } from '../../interface/FetchOptions';
 
-const getAllLists = async (): Promise<AuthApiData> => {
+interface ListData {
+  success?: boolean;
+  lists: [];
+}
+
+const getAllLists = async (): Promise<ListData> => {
   const fetchOptions: FetchOptions = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },

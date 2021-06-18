@@ -27,6 +27,10 @@ import AddLinkForm from './AddLinkForm/AddLinkForm';
 import ShoppingListCard from './ShoppingListCard/ShoppingListCard';
 import AddListComponent from '../../components/AddListComponent/AddListComponent';
 
+import { getAllLists } from '../../helpers/APICalls/lists';
+
+import { List } from '../../interface/List';
+
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
 
@@ -36,7 +40,8 @@ export default function Dashboard(): JSX.Element {
   const history = useHistory();
 
   const [showAddProductModal, setShowAddProductModal] = useState(false);
-  const [addListModalOpen, setAddListModalOpen] = React.useState(false);
+  const [addListModalOpen, setAddListModalOpen] = useState(false);
+  const [lists, setLists] = useState<List[]>([]);
 
   const openAddProductModal = () => {
     setShowAddProductModal(true);
@@ -44,7 +49,14 @@ export default function Dashboard(): JSX.Element {
 
   useEffect(() => {
     initSocket();
+    getListsData();
   }, [initSocket]);
+
+  const getListsData = async () => {
+    getAllLists().then((data) => {
+      setLists(data.lists);
+    });
+  };
 
   const handleModalClose = () => {
     setAddListModalOpen(false);
@@ -82,8 +94,18 @@ export default function Dashboard(): JSX.Element {
             spacing={2}
           >
             <ShoppingListCard title="Clothes" itemCount={34} image={ClothesImage} />
-            <ShoppingListCard title="Furniture" itemCount={12} image={FurnitureImage} />
-            <ShoppingListCard title="Luxury" itemCount={8} image={LuxuryImage} />
+
+            {lists.map((list: List) => {
+              return (
+                <ShoppingListCard
+                  key={list._id}
+                  title={list.name}
+                  itemCount={list.products.length}
+                  image={LuxuryImage}
+                />
+              );
+            })}
+
             <Grid item>
               <Card className={classes.shoppingListCard}>
                 <CardActionArea className={classes.shoppingListButton} onClick={() => handleModalOpen()}>
