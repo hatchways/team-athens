@@ -25,7 +25,7 @@ import LuxuryImage from '../../Images/luxury.png';
 import NavBar from './NavBar/NavBar';
 import AddLinkForm from './AddLinkForm/AddLinkForm';
 import ShoppingListCard from './ShoppingListCard/ShoppingListCard';
-import AddListComponent from '../../components/List/AddListComponent/AddListComponent';
+import AddListComponent from '../../components/AddListComponent/AddListComponent';
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
