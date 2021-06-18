@@ -12,7 +12,7 @@ import { useSocket } from '../../context/useSocketContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import { Icon } from '@material-ui/core';
 
-export default function NotificationPopover() {
+export default function NotificationPopover(): JSX.Element {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);

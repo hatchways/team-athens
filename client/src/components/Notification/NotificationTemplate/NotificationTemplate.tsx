@@ -1,5 +1,5 @@
 import { Icon } from '@material-ui/core';
-import { CircularProgress, Grid, Paper } from '@material-ui/core';
+import { CircularProgress, Grid } from '@material-ui/core';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { Notification } from '../../../interface/Notification';
