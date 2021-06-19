@@ -16,15 +16,15 @@ const List = require("../models/List");
 const processing = async (job) => {
   const {
     product,
-    user_id
+    userId
   } = job.data;
 
   if (!product) {
     throw new Error("Product<Product> couldn't be null");
   }
 
-  if (!user_id) {
-    throw new Error("User_id<string> couldn't be null");
+  if (!userId) {
+    throw new Error("UserId<string> couldn't be null");
   }
 
   let scrapedProduct = null;
@@ -57,10 +57,11 @@ const processing = async (job) => {
       Notification.create({
         title: 'New Price',
         message: `Product ${product.name} is on special offer!`,
-        receiver: user_id,
-        product: product._id,
-        old_price: product.price,
-        new_price: scrapedProduct.productPrice,
+        receiver: userId,
+        oldPrice: product.price,
+        newPrice: scrapedProduct.productPrice,
+        url: product.url,
+        image: product.pictureUrl
       }, (error, reply) => {
         if (error) {
           throw new Error(error);
@@ -87,11 +88,11 @@ const processing = async (job) => {
 /**
  * queues a scraping job
  * @param product the product added to a list / for which we are creating a job
- * @param user_id user_id must be the _id of the list the product belogns to 
+ * @param userId userId must be the _id of the list the product belogns to 
  */
 const createScrapingJob = ({
   product,
-  user_id
+  userId
 }) => {
 
   const queueOptions = {
@@ -108,7 +109,7 @@ const createScrapingJob = ({
   const job = new Queue(product._id, queueOptions);
   job.add(processing({
     product,
-    user_id
+    userId
   }), {
     repeat: {
       cron: cron,
@@ -132,7 +133,7 @@ const initScrapingJobs = async () => {
         if (product) {
           createScrapingJob({
             product: product,
-            user_id: list.userId
+            userId: list.creator
           });
         } else {
           console.error(`can't found product with _id=${productId}`);
