@@ -5,11 +5,10 @@ export interface Notification {
   title: string;
   message: string;
   receiver: User;
-  old_price?: string;
-  new_price?: string;
+  oldPrice?: string;
+  newPrice?: string;
   image?: string;
   url?: string;
   read: boolean;
-  read_date?: Date;
-  create_date: Date;
+  createDate: Date;
 }

@@ -44,10 +44,10 @@ const NotificationTemplate = ({ notification, markAsReadHandler }: Props): JSX.E
               {notification?.url}
             </a>
           </div>
-          {notification.old_price && notification.new_price && (
+          {notification.oldPrice && notification.newPrice && (
             <div>
-              <strong className={classes.oldPrice}>{notification.old_price}</strong>{' '}
-              <strong className={classes.newPrice}>{notification.new_price}</strong>
+              <strong className={classes.oldPrice}>{notification.oldPrice}</strong>{' '}
+              <strong className={classes.newPrice}>{notification.newPrice}</strong>
             </div>
           )}
         </Grid>
