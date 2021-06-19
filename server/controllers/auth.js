@@ -38,13 +38,15 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
       name: 'Shopping',
       creator: user._id,
       products: [],
-      userIds: []
+      userIds: [],
+      imageUrl: 'https://res.cloudinary.com/coop-image-cloud/image/upload/v1624121069/shopping-cart_lcdic8.jpg'
     });
     await List.create({
       name: 'Wishlist',
       creator: user._id,
       products: [],
-      userIds: []
+      userIds: [],
+      imageUrl: 'https://res.cloudinary.com/coop-image-cloud/image/upload/v1624121075/wishllist_rwtcat.jpg'
     });
 
     res.cookie("token", token, {
