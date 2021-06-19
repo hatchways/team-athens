@@ -14,17 +14,20 @@ const notificationSchema = new mongoose.Schema({
     required: true,
     ref: 'users',
   },
-  product: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: false,
-    ref: 'products',
-  },
-  old_price: {
-    type: Number,
+  image: {
+    type: String,
     required: false,
   },
-  new_price: {
-    type: Number,
+  url: {
+    type: String,
+    required: false,
+  },
+  oldPrice: {
+    type: String,
+    required: false,
+  },
+  newPrice: {
+    type: String,
     required: false,
   },
   read: {
@@ -32,12 +35,7 @@ const notificationSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
-  read_date: {
-    type: Date,
-    required: false,
-    default: null,
-  },
-  create_date: {
+  createDate: {
     type: Date,
     required: true,
     default: Date.now,
