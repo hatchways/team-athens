@@ -21,7 +21,7 @@ import ClothesImage from '../../Images/clothes.png';
 import FurnitureImage from '../../Images/furniture.png';
 import LuxuryImage from '../../Images/luxury.png';
 
-import NavBar from './NavBar/NavBar';
+import NavBar from '../../components/NavBar/NavBar';
 import AddLinkForm from './AddLinkForm/AddLinkForm';
 import ShoppingListCard from './ShoppingListCard/ShoppingListCard';
 
@@ -53,7 +53,7 @@ export default function Dashboard(): JSX.Element {
   return (
     <Grid container component="main" className={`${classes.root} ${classes.dashboard}`}>
       <CssBaseline />
-      <NavBar loggedInUser={loggedInUser} />
+      <NavBar />
 
       <Grid className={classes.pageContent} md={11} lg={10} xl={9}>
         <AddLinkForm />

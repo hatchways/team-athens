@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import LogoImage from './../../../Images/logo.png';
+import LogoImage from './../../Images/logo.png';
 
 const backgroundColor = 'white';
 const textColor = 'black';
