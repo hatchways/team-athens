@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
+const List = require("../models/List");
 
 // @route POST /auth/register
 // @desc Register user
@@ -33,13 +34,13 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     const secondsInWeek = 604800;
 
     // create default lists
-    const shoppingList = await List.create({
+    await List.create({
       name: 'Shopping',
       creator: user._id,
       products: [],
       userIds: []
     });
-    const wishlist = await List.create({
+    await List.create({
       name: 'Wishlist',
       creator: user._id,
       products: [],
