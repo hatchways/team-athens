@@ -48,7 +48,6 @@ exports.markAllAsRead = expressAsyncHandler(async (req, res, next) => {
   }
 
   notification.read = true;
-  notification.read_date = new Date().toString();
   const response = await Notification.updateMany(
     {
       receiver: user._id,
@@ -96,7 +95,6 @@ exports.markAsread = expressAsyncHandler(async (req, res, next) => {
   }
 
   notification.read = true;
-  notification.read_date = new Date().toString();
   await notification.save();
 
   res.status(200).json({

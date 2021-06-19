@@ -22,11 +22,11 @@ const notificationSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  old_price: {
+  oldPrice: {
     type: String,
     required: false,
   },
-  new_price: {
+  newPrice: {
     type: String,
     required: false,
   },
@@ -35,12 +35,7 @@ const notificationSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
-  read_date: {
-    type: Date,
-    required: false,
-    default: null,
-  },
-  create_date: {
+  createDate: {
     type: Date,
     required: true,
     default: Date.now,
