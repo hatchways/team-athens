@@ -25,7 +25,7 @@ const initSocketServer = (server, req) => {
 
       console.log(`${socket.id} disconnected for ${reason}`);
       const index = connectedUsers.online.findIndex((userOnline)=>{
-        return userOnline.socket_id === socket.id;
+        return userOnline.socketId === socket.id;
       });
 
       if(index !== -1) {
@@ -46,7 +46,7 @@ const initSocketServer = (server, req) => {
         id: user._id,
         username: user.username,
         email: user.email,
-        socket_id: socket.id
+        socketId: socket.id
       };
 
       const index = connectedUsers.online.findIndex((userOnline)=>{
@@ -54,7 +54,7 @@ const initSocketServer = (server, req) => {
       });
 
       if(index === -1) {
-        user.socket_id = socket.id;
+        user.socketId = socket.id;
         connectedUsers.online.push(userData);
       }
 
