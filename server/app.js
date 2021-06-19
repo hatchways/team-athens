@@ -2,8 +2,8 @@ const colors = require("colors");
 const path = require("path");
 const http = require("http");
 const express = require("express");
-const socketio = require("socket.io");
 const { notFound, errorHandler } = require("./middleware/error");
+const protect = require("./middleware/auth");
 const connectDB = require("./db");
 const { join } = require("path");
 const cookieParser = require("cookie-parser");
@@ -13,22 +13,13 @@ const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const notificationRouter = require('./routes/notifications');
 const imagesRouter = require("./routes/imageUpload");
+const { initSocketServer } = require("./utils/socketServer");
 
 const { json, urlencoded } = express;
 
 connectDB();
 const app = express();
 const server = http.createServer(app);
-
-const io = socketio(server, {
-  cors: {
-    origin: "*"
-  }
-});
-
-io.on("connection", socket => {
-  console.log("connected");
-});
 
 if (process.env.NODE_ENV === "development") {
   app.use(logger("dev"));
@@ -38,8 +29,8 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
 
-app.use((req, res, next) => {
-  req.io = io;
+app.use(protect, (req, res, next) => {
+  initSocketServer(server, req);
   next();
 });
 
