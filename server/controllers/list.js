@@ -14,20 +14,11 @@ exports.getAllLists = expressAsyncHandler(async (req, res, next) => {
         throw new Error("Not authorized");
     }
 
-    try {
-        const lists = await List.find({ creator: user._id }, projection);
-        res.status(200).json({
-            success: true,
-            lists: lists
-        });
-    } catch (err) {
-        res.status(400).json({
-            success: false,
-            msg: 'server error',
-        });
-    }
-
-
+    const lists = await List.find({ creator: user._id }, projection);
+    res.status(200).json({
+        success: true,
+        lists: lists
+    });
 });
 
 exports.getById = expressAsyncHandler(async (req, res, next) => {
@@ -39,29 +30,19 @@ exports.getById = expressAsyncHandler(async (req, res, next) => {
         throw new Error("Not authorized");
     }
 
-    try {
-        //find list that belongs to this user
-        const list = await List.findOne({ _id: listId, creator: user._id }, projection);
-        if (!list) {
-            return res.status(200).json({
-                success: false,
-                msg: 'cannot find list'
-            });
-        }
-
-        res.status(200).json({
-            success: true,
-            list: list
-        });
-
-
-    } catch (err) {
-        res.status(400).json({
+    //find list that belongs to this user
+    const list = await List.findOne({ _id: listId, creator: user._id }, projection);
+    if (!list) {
+        return res.status(200).json({
             success: false,
-            msg: 'server error',
-            error: err
+            msg: 'cannot find list'
         });
     }
+
+    res.status(200).json({
+        success: true,
+        list: list
+    });
 });
 
 exports.createList = expressAsyncHandler(async (req, res, next) => {
@@ -73,31 +54,22 @@ exports.createList = expressAsyncHandler(async (req, res, next) => {
         throw new Error("Not authorized");
     }
 
-    try {
-        // check if the list already exists
-        const list = await List.findOne({ creator: user._id, name: listName });
-        if (list) {
-            return res.status(200).json({
-                success: false,
-                msg: 'List already exists'
-            });
-        }
-
-        // create list
-        await List.create({ name: req.body.listName, creator: user._id });
-
-        res.status(200).json({
-            success: true,
-            msg: 'List created',
-        });
-
-    } catch (err) {
-        res.status(400).json({
+    // check if the list already exists
+    const list = await List.findOne({ creator: user._id, name: listName });
+    if (list) {
+        return res.status(200).json({
             success: false,
-            msg: 'server error',
-            err: err
+            msg: 'List already exists'
         });
     }
+
+    // create list
+    await List.create({ name: req.body.listName, creator: user._id });
+
+    res.status(200).json({
+        success: true,
+        msg: 'List created',
+    });
 });
 
 exports.updateList = expressAsyncHandler(async (req, res, next) => {
@@ -109,19 +81,12 @@ exports.updateList = expressAsyncHandler(async (req, res, next) => {
         throw new Error("Not authorized");
     }
 
-    try {
-        await List.findOneAndUpdate({ _id: listData._id }, listData);
+    await List.findOneAndUpdate({ _id: listData._id }, listData);
 
-        res.status(200).json({
-            success: true,
-            msg: 'list updated'
-        });
-    } catch (err) {
-        res.status(400).json({
-            success: false,
-            msg: 'server error',
-        });
-    }
+    res.status(200).json({
+        success: true,
+        msg: 'list updated'
+    });
 });
 
 exports.deleteList = expressAsyncHandler(async (req, res, next) => {
@@ -133,28 +98,21 @@ exports.deleteList = expressAsyncHandler(async (req, res, next) => {
         throw new Error("Not authorized");
     }
 
-    try {
-        const list = await List.findOne({ _id: listId, creator: user._id });
-        if (!list) {
-            return res.status(400).json({
-                success: false,
-                msg: 'list not found or not owned by current user'
-            });
-        }
-
-        //delete
-        await List.deleteOne({ _id: listId });
-
-        res.status(200).json({
-            success: {
-                success: true,
-                msg: 'list removed'
-            }
-        });
-    } catch (err) {
-        res.status(400).json({
+    const list = await List.findOne({ _id: listId, creator: user._id });
+    if (!list) {
+        return res.status(400).json({
             success: false,
-            msg: 'server error',
+            msg: 'list not found or not owned by current user'
         });
     }
+
+    //delete
+    await List.deleteOne({ _id: listId });
+
+    res.status(200).json({
+        success: {
+            success: true,
+            msg: 'list removed'
+        }
+    });
 });

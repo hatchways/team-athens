@@ -14,22 +14,15 @@ exports.getAllProducts = expressAsyncHandler(async (req, res, next) => {
         throw new Error("Not authorized");
     }
 
-    try {
-        const list = await List.findOne({ _id: listId });
-        const products = await Product.find({ _id: list.products });
+    const list = await List.findOne({ _id: listId });
+    const products = await Product.find({ _id: list.products });
 
-        res.status(200).json({
-            success: {
-                message: "found",
-                products: products
-            }
-        });
-
-    } catch (err) {
-        res.status(400).json({
-            error: err
-        });
-    }
+    res.status(200).json({
+        success: {
+            message: "found",
+            products: products
+        }
+    });
 });
 
 // @route GET /products/:listId/:productId
@@ -45,32 +38,25 @@ exports.getProductById = expressAsyncHandler(async (req, res, next) => {
         throw new Error("Not authorized");
     }
 
-    try {
-        const list = await List.findOne({ _id: listId });
-        const products = list.products
+    const list = await List.findOne({ _id: listId });
+    const products = list.products
 
-        const id = products.find(product => product.equals(productId));
+    const id = products.find(product => product.equals(productId));
 
-        if (!id) {
-            return res.status(400).json({
-                msg: 'productnot found'
-            });
-        }
-
-        const product = await Product.findById({ _id: id });
-
-        res.status(200).json({
-            success: {
-                message: "product found",
-                product: product
-            }
-        });
-
-    } catch (err) {
-        res.status(400).json({
-            error: err
+    if (!id) {
+        return res.status(400).json({
+            msg: 'productnot found'
         });
     }
+
+    const product = await Product.findById({ _id: id });
+
+    res.status(200).json({
+        success: {
+            message: "product found",
+            product: product
+        }
+    });
 });
 
 // @route POST /products/:listId
@@ -86,23 +72,15 @@ exports.createProduct = expressAsyncHandler(async (req, res, next) => {
         throw new Error("Not authorized");
     }
 
-    try {
-        const product = await Product.create(productDetails);
+    const product = await Product.create(productDetails);
 
-        await List.findOneAndUpdate({ _id: listId }, { $push: { products: product } });
+    await List.findOneAndUpdate({ _id: listId }, { $push: { products: product } });
 
-
-        res.status(200).json({
-            success: {
-                message: "product created"
-            }
-        });
-
-    } catch (err) {
-        res.status(400).json({
-            error: err
-        });
-    }
+    res.status(200).json({
+        success: {
+            message: "product created"
+        }
+    });
 });
 
 // @route DELETE /products/:listId/:productId
@@ -118,32 +96,25 @@ exports.deleteProductFromList = expressAsyncHandler(async (req, res, next) => {
         throw new Error("Not authorized");
     }
 
-    try {
-        // remove product from list
-        const list = await List.findOne({ _id: listId });
-        const a = list.products.pull({ _id: productId });
-        list.save();
+    // remove product from list
+    const list = await List.findOne({ _id: listId });
+    const a = list.products.pull({ _id: productId });
+    list.save();
 
-        // delete product
-        const deleteInfo = await Product.deleteOne({ _id: productId });
+    // delete product
+    const deleteInfo = await Product.deleteOne({ _id: productId });
 
-        let message = '';
-        if (deleteInfo.deletedCount > 0) {
-            message = 'product deleted'
-        } else {
-            message = 'product not found'
-        }
-        res.status(200).json({
-            success: {
-                message: message
-            }
-        });
-
-    } catch (err) {
-        res.status(400).json({
-            error: err
-        });
+    let message = '';
+    if (deleteInfo.deletedCount > 0) {
+        message = 'product deleted'
+    } else {
+        message = 'product not found'
     }
+    res.status(200).json({
+        success: {
+            message: message
+        }
+    });
 });
 
 // @route DELETE /products/:listId
@@ -159,18 +130,11 @@ exports.updateProduct = expressAsyncHandler(async (req, res, next) => {
         throw new Error("Not authorized");
     }
 
-    try {
-        await Product.updateOne({ _id: newProductData._id }, newProductData);
+    await Product.updateOne({ _id: newProductData._id }, newProductData);
 
-        res.status(200).json({
-            success: {
-                message: "product updated"
-            }
-        });
-
-    } catch (err) {
-        res.status(400).json({
-            error: err
-        });
-    }
+    res.status(200).json({
+        success: {
+            message: "product updated"
+        }
+    });
 });
