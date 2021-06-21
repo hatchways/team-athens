@@ -8,13 +8,35 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { List } from '../../../interface/List';
+import { createProduct } from '../../../helpers/APICalls/product';
+import { Product } from '../../../interface/Product';
+interface Props {
+  listData: List[];
+  updateLists: () => Promise<void>;
+}
 
-export default function Dashboard(): JSX.Element {
+export default function AddLinkForm({ listData, updateLists }: Props): JSX.Element {
   const classes = useStyles();
-  const [age, setAge] = useState('');
 
-  const handleChange = (event: any) => {
-    setAge(event.target.value);
+  const [selectInput, setSelectInput] = useState(listData.length > 0 ? listData[0].name : '');
+  const [urlInput, setUrlInput] = useState('');
+
+  const handleSelectChange = (event: any) => {
+    setSelectInput(event.target.value);
+  };
+  const handleUrlInput = (event: any) => {
+    setUrlInput(event.target.value);
+  };
+
+  const handleSubmit = async () => {
+    const productDetails: Product = {
+      url: urlInput,
+      name: 'temp name',
+      price: 0,
+    };
+    await createProduct(productDetails, selectInput);
+    await updateLists();
   };
 
   return (
@@ -22,7 +44,7 @@ export default function Dashboard(): JSX.Element {
       <Typography variant="h5" className={classes.addLinkFormTitle} align={'center'}>
         Add new item:
       </Typography>
-      <form className={classes.addLinkForm} noValidate autoComplete="off">
+      <form onSubmit={handleSubmit} className={classes.addLinkForm} noValidate autoComplete="off">
         <Grid container>
           <TextField
             id="standard-basic"
@@ -30,24 +52,28 @@ export default function Dashboard(): JSX.Element {
             variant="standard"
             className={classes.urlFormInput}
             InputProps={{ disableUnderline: true }}
+            value={urlInput}
+            onChange={handleUrlInput}
           />
           <FormControl variant="standard" className={classes.selectField}>
             <InputLabel id="list-select-field">Select list</InputLabel>
             <Select
               labelId="list-select-field"
               id="demo-simple-select-filled"
-              value={age}
-              onChange={handleChange}
+              value={selectInput}
+              onChange={handleSelectChange}
               disableUnderline={true}
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={'Shoes'}>Shoes</MenuItem>
-              <MenuItem value={'Tech'}>Tech</MenuItem>
+              {listData.map((list: List) => {
+                return (
+                  <MenuItem key={list.name} value={list._id}>
+                    {list.name}
+                  </MenuItem>
+                );
+              })}
             </Select>
           </FormControl>
-          <Button className={classes.formButton} color="secondary" variant="contained">
+          <Button onClick={handleSubmit} className={classes.formButton} color="secondary" variant="contained">
             Add
           </Button>
         </Grid>
