@@ -23,6 +23,7 @@ const getAllLists = async (): Promise<ListData> => {
 const addNewList = async (data: any): Promise<ListData> => {
   const body = {
     listName: data.name,
+    imageUrl: data.url,
   };
 
   const fetchOptions: FetchOptions = {

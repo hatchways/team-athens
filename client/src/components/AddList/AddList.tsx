@@ -8,6 +8,9 @@ import { CircularProgress } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 import { Icon, DialogActions, Grid, CssBaseline, Paper, IconButton } from '@material-ui/core';
 import { addNewList } from '../../helpers/APICalls/lists';
+import ImageUloader from '../ImageUploader/ImageUploader';
+import { useState } from 'react';
+import { uploadImage } from '../../helpers/APICalls/imageUpload';
 
 interface Props {
   handleSubmit: () => void;
@@ -15,9 +18,22 @@ interface Props {
 
 export default function AddList({ onClose }: any): JSX.Element {
   const classes = useStyles();
+  const [currentImage, setCurrentImage] = useState();
 
-  const handleSubmit = (data: any) => {
-    addNewList(data);
+  const handleSubmit = async (data: any) => {
+    //upload image
+    console.log('image from AddList: ', currentImage);
+    const imageData = await uploadImage(currentImage);
+    console.log('image data: ', imageData);
+
+    // s
+    const temp = {
+      name: data.name,
+      url: currentImage,
+    };
+
+    //add to object
+    // addNewList(data);
     onClose();
   };
 
@@ -49,6 +65,14 @@ export default function AddList({ onClose }: any): JSX.Element {
                 value={values.name}
                 onChange={handleChange}
               />
+              <Grid container>
+                <Grid item xs>
+                  <Typography className={classes.welcome} component="h1" variant="h5">
+                    Add a cover
+                  </Typography>
+                </Grid>
+              </Grid>
+              <ImageUloader imageState={[currentImage, setCurrentImage]} />
               <Box textAlign="center">
                 <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
                   {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Add'}
