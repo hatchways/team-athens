@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   urlFormInput: {
     flexGrow: 5.6,
-    padding: '0rem 0 0.55rem 0',
+    padding: '0rem 0.5rem 0.55rem 0',
   },
   formButton: {
     flexGrow: 2,
