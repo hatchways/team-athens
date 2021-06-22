@@ -1,16 +1,7 @@
-const Queue = require('bull');
-const {
-  getProductDetail: getProductDetailAmazonService
-} = require('../services/amazonScraperService');
-const {
-  getProductDetail: getProductDetailCraiglistService
-} = require('../services/craigslistScraperService');
-const {
-  getProductDetail: getProductDetailEbayService
-} = require('../services/ebayScraperService');
 const Notification = require("../models/Notification");
 const Product = require("../models/Product");
 const List = require("../models/List");
+const { scraperService } = require('../services/scraperService');
 let jobsAreRunning = false;
 
 // task to be accomplished on a regular basis
@@ -30,24 +21,11 @@ const processing = async (job) => {
 
   let scrapedProduct = null;
 
-  const SITES_REGEX = {
-    amazon: new RegExp('(http:\/\/|https:\/\/)?(www\.)?amazon(\.\w{2,})', 'gi'),
-    ebay: new RegExp('(http:\/\/|https:\/\/)?(www\.)?ebay(\.\w{2,})', 'gi'),
-    craiglist: new RegExp('(http:\/\/|https:\/\/)?(www\.)?craiglist(\.\w{2,})', 'gi'),
-  }
+  scrapedProduct = await scraperService(product.url);
 
-  if (SITES_REGEX.amazon.test(product.url)) {
-    await getProductDetailAmazonService(product.url).then((data) => {
-      scrapedProduct = data;
-    });
-  } else if (SITES_REGEX.craiglist.test(product.url)) {
-    await getProductDetailCraiglistService(product.url).then((data) => {
-      scrapedProduct = data;
-    });
-  } else if (SITES_REGEX.ebay.test(product.url)) {
-    await getProductDetailEbayService(product.url).then((data) => {
-      scrapedProduct = data;
-    });
+  if(scrapedProduct.error) {
+    console.error(scrapedProduct.error.message || scrapedProduct.error);
+    return;
   }
 
   if (scrapedProduct) {
