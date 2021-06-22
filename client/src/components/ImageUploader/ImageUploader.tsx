@@ -3,7 +3,8 @@ import { useState } from 'react';
 import useStyles from './useStyles';
 import { Grid } from '@material-ui/core';
 import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
-import { IconButton } from '@material-ui/core';
+import { useDropzone } from 'react-dropzone';
+import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
 
 export default function ImageUloader(props: any): JSX.Element {
   const classes = useStyles();
@@ -13,22 +14,27 @@ export default function ImageUloader(props: any): JSX.Element {
   const [previewImage, setPreviewImage] = useState('');
   const [fileChosen, setFileChosen] = useState(false);
 
-  const selectFile = async (event: any) => {
-    const file = event.target.files[0];
-    if (!file) return;
+  const onDrop = (acceptedFiles: any) => {
+    setFile(acceptedFiles);
+  };
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  const setFile = (files: any[]) => {
     setFileChosen(true);
-    setCurrentFiles(event.target.files);
-    setPreviewImage(URL.createObjectURL(file));
+    setCurrentFiles(files);
+    setPreviewImage(URL.createObjectURL(files[0]));
   };
 
   const uploadImageButton = () => {
     return (
       <Box className={classes.uploadButton}>
-        <input id="icon-button-file" style={{ display: 'none' }} type="file" accept="image/*" onChange={selectFile} />
-        <label htmlFor="icon-button-file">
-          <IconButton aria-label="upload picture" component="span">
+        <input {...getInputProps()} style={{ display: 'none' }} type="file" accept="image/*" />
+        <label {...getRootProps()}>
+          {isDragActive ? (
+            <SystemUpdateAltIcon className={classes.imageIcon} />
+          ) : (
             <InsertPhotoIcon className={classes.imageIcon} />
-          </IconButton>
+          )}
         </label>
       </Box>
     );
@@ -40,10 +46,9 @@ export default function ImageUloader(props: any): JSX.Element {
         <Box className={classes.imagePreview}>
           <img className={classes.image} src={previewImage} alt="preview image" />
         </Box>
-        <div className="file-name">{fileChosen === true ? currentFiles[0].name : ''}</div>
       </>
     );
   };
 
-  return <Grid className={classes.root}>{fileChosen === false ? uploadImageButton() : displayPreview()}</Grid>;
+  return <Grid>{fileChosen === false ? uploadImageButton() : displayPreview()}</Grid>;
 }

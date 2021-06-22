@@ -18,7 +18,7 @@ interface Props {
 
 export default function AddList({ onClose }: any): JSX.Element {
   const classes = useStyles();
-  const [currentImages, setCurrentImages] = useState<FileList>();
+  const [currentImages, setCurrentImages] = useState<File[]>();
 
   const handleSubmit = async (data: any) => {
     //upload image
