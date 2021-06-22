@@ -1,23 +1,24 @@
 const Queue = require('bull');
 const {
   getProductDetail: getProductDetailAmazonService
-} = require('../services/amazonScrapingService');
+} = require('../services/amazonScraperService');
 const {
   getProductDetail: getProductDetailCraiglistService
-} = require('../services/craiglistScraperService');
+} = require('../services/craigslistScraperService');
 const {
   getProductDetail: getProductDetailEbayService
 } = require('../services/ebayScraperService');
 const Notification = require("../models/Notification");
 const Product = require("../models/Product");
 const List = require("../models/List");
+let jobsAreRunning = false;
 
 // task to be accomplished on a regular basis
 const processing = async (job) => {
   const {
     product,
     userId
-  } = job.data;
+  } = job;
 
   if (!product) {
     throw new Error("Product<Product> couldn't be null");
@@ -78,7 +79,7 @@ const processing = async (job) => {
       }
     })
   } else {
-    throw new Error('scraped product is null');
+    console.log('scraped product is null');
   }
 
 
@@ -121,14 +122,15 @@ const createScrapingJob = ({
  * inits jobs when app is launched
  */
 const initScrapingJobs = async () => {
+
+  if(jobsAreRunning) return;
+
   const lists = await List.find();
 
   if (lists) {
     lists.forEach(list => {
       list.products.forEach(async (productId) => {
-        const product = await Product.find({
-          _id: productId
-        })
+        const product = await Product.findById(productId);
 
         if (product) {
           createScrapingJob({
@@ -141,6 +143,8 @@ const initScrapingJobs = async () => {
       })
     });
   }
+
+  jobsAreRunning = true;
 }
 
 module.exports = {

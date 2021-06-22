@@ -29,8 +29,7 @@ exports.getProductDetail = async (productUrl) => {
             price = match[2];
           }
         } catch (error) {
-          console.log("Price not availble for this product");
-          throw new Error(error);
+          return {error: {message: "Price not availble for this product"}}
         }
 
         return {
@@ -46,7 +45,7 @@ exports.getProductDetail = async (productUrl) => {
 
       return productData;
     } catch (error) {
-      throw new Error(error);
+      return {error: {message: error}}
     }
   } else {
     throw new Error("Product url not provided");
