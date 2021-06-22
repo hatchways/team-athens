@@ -6,4 +6,5 @@ export interface List {
   products: Product[];
   userIds: string;
   creator: string;
+  imageUrl: string;
 }

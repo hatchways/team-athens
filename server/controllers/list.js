@@ -4,6 +4,8 @@ const List = require("../models/List");
 const projection = {
     name: 1,
     products: 1,
+    creator: 1,
+    imageUrl: 1,
 };
 
 exports.getAllLists = expressAsyncHandler(async (req, res, next) => {
