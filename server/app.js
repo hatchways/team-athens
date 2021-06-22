@@ -13,10 +13,9 @@ const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const notificationRouter = require('./routes/notifications');
 const imagesRouter = require("./routes/imageUpload");
+const { initScrapingJobs } = require("./utils/taskQueue");
 const ListRouter = require("./routes/list");
 const productRouter = require("./routes/product");
-
-const { initSocketServer } = require("./utils/socketServer");
 
 const { json, urlencoded } = express;
 
