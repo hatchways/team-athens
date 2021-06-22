@@ -2,8 +2,8 @@ const colors = require("colors");
 const path = require("path");
 const http = require("http");
 const express = require("express");
-const socketio = require("socket.io");
 const { notFound, errorHandler } = require("./middleware/error");
+const protect = require("./middleware/auth");
 const connectDB = require("./db");
 const { join } = require("path");
 const cookieParser = require("cookie-parser");
@@ -11,26 +11,17 @@ const logger = require("morgan");
 
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
+const notificationRouter = require('./routes/notifications');
 const imagesRouter = require("./routes/imageUpload");
 const { initScrapingJobs } = require("./utils/taskQueue");
+const ListRouter = require("./routes/list");
+const productRouter = require("./routes/product");
 
 const { json, urlencoded } = express;
 
 connectDB();
 const app = express();
 const server = http.createServer(app);
-
-const io = socketio(server, {
-  cors: {
-    origin: "*"
-  }
-});
-
-initScrapingJobs();
-
-io.on("connection", socket => {
-  console.log("connected");
-});
 
 if (process.env.NODE_ENV === "development") {
   app.use(logger("dev"));
@@ -40,14 +31,17 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
 
-app.use((req, res, next) => {
-  req.io = io;
+app.use(protect, (req, res, next) => {
+  initSocketServer(server, req);
   next();
 });
 
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
+app.use('/notifications', notificationRouter);
 app.use("/images", imagesRouter);
+app.use("/lists", ListRouter);
+app.use("/products", productRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
