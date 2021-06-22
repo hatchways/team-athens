@@ -33,7 +33,7 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
 
-app.use(protect, (req, res, next) => {
+app.use((req, res, next) => {
   initSocketServer(server, req);
   next();
 });
