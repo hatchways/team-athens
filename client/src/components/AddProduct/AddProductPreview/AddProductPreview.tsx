@@ -76,16 +76,6 @@ const AddProductPreview = ({
           <Grid>
             <Typography color="primary">Price: {productDetails.productPrice}</Typography>
           </Grid>
-          <Grid>
-            <Typography variant={'h5'}>Product features</Typography>
-            <List>
-              {productDetails.productFeatures.map((feature) => (
-                <ListItem key={feature}>
-                  <ListItemText>{feature}</ListItemText>
-                </ListItem>
-              ))}
-            </List>
-          </Grid>
         </DialogContent>
 
         <DialogActions>

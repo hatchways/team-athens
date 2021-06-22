@@ -67,7 +67,7 @@ const AddProductForm = ({ handleSubmit, productLists, setListId }: Props): JSX.E
           />
           <TextField
             id="email"
-            label={<Typography className={classes.label}>Past link to item:</Typography>}
+            label={<Typography className={classes.label}>Select list:</Typography>}
             fullWidth
             margin="normal"
             InputProps={{

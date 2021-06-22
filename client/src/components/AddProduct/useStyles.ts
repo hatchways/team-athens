@@ -12,6 +12,17 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "'Open Sans'",
     textAlign: 'center',
   },
+  addButton: {
+    margin: theme.spacing(3, 2, 2),
+    padding: 10,
+    width: 160,
+    height: 56,
+    marginTop: 49,
+    fontSize: 16,
+    fontWeight: 'bold',
+    borderRadius: '50px',
+    textTransform: 'uppercase',
+  },
 }));
 
 export default useStyles;

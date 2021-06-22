@@ -16,6 +16,7 @@ const imagesRouter = require("./routes/imageUpload");
 const { initScrapingJobs } = require("./utils/taskQueue");
 const ListRouter = require("./routes/list");
 const productRouter = require("./routes/product");
+const scraperRouter = require("./routes/scraper");
 
 const { json, urlencoded } = express;
 
@@ -42,6 +43,7 @@ app.use('/notifications', notificationRouter);
 app.use("/images", imagesRouter);
 app.use("/lists", ListRouter);
 app.use("/products", productRouter);
+app.use('/scrape', scraperRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));

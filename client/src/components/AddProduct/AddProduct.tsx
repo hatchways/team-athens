@@ -1,4 +1,4 @@
-import { CssBaseline, Dialog, DialogContent, Grid, Icon, Typography } from '@material-ui/core';
+import { CssBaseline, Dialog, DialogContent, Grid, Icon, Typography, Button } from '@material-ui/core';
 import React, { useState } from 'react';
 import useStyles from './useStyles';
 import { FormikHelpers } from 'formik';
@@ -11,19 +11,18 @@ import productDetails from '../../helpers/APICalls/productDetails';
 import { createProduct } from '../../helpers/APICalls/product';
 import { Product } from '../../interface/Product';
 import { useEffect } from 'react';
-
-interface Props {
-  showAddProductModal: boolean;
-  setShowAddProductModal: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { ListApiData } from '../../interface/ListApiData';
+import { List } from '../../interface/List';
+import { ProductDetailApiData } from '../../interface/ProductDetailApiData';
+import { ProductApiData } from '../../interface/ProductApiData';
 
 const getProductLists = async () => {
-  let lists: any[] = [];
-  await getAllLists().then((data: any) => {
+  let lists: List[] = [];
+  await getAllLists().then((data: ListApiData) => {
     if (data.error) {
       console.log(data.error.message);
     } else if (data.success) {
-      lists = data.success;
+      lists = data.lists || [];
     } else {
       console.error({ data });
       console.error('An unexpected error occurred');
@@ -32,7 +31,7 @@ const getProductLists = async () => {
   return lists;
 };
 
-const AddProduct = ({ showAddProductModal, setShowAddProductModal }: Props): JSX.Element => {
+const AddProduct = (): JSX.Element => {
   const classes = useStyles();
   const handleCloseAddProductModal = () => {
     setShowAddProductModal(false);
@@ -40,12 +39,12 @@ const AddProduct = ({ showAddProductModal, setShowAddProductModal }: Props): JSX
 
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [detailsOfProduct, setDetailsOfProduct] = useState<ProductDetails>();
-  const [productLists, setProductLists] = useState<any[]>([]);
+  const [productLists, setProductLists] = useState<List[]>([]);
   const [listId, setListId] = useState<string>('');
 
   const { updateSnackBarMessage } = useSnackBar();
 
-  const saveList = (list: any) => {
+  const saveList = (list: List[]) => {
     setProductLists(list);
   };
 
@@ -59,13 +58,13 @@ const AddProduct = ({ showAddProductModal, setShowAddProductModal }: Props): JSX
       pictureUrl: productDetails.productImage,
     } as unknown as Product;
 
-    createProduct(newProduct, listID).then((data: any) => {
+    createProduct(newProduct, listID).then((data: ProductApiData) => {
       if (data.error) {
         updateSnackBarMessage(data.error.message);
       } else if (data.success) {
         setShowAddProductModal(false);
         setShowPreviewModal(false);
-        updateSnackBarMessage('Submit OK');
+        updateSnackBarMessage(data.success.message);
       } else {
         console.error({ data });
         updateSnackBarMessage('An unexpected error occurred. Please try again');
@@ -78,16 +77,16 @@ const AddProduct = ({ showAddProductModal, setShowAddProductModal }: Props): JSX
     { setSubmitting }: FormikHelpers<{ productUrl: string; listId: string }>,
   ) => {
     // Get detail of the product from the api
-    productDetails(productUrl).then((data: any) => {
+    productDetails(productUrl).then((data: ProductDetailApiData) => {
       if (data.error) {
         setSubmitting(false);
         updateSnackBarMessage(data.error.message);
       } else if (data.success) {
-        setDetailsOfProduct(data.success);
+        setDetailsOfProduct(data.ScrapedProduct);
         setListId(listId);
         setShowPreviewModal(true);
+        setSubmitting(false);
       } else {
-        console.error({ data });
         setSubmitting(false);
         updateSnackBarMessage('An unexpected error occurred. Please try again');
       }
@@ -100,8 +99,17 @@ const AddProduct = ({ showAddProductModal, setShowAddProductModal }: Props): JSX
     });
   });
 
+  const [showAddProductModal, setShowAddProductModal] = useState(false);
+
+  const openAddProductModal = () => {
+    setShowAddProductModal(true);
+  };
+
   return (
-    <Grid container component="main">
+    <Grid>
+      <Button onClick={openAddProductModal} className={classes.addButton} variant="contained" color="primary">
+        Add new item
+      </Button>
       <CssBaseline />
       <Dialog
         onClose={handleCloseAddProductModal}
