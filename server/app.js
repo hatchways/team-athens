@@ -17,6 +17,7 @@ const { initScrapingJobs } = require("./utils/taskQueue");
 const ListRouter = require("./routes/list");
 const productRouter = require("./routes/product");
 const scraperRouter = require("./routes/scraper");
+const { initSocketServer } = require("./utils/socketServer");
 
 const { json, urlencoded } = express;
 
@@ -56,6 +57,8 @@ if (process.env.NODE_ENV === "production") {
     res.send("API is running");
   });
 }
+
+initScrapingJobs();
 
 app.use(notFound);
 app.use(errorHandler);
