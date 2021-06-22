@@ -18,22 +18,22 @@ interface Props {
 
 export default function AddList({ onClose }: any): JSX.Element {
   const classes = useStyles();
-  const [currentImage, setCurrentImage] = useState();
+  const [currentImages, setCurrentImages] = useState<FileList>();
 
   const handleSubmit = async (data: any) => {
     //upload image
-    console.log('image from AddList: ', currentImage);
-    const imageData = await uploadImage(currentImage);
-    console.log('image data: ', imageData);
+    const response = await uploadImage(currentImages);
 
-    // s
-    const temp = {
+    // get the url of image
+    const url = response.images[0].secure_url;
+
+    const listData = {
       name: data.name,
-      url: currentImage,
+      url: url,
     };
 
     //add to object
-    // addNewList(data);
+    addNewList(listData);
     onClose();
   };
 
@@ -72,7 +72,7 @@ export default function AddList({ onClose }: any): JSX.Element {
                   </Typography>
                 </Grid>
               </Grid>
-              <ImageUloader imageState={[currentImage, setCurrentImage]} />
+              <ImageUloader imageState={[currentImages, setCurrentImages]} />
               <Box textAlign="center">
                 <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
                   {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Add'}

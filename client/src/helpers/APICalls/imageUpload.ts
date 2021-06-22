@@ -1,18 +1,27 @@
-import { FetchOptions } from '../../interface/FetchOptions';
+// import { FetchOptions } from '../../interface/FetchOptions';
 
-const uploadImage = async (image: any): Promise<any> => {
-  const body = {
-    images: [image],
+// body is not string in this request
+interface FetchOptions {
+  method: string;
+  headers?: {
+    'Content-Type': string;
   };
-  const formData = new FormData();
+  body?: any;
+  credentials: RequestCredentials;
+}
 
-  formData.append('files', image);
+const uploadImage = async (images: any): Promise<any> => {
+  const fd = new FormData();
+
+  for (const image of images) {
+    fd.append('images', image, `${image.name}`);
+  }
 
   const fetchOptions: FetchOptions = {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    // headers: { 'Content-Type': 'multipart/form-data; boundary=AaB03x' },
     credentials: 'include',
-    body: JSON.stringify(formData),
+    body: fd,
   };
 
   return await fetch(`/images`, fetchOptions)

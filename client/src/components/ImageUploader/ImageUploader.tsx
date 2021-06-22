@@ -1,5 +1,4 @@
-import LinearProgress from '@material-ui/core/LinearProgress';
-import { Box, Typography, Button, ListItem, withStyles } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import { useState } from 'react';
 import useStyles from './useStyles';
 import { Grid } from '@material-ui/core';
@@ -9,28 +8,23 @@ import { IconButton } from '@material-ui/core';
 export default function ImageUloader(props: any): JSX.Element {
   const classes = useStyles();
 
-  const [currentFile, setCurrentFile] = useState({ name: '' });
+  const [currentFiles, setCurrentFiles] = props.imageState;
 
-  const [previewImage, setPreviewImage] = props.imageState;
+  const [previewImage, setPreviewImage] = useState('');
+  const [fileChosen, setFileChosen] = useState(false);
 
   const selectFile = async (event: any) => {
     const file = event.target.files[0];
     if (!file) return;
-    setCurrentFile(file);
+    setFileChosen(true);
+    setCurrentFiles(event.target.files);
     setPreviewImage(URL.createObjectURL(file));
   };
 
   const uploadImageButton = () => {
     return (
       <Box className={classes.uploadButton}>
-        <input
-          id="icon-button-file"
-          name="btn-upload"
-          style={{ display: 'none' }}
-          type="file"
-          accept="image/*"
-          onChange={selectFile}
-        />
+        <input id="icon-button-file" style={{ display: 'none' }} type="file" accept="image/*" onChange={selectFile} />
         <label htmlFor="icon-button-file">
           <IconButton aria-label="upload picture" component="span">
             <InsertPhotoIcon className={classes.imageIcon} />
@@ -46,10 +40,10 @@ export default function ImageUloader(props: any): JSX.Element {
         <Box className={classes.imagePreview}>
           <img className={classes.image} src={previewImage} alt="preview image" />
         </Box>
-        <div className="file-name">{currentFile ? currentFile.name : null}</div>
+        <div className="file-name">{fileChosen === true ? currentFiles[0].name : ''}</div>
       </>
     );
   };
 
-  return <Grid className={classes.root}>{currentFile.name === '' ? uploadImageButton() : displayPreview()}</Grid>;
+  return <Grid className={classes.root}>{fileChosen === false ? uploadImageButton() : displayPreview()}</Grid>;
 }

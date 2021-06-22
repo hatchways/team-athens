@@ -48,6 +48,7 @@ exports.getById = expressAsyncHandler(async (req, res, next) => {
 exports.createList = expressAsyncHandler(async (req, res, next) => {
     const user = await User.findById(req.user.id);
     const listName = req.body.listName;
+    const imageUrl = req.body.imageUrl;
 
     if (!user) {
         res.status(401).send("Unathenticated");
@@ -64,7 +65,7 @@ exports.createList = expressAsyncHandler(async (req, res, next) => {
     }
 
     // create list
-    await List.create({ name: req.body.listName, creator: user._id });
+    await List.create({ name: req.body.listName, creator: user._id, imageUrl: imageUrl });
 
     res.status(200).json({
         success: true,
