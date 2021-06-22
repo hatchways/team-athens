@@ -22,6 +22,8 @@ import LuxuryImage from '../../Images/luxury.png';
 import NavBar from '../../components/NavBar/NavBar';
 import AddLinkForm from './AddLinkForm/AddLinkForm';
 import ShoppingListCard from './ShoppingListCard/ShoppingListCard';
+import EditList from '../../components/EditList/EditList';
+import { List } from '../../interface/List';
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
@@ -50,6 +52,8 @@ export default function Dashboard(): JSX.Element {
       <Grid className={classes.pageContent} md={11} lg={10} xl={9}>
         <AddProduct />
         <AddLinkForm />
+
+        <EditList list={{ name: 'testList' } as List} />
 
         <Grid className={classes.shoppingListsContentArea}>
           <Typography variant="h5" align={'left'} className={classes.shoppingListsTitle}>

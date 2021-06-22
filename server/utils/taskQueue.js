@@ -1,3 +1,4 @@
+const Queue = require('bull');
 const Notification = require("../models/Notification");
 const Product = require("../models/Product");
 const List = require("../models/List");
