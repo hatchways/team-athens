@@ -13,6 +13,7 @@ import { useAuth } from '../../context/useAuthContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import NotificationPopover from '../../components/Notification/NotificationPopver';
 
 export default function NavBar(): JSX.Element {
   const classes = useStyles();
@@ -48,14 +49,11 @@ export default function NavBar(): JSX.Element {
         </Link>
         <Box className={classes.headerButtonGroup}>
           <Button>Shopping List</Button>
+
           <Button component={Link} to="/followers">
             Friends
           </Button>
-          <Button>
-            <Badge variant="dot" color="secondary" invisible={false}>
-              Notifications
-            </Badge>
-          </Button>
+          <NotificationPopover />
         </Box>
 
         <Chip
