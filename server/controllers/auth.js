@@ -34,14 +34,14 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     const secondsInWeek = 604800;
 
     // create default lists
-    await List.create({
+    List.create({
       name: 'Shopping',
       creator: user._id,
       products: [],
       userIds: [],
       imageUrl: 'https://res.cloudinary.com/coop-image-cloud/image/upload/v1624121069/shopping-cart_lcdic8.jpg'
     });
-    await List.create({
+    List.create({
       name: 'Wishlist',
       creator: user._id,
       products: [],
