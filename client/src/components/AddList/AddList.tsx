@@ -8,6 +8,7 @@ import { CircularProgress } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 import { Icon, DialogActions, Grid, CssBaseline, Paper, IconButton } from '@material-ui/core';
 import { addNewList } from '../../helpers/APICalls/lists';
+import * as Yup from 'yup';
 
 interface Props {
   handleSubmit: () => void;
@@ -21,6 +22,10 @@ export default function AddList({ onClose }: any): JSX.Element {
     onClose();
   };
 
+  const nameSchema = Yup.object().shape({
+    name: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
+  });
+
   const renderModalContent = () => {
     return (
       <Container component="main" style={{ minWidth: '670px' }} maxWidth="xs" className="bg-secondary">
@@ -29,33 +34,40 @@ export default function AddList({ onClose }: any): JSX.Element {
             name: '',
           }}
           onSubmit={handleSubmit}
+          validationSchema={nameSchema}
         >
-          {({ handleSubmit, handleChange, values, touched, errors, isSubmitting }) => (
-            <form onSubmit={handleSubmit} className={classes.form} noValidate>
-              <TextField
-                id="name"
-                label={<Typography className={classes.label}>Name</Typography>}
-                fullWidth
-                margin="normal"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                InputProps={{
-                  classes: { input: classes.inputs },
-                }}
-                name="name"
-                autoComplete="name"
-                autoFocus
-                value={values.name}
-                onChange={handleChange}
-              />
-              <Box textAlign="center">
-                <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
-                  {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Add'}
-                </Button>
-              </Box>
-            </form>
-          )}
+          {({ handleSubmit, handleChange, values, touched, errors, isSubmitting }) => {
+            const err: any = errors.name && touched.name ? true : false;
+            const helperText: string = err ? 'Please Provide a name' : '';
+            return (
+              <form onSubmit={handleSubmit} className={classes.form}>
+                <TextField
+                  id="name"
+                  label={<Typography className={classes.label}>Name</Typography>}
+                  fullWidth
+                  margin="normal"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  InputProps={{
+                    classes: { input: classes.inputs },
+                  }}
+                  name="name"
+                  autoComplete="name"
+                  autoFocus
+                  value={values.name}
+                  onChange={handleChange}
+                  error={err}
+                  helperText={helperText}
+                />
+                <Box textAlign="center">
+                  <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
+                    {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Add'}
+                  </Button>
+                </Box>
+              </form>
+            );
+          }}
         </Formik>
       </Container>
     );
