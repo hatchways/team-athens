@@ -26,7 +26,7 @@ const NotificationTemplate = ({ notification, markAsReadHandler }: Props): JSX.E
   return (
     <div className={classes.root}>
       <div>
-        <strong>{notification.title}</strong>
+        <strong>{notification.title.substring(0, 100)}</strong>
       </div>
       <Grid container className={classes.rootGrid}>
         <Grid item spacing={2}>
@@ -41,7 +41,7 @@ const NotificationTemplate = ({ notification, markAsReadHandler }: Props): JSX.E
           </div>
           <div>
             <a className={classes.link} href={notification?.url} target="_blank" rel="noreferrer">
-              {notification?.url}
+              {notification?.url?.substring(0, 60)}
             </a>
           </div>
           {notification.oldPrice && notification.newPrice && (

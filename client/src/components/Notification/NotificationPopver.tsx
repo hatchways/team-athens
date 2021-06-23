@@ -46,7 +46,7 @@ export default function NotificationPopover(): JSX.Element {
         setUnread(data.success.notifications);
       }
     });
-  });
+  }, []);
 
   const markAllAsReadClickHandler = () => {
     markAllAsRead().then((data) => {

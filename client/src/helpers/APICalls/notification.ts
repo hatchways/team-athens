@@ -16,7 +16,7 @@ const getUnreadNotification = async (): Promise<NotificationApiData> => {
 
 const markAllAsRead = async (): Promise<NotificationApiData> => {
   const fetchOptions: FetchOptions = {
-    method: 'GET',
+    method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
   };
