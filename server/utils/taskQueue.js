@@ -86,7 +86,7 @@ const createScrapingJob = ({
   // "At every 15th minute" this defines at what interval a task will be executed
   const cron = '*/15 * * * *';
 
-  const job = new Queue(product._id, queueOptions);
+  const job = new Queue(product._id, queueOptions, );
   job.add(processing({
     product,
     userId
@@ -94,6 +94,9 @@ const createScrapingJob = ({
     repeat: {
       cron: cron,
     }
+  }).catch((error) => {
+    console.log("Something went wront with redis server");
+    console.error(error);
   });
 }
 

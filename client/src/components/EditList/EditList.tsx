@@ -1,11 +1,11 @@
-import { CssBaseline, Dialog, DialogContent, Grid, Icon, Typography, Button } from '@material-ui/core';
+import { CssBaseline, Dialog, DialogContent, Grid, Icon, Typography, Button, IconButton, Fab } from '@material-ui/core';
 import { useState } from 'react';
 import useStyles from './useStyles';
-import { FormikHelpers } from 'formik';
-import AddProductForm from './EditListForm/EditListForm';
+import EditListForm from './EditListForm/EditListForm';
 import { useSnackBar } from '../../context/useSnackbarContext';
-import { ListApiData } from '../../interface/ListApiData';
 import { List } from '../../interface/List';
+import { uploadImage } from '../../helpers/APICalls/imageUpload';
+import { updateList } from '../../helpers/APICalls/lists';
 
 interface Props {
   list: List;
@@ -19,19 +19,37 @@ const EditList = ({ list }: Props): JSX.Element => {
 
   const { updateSnackBarMessage } = useSnackBar();
 
-  const handleSubmit = ({ name }: { name: string }, { setSubmitting }: FormikHelpers<{ name: string }>) => {
-    // Get detail of the product from the api
-    // productDetails(productUrl).then((data: ProductDetailApiData) => {
-    //   if (data.error) {
-    //     setSubmitting(false);
-    //     updateSnackBarMessage(data.error.message);
-    //   } else if (data.success) {
-    //     setSubmitting(false);
-    //   } else {
-    //     setSubmitting(false);
-    //     updateSnackBarMessage('An unexpected error occurred. Please try again');
-    //   }
-    // });
+  const handleSubmit = async ({
+    name,
+    image,
+    access,
+    setSubmitting,
+  }: {
+    name: string;
+    image: any;
+    access: boolean;
+    setSubmitting: (status: boolean) => void;
+  }) => {
+    //upload image
+    const response = await uploadImage(image);
+
+    // get the url of image
+    const url = response.images[0].secure_url;
+
+    list.name = name;
+    list.private = access;
+    list.imageUrl = url;
+
+    updateList(list).then((data: { success: boolean; msg: string }) => {
+      if (data.success) {
+        setSubmitting(false);
+        setShowEditListModal(false);
+        updateSnackBarMessage(data.msg);
+      } else {
+        setSubmitting(false);
+        updateSnackBarMessage('An unexpected error occurred. Please try again');
+      }
+    });
   };
 
   const [showEditListModal, setShowEditListModal] = useState(false);
@@ -42,15 +60,15 @@ const EditList = ({ list }: Props): JSX.Element => {
 
   return (
     <Grid>
-      <Button onClick={openEditListModal} className={classes.addButton} variant="contained" color="primary">
-        Edit List
-      </Button>
+      <Fab color="primary" component="span" onClick={openEditListModal} className={classes.addButton}>
+        <Icon>edit</Icon>
+      </Fab>
+
       <CssBaseline />
       <Dialog
         onClose={handleCloseEditListModal}
         open={showEditListModal}
         disableBackdropClick={true}
-        disableEscapeKeyDown={true}
         PaperProps={{ elevation: 0 }}
       >
         <DialogContent dividers>
@@ -63,7 +81,7 @@ const EditList = ({ list }: Props): JSX.Element => {
                 Edit List
               </Typography>
             </Grid>
-            <AddProductForm handleSubmit={handleSubmit} list={list} />
+            <EditListForm handleSubmit={handleSubmit} list={list} />
           </Grid>
         </DialogContent>
       </Dialog>

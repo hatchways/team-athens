@@ -13,15 +13,15 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
   },
   addButton: {
+    position: 'absolute',
+    bottom: '0px',
+    right: '0px',
     margin: theme.spacing(3, 2, 2),
-    padding: 10,
-    width: 160,
-    height: 56,
+    padding: '20px',
+    width: '30px',
+    height: '30px',
     marginTop: 49,
-    fontSize: 16,
-    fontWeight: 'bold',
-    borderRadius: '50px',
-    textTransform: 'uppercase',
+    zIndex: 14,
   },
 }));
 

@@ -51,6 +51,10 @@ const useStyles = makeStyles((theme) => ({
   inputLabelShrink: {
     transform: 'none',
   },
+  uploadBox: {
+    textAlign: 'center',
+    marginTop: '10px',
+  },
 }));
 
 export default useStyles;

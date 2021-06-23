@@ -22,7 +22,6 @@ import LuxuryImage from '../../Images/luxury.png';
 import NavBar from '../../components/NavBar/NavBar';
 import AddLinkForm from './AddLinkForm/AddLinkForm';
 import ShoppingListCard from './ShoppingListCard/ShoppingListCard';
-import EditList from '../../components/EditList/EditList';
 import { List } from '../../interface/List';
 
 export default function Dashboard(): JSX.Element {
@@ -53,8 +52,6 @@ export default function Dashboard(): JSX.Element {
         <AddProduct />
         <AddLinkForm />
 
-        <EditList list={{ name: 'testList' } as List} />
-
         <Grid className={classes.shoppingListsContentArea}>
           <Typography variant="h5" align={'left'} className={classes.shoppingListsTitle}>
             My Shopping Lists:
@@ -68,9 +65,9 @@ export default function Dashboard(): JSX.Element {
             alignItems="flex-start"
             spacing={2}
           >
-            <ShoppingListCard title="Clothes" itemCount={34} image={ClothesImage} />
-            <ShoppingListCard title="Furniture" itemCount={12} image={FurnitureImage} />
-            <ShoppingListCard title="Luxury" itemCount={8} image={LuxuryImage} />
+            <ShoppingListCard title="Clothes" itemCount={34} image={ClothesImage} list={{} as List} />
+            <ShoppingListCard title="Furniture" itemCount={12} image={FurnitureImage} list={{} as List} />
+            <ShoppingListCard title="Luxury" itemCount={8} image={LuxuryImage} list={{} as List} />
 
             {/* Add new list button */}
             <Grid item>

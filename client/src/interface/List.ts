@@ -3,5 +3,7 @@ export interface List {
   name: string;
   products?: string[];
   userIds?: string[];
+  imageUrl: string;
+  private?: boolean;
   creator: string;
 }

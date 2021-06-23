@@ -15,11 +15,11 @@ const getAllLists = async (): Promise<ListApiData> => {
     }));
 };
 
-const updateList = async (list: List): Promise<ListApiData> => {
+const updateList = async (list: List): Promise<{ success: boolean; msg: string }> => {
   const fetchOptions: FetchOptions = {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(list),
+    body: JSON.stringify({ listData: list }),
     credentials: 'include',
   };
 
