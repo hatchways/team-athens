@@ -97,7 +97,7 @@ const AddProduct = (): JSX.Element => {
     getProductLists().then((data) => {
       saveList(data);
     });
-  });
+  }, []);
 
   const [showAddProductModal, setShowAddProductModal] = useState(false);
 
