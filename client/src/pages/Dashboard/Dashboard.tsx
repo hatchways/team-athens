@@ -29,9 +29,11 @@ import AddList from '../../components/AddList/AddList';
 
 import { List } from '../../interface/List';
 import { getAllLists } from '../../helpers/APICalls/lists';
+import { useSnackBar } from '../../context/useSnackbarContext';
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
+  const { updateSnackBarMessage } = useSnackBar();
 
   const { loggedInUser } = useAuth();
   const { initSocket } = useSocket();
@@ -60,9 +62,12 @@ export default function Dashboard(): JSX.Element {
   }
 
   const getListsData = async () => {
-    getAllLists().then((data) => {
-      setLists(data.lists || []);
-    });
+    const result = await getAllLists();
+    if (result.success) {
+      setLists(result.lists);
+    } else {
+      updateSnackBarMessage('Failed to update lists');
+    }
   };
 
   const handleModalClose = () => {
