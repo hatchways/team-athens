@@ -79,7 +79,7 @@ const EditListForm = ({ list, handleSubmit }: Props): JSX.Element => {
 
           <Box textAlign="center">
             <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
-              {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Add item'}
+              {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Save'}
             </Button>
           </Box>
         </form>
