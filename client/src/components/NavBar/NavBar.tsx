@@ -53,6 +53,10 @@ export default function NavBar(): JSX.Element {
           <Button component={Link} to="/followers">
             Friends
           </Button>
+
+          <Button component={Link} to="/public">
+            Public Lists
+          </Button>
           <NotificationPopover />
         </Box>
 

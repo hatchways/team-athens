@@ -6,3 +6,8 @@ export interface Product {
   price: number;
   pictureUrl: string;
 }
+
+export interface ListProductApiData {
+  success?: { message: string; products: Product[] };
+  error?: { message: string };
+}
