@@ -58,17 +58,18 @@ const AddProduct = (): JSX.Element => {
       pictureUrl: productDetails.productImage,
     } as unknown as Product;
 
-    createProduct(newProduct, listID).then((data: ProductApiData) => {
-      if (data.error) {
-        updateSnackBarMessage(data.error.message);
-      } else if (data.success) {
-        setShowAddProductModal(false);
-        setShowPreviewModal(false);
-        updateSnackBarMessage(data.success.message);
-      } else {
-        console.error({ data });
-        updateSnackBarMessage('An unexpected error occurred. Please try again');
+    createProduct(newProduct, listID).then((data: Product) => {
+      if (!data) {
+        updateSnackBarMessage('PRoduct could not be created');
       }
+      // } else if (data.success) {
+      setShowAddProductModal(false);
+      setShowPreviewModal(false);
+      updateSnackBarMessage('Product added succesfully');
+      // } else {
+      //   console.error({ data });
+      //   updateSnackBarMessage('An unexpected error occurred. Please try again');
+      // }
     });
   };
 
