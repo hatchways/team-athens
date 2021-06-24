@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '2em',
     padding: '10px',
   },
+  showAllNotificationsButton: {
+    width: '100%',
+  },
 }));
 
 export default useStyles;
