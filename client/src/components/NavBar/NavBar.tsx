@@ -14,6 +14,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import NotificationPopover from '../../components/Notification/NotificationPopver';
+import logout from '../../helpers/APICalls/logout';
 
 export default function NavBar(): JSX.Element {
   const classes = useStyles();
@@ -40,6 +41,11 @@ export default function NavBar(): JSX.Element {
 
   const open = Boolean(anchorEl);
   const id = open ? 'user-chip-popover' : undefined;
+
+  const logoutAndGoToLogin = () => {
+    logout();
+    history.push('/login');
+  };
 
   return (
     <AppBar position="static" className={classes.navRoot} elevation={2}>
@@ -81,7 +87,7 @@ export default function NavBar(): JSX.Element {
         >
           <Grid container direction="column" justify="center" alignItems="center">
             <Button>Profile</Button>
-            <Button>Logout</Button>
+            <Button onClick={logoutAndGoToLogin}>Logout</Button>
           </Grid>
         </Popover>
       </Toolbar>
