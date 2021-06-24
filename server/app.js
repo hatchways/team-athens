@@ -13,9 +13,10 @@ const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const notificationRouter = require('./routes/notifications');
 const imagesRouter = require("./routes/imageUpload");
+const { initScrapingJobs } = require("./utils/taskQueue");
 const ListRouter = require("./routes/list");
 const productRouter = require("./routes/product");
-
+const scraperRouter = require("./routes/scraper");
 const { initSocketServer } = require("./utils/socketServer");
 
 const { json, urlencoded } = express;
@@ -32,7 +33,7 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
 
-app.use(protect, (req, res, next) => {
+app.use((req, res, next) => {
   initSocketServer(server, req);
   next();
 });
@@ -43,6 +44,7 @@ app.use('/notifications', notificationRouter);
 app.use("/images", imagesRouter);
 app.use("/lists", ListRouter);
 app.use("/products", productRouter);
+app.use('/scrape', scraperRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
@@ -55,6 +57,8 @@ if (process.env.NODE_ENV === "production") {
     res.send("API is running");
   });
 }
+
+initScrapingJobs();
 
 app.use(notFound);
 app.use(errorHandler);

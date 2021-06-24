@@ -18,8 +18,7 @@ exports.getProductDetail = async (productUrl) => {
         try {
           price = document.getElementById("prcIsum").innerText;
         } catch (error) {
-          console.log("Price not availble for this product");
-          throw new Error(error);
+          return {error: {message: "Price not availble for this product"}}
         }
         //product title
         const title = document.getElementsByClassName("it-ttl")[0].innerText;
@@ -39,7 +38,7 @@ exports.getProductDetail = async (productUrl) => {
       Object.freeze(productData);
       return productData;
     } catch (error) {
-      throw new Error(error);
+      return {error: {message: error}}
     }
   } else {
     throw new Error("Product url not provided");

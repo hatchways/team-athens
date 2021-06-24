@@ -7,7 +7,7 @@ import { useSocket } from '../../context/useSocketContext';
 import { useHistory } from 'react-router-dom';
 
 import ChatSideBanner from '../../components/ChatSideBanner/ChatSideBanner';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import AddProduct from '../../components/AddProduct/AddProduct';
 import { Button, Modal } from '@material-ui/core';
 
@@ -30,6 +30,7 @@ import AddList from '../../components/AddList/AddList';
 import { List } from '../../interface/List';
 import { getAllLists } from '../../helpers/APICalls/lists';
 import { useSnackBar } from '../../context/useSnackbarContext';
+import { useState } from 'react';
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
@@ -85,6 +86,7 @@ export default function Dashboard(): JSX.Element {
 
       <Grid className={classes.pageContent} md={11} lg={10} xl={9}>
         <AddLinkForm listData={lists} updateLists={getListsData} />
+        <AddProduct />
 
         <Grid className={classes.shoppingListsContentArea}>
           <Typography variant="h5" align={'left'} className={classes.shoppingListsTitle}>
@@ -130,7 +132,7 @@ export default function Dashboard(): JSX.Element {
       </Grid>
       <Grid>
         <Button onClick={openAddProductModal}>Add Product</Button>
-        <AddProduct showAddProductModal={showAddProductModal} setShowAddProductModal={setShowAddProductModal} />
+        {/* <AddProduct showAddProductModal={showAddProductModal} setShowAddProductModal={setShowAddProductModal} /> */}
       </Grid>
       <Modal open={addListModalOpen} onClose={handleModalClose}>
         <AddList onClose={handleModalClose} />

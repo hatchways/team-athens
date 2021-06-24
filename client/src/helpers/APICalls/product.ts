@@ -1,5 +1,6 @@
 import { FetchOptions } from '../../interface/FetchOptions';
 import { Product } from '../../interface/Product';
+import { ProductApiData } from '../../interface/ProductApiData';
 
 const createProduct = async (product: Product, listID: string): Promise<Product> => {
   const body = {
