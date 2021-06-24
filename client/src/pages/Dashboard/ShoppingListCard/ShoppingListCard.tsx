@@ -19,7 +19,7 @@ export default function shoppingListCard({ image, title, itemCount }: CardProps)
   return (
     <Grid item>
       <Card className={classes.shoppingListCard}>
-        <CardActionArea className={classes.shoppingListButton}>
+        <CardActionArea className={classes.shoppingListButton} onClick={() => console.log('click')}>
           <CardMedia className={classes.media} image={image} title="Card image" />
           <CardContent>
             <Typography gutterBottom variant="h6" component="h2" align={'center'}>
