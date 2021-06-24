@@ -21,7 +21,7 @@ const listSchema = new mongoose.Schema({
     required: true,
     ref: 'users'
   },
-  private: {
+  isPrivate: {
     type: Boolean,
     default: true,
     required: true,

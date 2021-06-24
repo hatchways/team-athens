@@ -1,4 +1,4 @@
-import { CssBaseline, Dialog, DialogContent, Grid, Icon, Typography, Button, IconButton, Fab } from '@material-ui/core';
+import { CssBaseline, Dialog, DialogContent, Grid, Icon, Typography, Fab } from '@material-ui/core';
 import { useState } from 'react';
 import useStyles from './useStyles';
 import EditListForm from './EditListForm/EditListForm';
@@ -37,7 +37,7 @@ const EditList = ({ list }: Props): JSX.Element => {
     const url = response.images[0].secure_url;
 
     list.name = name;
-    list.private = access;
+    list.isPrivate = access;
     list.imageUrl = url;
 
     updateList(list).then((data: { success: boolean; msg: string }) => {
