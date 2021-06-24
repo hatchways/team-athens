@@ -3,8 +3,7 @@ const List = require("../models/List");
 const Product = require("../models/Product");
 
 exports.getPublicLists = asyncHandler(async (req, res, next) => {
-  // const lists = await List.find({ isPrivate: false }).select([
-  const lists = await List.find().select([
+  const lists = await List.find({ isPrivate: false }).select([
     "-creator",
     "-userIds",
   ]);
