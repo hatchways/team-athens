@@ -25,7 +25,7 @@ interface Props {
 const EditListForm = ({ list, handleSubmit }: Props): JSX.Element => {
   const classes = useStyles();
   const [currentImages, setCurrentImages] = useState<File[]>();
-  const [listAccess, setListAccess] = useState<boolean>(list.private || false);
+  const [listAccess, setListAccess] = useState<boolean>(list.isPrivate || false);
 
   const submitForm = ({ name }: { name: string }, { setSubmitting }: FormikHelpers<{ name: string }>) => {
     handleSubmit({ name, image: currentImages, access: listAccess, setSubmitting });

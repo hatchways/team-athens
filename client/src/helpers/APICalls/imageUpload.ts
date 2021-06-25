@@ -1,5 +1,3 @@
-// import { FetchOptions } from '../../interface/FetchOptions';
-
 // body is not string in this request
 interface FetchOptions {
   method: string;
@@ -19,7 +17,6 @@ const uploadImage = async (images: any): Promise<any> => {
 
   const fetchOptions: FetchOptions = {
     method: 'POST',
-    // headers: { 'Content-Type': 'multipart/form-data; boundary=AaB03x' },
     credentials: 'include',
     body: fd,
   };
