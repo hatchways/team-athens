@@ -18,7 +18,7 @@ const ToggleListAccess = ({ listAccess, setListAccess }: Props): JSX.Element => 
 
   const toggleChecked = () => {
     setChecked((state) => !state);
-    setListAccess(checked);
+    setListAccess(!checked);
   };
 
   return (
