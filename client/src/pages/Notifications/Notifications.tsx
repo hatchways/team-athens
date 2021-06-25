@@ -89,7 +89,6 @@ export default function Notifications(): JSX.Element {
         updateSnackBarMessage('An error occurs when getting all notifications');
       }
       if (data.success) {
-        // setAllNotifications(testNotifications); // demo only
         setAllNotifications(data.success.notifications);
       }
       setDataChanged(false);
