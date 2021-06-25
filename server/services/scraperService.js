@@ -13,7 +13,7 @@ exports.scraperService = async (productUrl) => {
   const SITES_REGEX = {
     amazon: new RegExp('(http:\/\/|https:\/\/)?(www\.)?amazon(\..{2,})', 'gi'),
     ebay: new RegExp('(http:\/\/|https:\/\/)?(www\.)?ebay(\..{2,})', 'gi'),
-    craiglist: new RegExp('(http:\/\/|https:\/\/)?(www\.)?craiglist(\..{2,})', 'gi'),
+    craiglist: new RegExp('(http:\/\/|https:\/\/)?(www\.)?craigslist(\..{2,})', 'gi'),
   }
   if (SITES_REGEX.amazon.test(productUrl)) {
     await getProductDetailAmazonService(productUrl).then((data) => {
