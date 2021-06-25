@@ -15,11 +15,11 @@ router.route("/").get(protect, getAll);
 // get unread
 router.route("/unread").get(protect, getUnread);
 
-// mark as read
-router.route("/:notificationID").patch(protect, markAsread);
-
 // mark all as read
 router.route("/mark-all-as-read").patch(protect, markAllAsRead);
+
+// mark as read
+router.route("/:notificationID").patch(protect, markAsread);
 
 // create
 router.route("/").post(protect, create);

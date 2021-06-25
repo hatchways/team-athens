@@ -47,7 +47,6 @@ exports.markAllAsRead = expressAsyncHandler(async (req, res, next) => {
     throw new Error("Not authorized");
   }
 
-  notification.read = true;
   const response = await Notification.updateMany(
     {
       receiver: user._id,

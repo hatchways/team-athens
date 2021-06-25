@@ -11,6 +11,7 @@ import { SnackBarProvider } from './context/useSnackbarContext';
 import { ProtectedRoute } from './helpers/ProtectedRoute';
 
 import './App.css';
+import PublicProfiles from './pages/PublicProfiles/PublicProfiles';
 
 function App(): JSX.Element {
   return (
@@ -22,6 +23,7 @@ function App(): JSX.Element {
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
+                <ProtectedRoute exact path="/public" component={PublicProfiles} />
                 <ProtectedRoute exact path="/dashboard" component={Dashboard} />
                 <ProtectedRoute exact path="/followers" component={Followers} />
                 <Route path="*">
