@@ -17,6 +17,7 @@ const { initScrapingJobs } = require("./utils/taskQueue");
 const ListRouter = require("./routes/list");
 const productRouter = require("./routes/product");
 const scraperRouter = require("./routes/scraper");
+const publicProfilesRouter = require("./routes/publicProfiles");
 const { initSocketServer } = require("./utils/socketServer");
 
 const { json, urlencoded } = express;
@@ -45,6 +46,7 @@ app.use("/images", imagesRouter);
 app.use("/lists", ListRouter);
 app.use("/products", productRouter);
 app.use('/scrape', scraperRouter);
+app.use('/public-lists', publicProfilesRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));

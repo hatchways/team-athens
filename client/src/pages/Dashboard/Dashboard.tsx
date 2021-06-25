@@ -24,6 +24,7 @@ import LuxuryImage from '../../Images/luxury.png';
 import NavBar from '../../components/NavBar/NavBar';
 import AddLinkForm from './AddLinkForm/AddLinkForm';
 import ShoppingListCard from './ShoppingListCard/ShoppingListCard';
+import { List } from '../../interface/List';
 
 import AddList from '../../components/AddList/AddList';
 
@@ -101,6 +102,7 @@ export default function Dashboard(): JSX.Element {
             alignItems="flex-start"
             spacing={2}
           >
+
             {lists.map((list: List) => {
               return (
                 <ShoppingListCard
@@ -108,6 +110,7 @@ export default function Dashboard(): JSX.Element {
                   title={list.name}
                   itemCount={list.products?.length || 0}
                   image={ClothesImage}
+                  list={list}
                 />
               );
             })}

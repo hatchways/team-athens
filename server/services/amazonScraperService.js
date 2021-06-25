@@ -1,11 +1,14 @@
 const puppeteer = require("puppeteer");
+process.setMaxListeners(Infinity);
 
 exports.getProductDetail = async (productUrl) => {
   if (productUrl) {
     try {
       const browser = await puppeteer.launch({ headless: true });
       const page = await browser.newPage();
+      await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
       await page.goto(productUrl, { waitUntil: "domcontentloaded" });
+
 
       const productData = await page.evaluate(() => {
         let price = "unavailable";

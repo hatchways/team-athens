@@ -16,25 +16,25 @@ import { List } from '../../interface/List';
 import { ProductDetailApiData } from '../../interface/ProductDetailApiData';
 import { ProductApiData } from '../../interface/ProductApiData';
 
-const getProductLists = async () => {
-  let lists: List[] = [];
-  await getAllLists().then((data: ListApiData) => {
-    if (data.error) {
-      console.log(data.error.message);
-    } else if (data.success) {
-      lists = data.lists || [];
-    } else {
-      console.error({ data });
-      console.error('An unexpected error occurred');
-    }
-  });
-  return lists;
-};
-
 const AddProduct = (): JSX.Element => {
   const classes = useStyles();
   const handleCloseAddProductModal = () => {
     setShowAddProductModal(false);
+  };
+
+  const getProductLists = async () => {
+    let lists: List[] = [];
+    await getAllLists().then((data: ListApiData) => {
+      if (data.error) {
+        console.log(data.error.message);
+      } else if (data.success) {
+        lists = data.lists || [];
+      } else {
+        console.error({ data });
+        console.error('An unexpected error occurred');
+      }
+    });
+    return lists;
   };
 
   const [showPreviewModal, setShowPreviewModal] = useState(false);

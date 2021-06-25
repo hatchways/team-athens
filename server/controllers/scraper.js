@@ -7,12 +7,12 @@ exports.scrap = async (req, res) => {
   scrapedProduct = await scraperService(productUrl);
 
   if(scrapedProduct.error) {
-    res.status(500).json(scrapedProduct.error.message);
+    console.log(scrapedProduct);
+    res.status(500).json(scrapedProduct);
     return;
   }
 
   if(scrapedProduct) {
-    console.log(scrapedProduct);
     res.status(200).json({
       ScrapedProduct: scrapedProduct,
       success: true
