@@ -11,6 +11,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { List } from '../../../interface/List';
 import { createProduct } from '../../../helpers/APICalls/product';
 import { Product } from '../../../interface/Product';
+import AddProductPreview from '../../../components/AddProduct/AddProductPreview/AddProductPreview';
+import { useSnackBar } from '../../../context/useSnackbarContext';
+import { ProductDetails } from '../../../interface/ProductDetails';
+import { ProductApiData } from '../../../interface/ProductApiData';
+import { ProductDetailApiData } from '../../../interface/ProductDetailApiData';
+import productDetails from '../../../helpers/APICalls/productDetails';
+import { CircularProgress } from '@material-ui/core';
+
 interface Props {
   listData: List[];
   updateLists: () => Promise<void>;
@@ -18,6 +26,11 @@ interface Props {
 
 export default function AddLinkForm({ listData, updateLists }: Props): JSX.Element {
   const classes = useStyles();
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
+  const [detailsOfProduct, setDetailsOfProduct] = useState<ProductDetails>();
+  const [listId, setListId] = useState<string>('');
+  const { updateSnackBarMessage } = useSnackBar();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [selectInput, setSelectInput] = useState(listData.length > 0 ? listData[0].name : '');
   const [urlInput, setUrlInput] = useState('');
@@ -29,15 +42,46 @@ export default function AddLinkForm({ listData, updateLists }: Props): JSX.Eleme
     setUrlInput(event.target.value);
   };
 
+  const submitItem = (productDetails: ProductDetails, listID: string) => {
+    // send productData to the api
+    const newProduct = {
+      name: productDetails.productTitle,
+      description: productDetails.productFeatures,
+      url: productDetails.url,
+      price: productDetails.productPrice,
+      pictureUrl: productDetails.productImage,
+    } as unknown as Product;
+
+    createProduct(newProduct, listID).then((data: ProductApiData) => {
+      if (data.error) {
+        updateSnackBarMessage(data.error.message);
+      } else if (data.success) {
+        setShowPreviewModal(false);
+        updateSnackBarMessage(data.success.message);
+      } else {
+        console.error({ data });
+        updateSnackBarMessage('An unexpected error occurred. Please try again');
+      }
+    });
+  };
+
   const handleSubmit = async () => {
-    const productDetails: Product = {
-      url: urlInput,
-      name: 'temp name',
-      price: 0,
-      pictureUrl: 'https://res.cloudinary.com/coop-image-cloud/image/upload/v1624619785/placeholder_gnwlre.webp',
-    };
-    await createProduct(productDetails, selectInput);
-    await updateLists();
+    setIsSubmitting(true);
+    productDetails(urlInput).then(async (data: ProductDetailApiData) => {
+      if (data.error) {
+        setIsSubmitting(false);
+        updateSnackBarMessage(data.error.message);
+      } else if (data.success) {
+        setIsSubmitting(false);
+        setDetailsOfProduct(data.ScrapedProduct);
+        setListId(selectInput);
+        await updateLists();
+        setShowPreviewModal(true);
+      } else {
+        setIsSubmitting(false);
+        updateSnackBarMessage('An unexpected error occurred. Please try again');
+      }
+    });
   };
 
   return (
@@ -75,10 +119,19 @@ export default function AddLinkForm({ listData, updateLists }: Props): JSX.Eleme
             </Select>
           </FormControl>
           <Button onClick={handleSubmit} className={classes.formButton} color="secondary" variant="contained">
-            Add
+            {isSubmitting ? <CircularProgress size={22} style={{ color: 'white' }} /> : 'Continue'}
           </Button>
         </Grid>
       </form>
+      {detailsOfProduct && (
+        <AddProductPreview
+          showPreviewModal={showPreviewModal}
+          setShowPreviewModal={setShowPreviewModal}
+          productDetails={detailsOfProduct}
+          handleSubmit={submitItem}
+          listId={listId}
+        />
+      )}
     </Grid>
   );
 }
