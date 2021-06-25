@@ -3,7 +3,7 @@ import useStyles from './useStyles';
 import * as Yup from 'yup';
 import { Box, Button, CircularProgress, Grid, TextField, Typography } from '@material-ui/core';
 import { List } from '../../../interface/List';
-import ImageUloader from '../../ImageUploader/ImageUploader';
+import ImageUploader from '../../ImageUploader/ImageUploader';
 import { useState } from 'react';
 import ToggleListAccess from '../../ToggleListAccess/ToggleListAccess';
 
@@ -72,7 +72,7 @@ const EditListForm = ({ list, handleSubmit }: Props): JSX.Element => {
             <Typography className={classes.label}>
               Add a cover (click image to change it or drag new image over it)
             </Typography>
-            <ImageUloader setCurrentFiles={setCurrentImages} defaultImage={list.imageUrl} />
+            <ImageUploader setCurrentFiles={setCurrentImages} defaultImage={list.imageUrl} />
           </Box>
 
           <ToggleListAccess listAccess={listAccess} setListAccess={setListAccess} />
