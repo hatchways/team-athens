@@ -1,6 +1,8 @@
 import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from '@material-ui/core';
 import { List } from '../../../interface/List';
 import useStyles from './useStyles';
+import EditList from '../../../components/EditList/EditList';
+import { useAuth } from '../../../context/useAuthContext';
 
 interface Props {
   list: List;
@@ -9,11 +11,13 @@ interface Props {
 
 const PublicListTemplate = ({ list, handleClick }: Props): JSX.Element => {
   const classes = useStyles();
+  const { loggedInUser } = useAuth();
 
   return (
     <Grid item>
-      <Card className={classes.shoppingListCard} onClick={() => handleClick(list)}>
-        <CardActionArea className={classes.shoppingListButton}>
+      <Card className={classes.shoppingListCard}>
+        {loggedInUser && <EditList list={list} />}
+        <CardActionArea className={classes.shoppingListButton} onClick={() => handleClick(list)}>
           <CardMedia className={classes.media} image={list.imageUrl} title="Card image" />
           <CardContent>
             <Typography gutterBottom variant="h6" component="h2" align={'center'}>

@@ -28,11 +28,11 @@ const ToggleListAccess = ({ listAccess, setListAccess }: Props): JSX.Element => 
         <Grid container alignItems="center" spacing={1}>
           <Grid className={classes.marginAuto} item>
             <Grid component="label" item>
-              Private List
+              Public List
             </Grid>
             <Switch checked={checked} onChange={toggleChecked} color="primary" />
             <Grid component="label" item>
-              Public List
+              Private List
             </Grid>
           </Grid>
         </Grid>

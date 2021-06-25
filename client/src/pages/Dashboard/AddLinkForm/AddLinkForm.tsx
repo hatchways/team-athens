@@ -34,6 +34,7 @@ export default function AddLinkForm({ listData, updateLists }: Props): JSX.Eleme
       url: urlInput,
       name: 'temp name',
       price: 0,
+      pictureUrl: '',
     };
     await createProduct(productDetails, selectInput);
     await updateLists();

@@ -28,7 +28,6 @@ import { List } from '../../interface/List';
 
 import AddList from '../../components/AddList/AddList';
 
-import { List } from '../../interface/List';
 import { getAllLists } from '../../helpers/APICalls/lists';
 import { useSnackBar } from '../../context/useSnackbarContext';
 
@@ -102,14 +101,13 @@ export default function Dashboard(): JSX.Element {
             alignItems="flex-start"
             spacing={2}
           >
-
             {lists.map((list: List) => {
               return (
                 <ShoppingListCard
                   key={list._id}
                   title={list.name}
                   itemCount={list.products?.length || 0}
-                  image={ClothesImage}
+                  image={list.imageUrl || ClothesImage}
                   list={list}
                 />
               );
