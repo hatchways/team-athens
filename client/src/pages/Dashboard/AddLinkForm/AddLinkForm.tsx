@@ -52,12 +52,13 @@ export default function AddLinkForm({ listData, updateLists }: Props): JSX.Eleme
       pictureUrl: productDetails.productImage,
     } as unknown as Product;
 
-    createProduct(newProduct, listID).then((data: ProductApiData) => {
+    createProduct(newProduct, listID).then(async (data: ProductApiData) => {
       if (data.error) {
         updateSnackBarMessage(data.error.message);
       } else if (data.success) {
         setShowPreviewModal(false);
         updateSnackBarMessage(data.success.message);
+        await updateLists();
       } else {
         console.error({ data });
         updateSnackBarMessage('An unexpected error occurred. Please try again');
@@ -75,7 +76,6 @@ export default function AddLinkForm({ listData, updateLists }: Props): JSX.Eleme
         setIsSubmitting(false);
         setDetailsOfProduct(data.ScrapedProduct);
         setListId(selectInput);
-        await updateLists();
         setShowPreviewModal(true);
       } else {
         setIsSubmitting(false);
