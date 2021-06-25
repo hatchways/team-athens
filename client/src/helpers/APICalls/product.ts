@@ -3,10 +3,13 @@ import { Product } from '../../interface/Product';
 import { ProductApiData } from '../../interface/ProductApiData';
 
 const createProduct = async (product: Product, listID: string): Promise<ProductApiData> => {
+  const body = {
+    productDetails: product,
+  };
   const fetchOptions: FetchOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ productDetails: product }),
+    body: JSON.stringify(body),
     credentials: 'include',
   };
   return await fetch(`/products/${listID}`, fetchOptions)
