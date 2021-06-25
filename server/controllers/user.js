@@ -1,5 +1,7 @@
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
+const {sendNotification} = require('../utils/socketServer');
+const Notification = require('../models/Notification');
 
 const projection = {
   username: 1,
@@ -61,6 +63,17 @@ exports.followUser = asyncHandler(async (req, res, next) => {
     // follow
     await user.updateOne({ $push: { followers: currentuser._id } });
     await currentuser.updateOne({ $push: { followings: user._id } });
+
+    const notificationData = {
+      title: "Someone follows you",
+      message: `${user.username} started following you`,
+      receiver: currentuser._id,
+      image: 'https://res.cloudinary.com/coop-image-cloud/image/upload/v1624639535/avatar-1577909_960_720_kexbkh.webp',
+    };
+
+    Notification.create(notificationData, (error, reply) => {
+      sendNotification(req.socket, notificationData);
+    });
 
     res.status(200).json({
       msg: `${currentuser.username} is now following ${user.username}`,
