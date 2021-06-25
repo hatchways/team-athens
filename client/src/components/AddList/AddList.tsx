@@ -10,10 +10,6 @@ import { Icon, DialogActions, Grid, CssBaseline, Paper, IconButton } from '@mate
 import { addNewList } from '../../helpers/APICalls/lists';
 import * as Yup from 'yup';
 
-interface Props {
-  handleSubmit: () => void;
-}
-
 export default function AddList({ onClose }: any): JSX.Element {
   const classes = useStyles();
 
