@@ -107,7 +107,7 @@ export default function Dashboard(): JSX.Element {
                   key={list._id}
                   title={list.name}
                   itemCount={list.products?.length || 0}
-                  image={ClothesImage}
+                  image={list.imageUrl || ClothesImage}
                   list={list}
                 />
               );

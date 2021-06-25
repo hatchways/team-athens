@@ -31,14 +31,15 @@ const EditList = ({ list }: Props): JSX.Element => {
     setSubmitting: (status: boolean) => void;
   }) => {
     //upload image
-    const response = await uploadImage(image);
-
-    // get the url of image
-    const url = response.images[0].secure_url;
+    if (image) {
+      const response = await uploadImage(image);
+      // get the url of image
+      const url = response.images[0].secure_url;
+      list.imageUrl = url;
+    }
 
     list.name = name;
     list.isPrivate = access;
-    list.imageUrl = url;
 
     updateList(list).then((data: { success: boolean; msg: string }) => {
       if (data.success) {

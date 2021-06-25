@@ -1,11 +1,6 @@
 const expressAsyncHandler = require("express-async-handler");
 const List = require("../models/List");
 
-const projection = {
-    name: 1,
-    products: 1,
-};
-
 exports.getAllLists = expressAsyncHandler(async (req, res, next) => {
     const user = await User.findById(req.user.id);
 
@@ -14,7 +9,7 @@ exports.getAllLists = expressAsyncHandler(async (req, res, next) => {
         throw new Error("Not authorized");
     }
 
-    const lists = await List.find({ creator: user._id }, projection);
+    const lists = await List.find({ creator: user._id });
     res.status(200).json({
         success: true,
         lists: lists
@@ -31,7 +26,7 @@ exports.getById = expressAsyncHandler(async (req, res, next) => {
     }
 
     //find list that belongs to this user
-    const list = await List.findOne({ _id: listId, creator: user._id }, projection);
+    const list = await List.findOne({ _id: listId, creator: user._id });
     if (!list) {
         return res.status(200).json({
             success: false,
