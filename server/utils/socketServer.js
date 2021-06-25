@@ -65,10 +65,11 @@ const initSocketServer = (server, req) => {
 };
 
 // socket could be passed with req.socket
-const sendNotification = (socket, { message, title }) => {
+const sendNotification = (socket, { message, title, image }) => {
   socket.emit("notification", {
     message: message,
     title: title,
+    image: image,
     date: new Date().toString(),
   });
 };
