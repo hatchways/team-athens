@@ -20,7 +20,12 @@ const listSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     required: true,
     ref: 'users'
-  }
+  },
+  isPrivate: {
+    type: Boolean,
+    default: true,
+    required: true,
+  },
 });
 
 module.exports = List = mongoose.model("lists", listSchema);

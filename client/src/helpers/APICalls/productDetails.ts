@@ -10,10 +10,11 @@ const productDetails = async (url: string): Promise<ProductDetailApiData> => {
   };
   return await fetch(`/scrape`, fetchOptions)
     .then((res) => {
-      console.log(res);
       return res.json();
     })
-    .catch(() => ({ error: { message: 'Unable to connect to server. Please try again' } }));
+    .catch((error) => {
+      return error;
+    });
 };
 
 export default productDetails;

@@ -1,4 +1,4 @@
-const Queue = require("bull");
+const Queue = require('bull');
 const Notification = require("../models/Notification");
 const Product = require("../models/Product");
 const List = require("../models/List");
@@ -83,23 +83,19 @@ const createScrapingJob = ({ product, userId }) => {
   // "At every 15th minute" this defines at what interval a task will be executed
   const cron = "*/15 * * * *";
 
-  const job = new Queue(product._id, queueOptions);
-  job
-    .add(
-      processing({
-        product,
-        userId,
-      }),
-      {
-        repeat: {
-          cron: cron,
-        },
-      }
-    )
-    .catch((error) => {
-      return;
-    });
-};
+  const job = new Queue(product._id, queueOptions, );
+  job.add(processing({
+    product,
+    userId
+  }), {
+    repeat: {
+      cron: cron,
+    }
+  }).catch((error) => {
+    console.log("Something went wront with redis server");
+    console.error(error);
+  });
+}
 
 /**
  * inits jobs when app is launched

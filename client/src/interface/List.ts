@@ -4,5 +4,6 @@ export interface List {
   products?: string[];
   userIds?: string[];
   imageUrl: string;
+  isPrivate?: boolean;
   creator: string;
 }
