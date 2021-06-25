@@ -10,7 +10,7 @@ interface Props {
   defaultImage: string | undefined;
 }
 
-export default function ImageUloader({ setCurrentFiles, defaultImage }: Props): JSX.Element {
+export default function ImageUploader({ setCurrentFiles, defaultImage }: Props): JSX.Element {
   const classes = useStyles();
 
   const [previewImage, setPreviewImage] = useState(defaultImage);

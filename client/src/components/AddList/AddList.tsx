@@ -9,7 +9,7 @@ import Container from '@material-ui/core/Container';
 import { Icon, DialogActions, Grid, CssBaseline, Paper, IconButton } from '@material-ui/core';
 import { addNewList } from '../../helpers/APICalls/lists';
 import * as Yup from 'yup';
-import ImageUloader from '../ImageUploader/ImageUploader';
+import ImageUploader from '../ImageUploader/ImageUploader';
 import { useState } from 'react';
 import { uploadImage } from '../../helpers/APICalls/imageUpload';
 
@@ -76,6 +76,8 @@ export default function AddList({ onClose }: any): JSX.Element {
                   error={err}
                   helperText={helperText}
                 />
+
+                <ImageUploader setCurrentFiles={setCurrentImages} defaultImage={undefined} />
                 <Box textAlign="center">
                   <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
                     {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Add'}
