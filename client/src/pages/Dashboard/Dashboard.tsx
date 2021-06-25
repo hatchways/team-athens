@@ -83,7 +83,7 @@ export default function Dashboard(): JSX.Element {
       <CssBaseline />
       <NavBar />
 
-      <AddProduct />
+      {/* <AddProduct /> */}
 
       <Grid className={classes.pageContent} md={11} lg={10} xl={9}>
         <AddLinkForm listData={lists} updateLists={getListsData} />

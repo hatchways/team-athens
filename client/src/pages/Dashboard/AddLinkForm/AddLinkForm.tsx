@@ -30,13 +30,12 @@ export default function AddLinkForm({ listData, updateLists }: Props): JSX.Eleme
   };
 
   const handleSubmit = async () => {
-    const productDetails = {
+    const productDetails: Product = {
       url: urlInput,
       name: 'temp name',
       price: 0,
-      pictureUrl: '',
-    } as unknown as Product;
-
+      pictureUrl: 'https://res.cloudinary.com/coop-image-cloud/image/upload/v1624619785/placeholder_gnwlre.webp',
+    };
     await createProduct(productDetails, selectInput);
     await updateLists();
   };
