@@ -41,8 +41,6 @@ const EditList = ({ list }: Props): JSX.Element => {
     list.name = name;
     list.isPrivate = access;
 
-    console.log(list);
-
     updateList(list).then((data: { success: boolean; msg: string }) => {
       if (data.success) {
         setSubmitting(false);
