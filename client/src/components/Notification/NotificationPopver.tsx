@@ -11,6 +11,7 @@ import NotificationTemplate from './NotificationTemplate/NotificationTemplate';
 import { useSocket } from '../../context/useSocketContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import { Icon } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 export default function NotificationPopover(): JSX.Element {
   const classes = useStyles();
@@ -129,6 +130,11 @@ export default function NotificationPopover(): JSX.Element {
             No notification
           </div>
         )}
+        <Grid className={classes.showAllNotificationsButton}>
+          <Button component={Link} to="/notifications" className={classes.showAllNotificationsButton}>
+            View all notifications
+          </Button>
+        </Grid>
       </Popover>
     </div>
   );

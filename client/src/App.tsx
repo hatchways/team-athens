@@ -5,6 +5,7 @@ import Login from './pages/Login/Login';
 import Signup from './pages/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Followers from './pages/Followers/Followers';
+import Notifications from './pages/Notifications/Notifications';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
@@ -26,6 +27,7 @@ function App(): JSX.Element {
                 <ProtectedRoute exact path="/public" component={PublicProfiles} />
                 <ProtectedRoute exact path="/dashboard" component={Dashboard} />
                 <ProtectedRoute exact path="/followers" component={Followers} />
+                <ProtectedRoute exact path="/notifications" component={Notifications} />
                 <Route path="*">
                   <Redirect to="/login" />
                 </Route>
