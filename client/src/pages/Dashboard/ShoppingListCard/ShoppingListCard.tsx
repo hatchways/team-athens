@@ -33,9 +33,9 @@ export default function shoppingListCard({ list, updateLists }: CardProps): JSX.
   return (
     <Grid item>
       <Card className={classes.shoppingListCard}>
-        <CardActionArea className={classes.shoppingListButton} onClick={handleClick}>
+        <CardActionArea className={classes.shoppingListButton}>
           <EditList list={list} />
-          <CardMedia className={classes.media} image={list.imageUrl} title="Card image" />
+          <CardMedia className={classes.media} image={list.imageUrl} title="Card image" onClick={handleClick} />
           <CardContent>
             <Typography gutterBottom variant="h6" component="h2" align={'center'}>
               {list.name}
