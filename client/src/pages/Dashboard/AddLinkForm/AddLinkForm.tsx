@@ -30,12 +30,13 @@ export default function AddLinkForm({ listData, updateLists }: Props): JSX.Eleme
   };
 
   const handleSubmit = async () => {
-    const productDetails: Product = {
+    const productDetails = {
       url: urlInput,
       name: 'temp name',
       price: 0,
       pictureUrl: '',
-    };
+    } as unknown as Product;
+
     await createProduct(productDetails, selectInput);
     await updateLists();
   };
