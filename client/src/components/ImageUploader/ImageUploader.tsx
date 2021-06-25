@@ -5,7 +5,6 @@ import { Grid } from '@material-ui/core';
 import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
 import { useDropzone } from 'react-dropzone';
 import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
-
 interface Props {
   setCurrentFiles: any;
   defaultImage: string | undefined;

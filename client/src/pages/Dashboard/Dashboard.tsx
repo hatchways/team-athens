@@ -24,12 +24,12 @@ import LuxuryImage from '../../Images/luxury.png';
 import NavBar from '../../components/NavBar/NavBar';
 import AddLinkForm from './AddLinkForm/AddLinkForm';
 import ShoppingListCard from './ShoppingListCard/ShoppingListCard';
-import { List } from '../../interface/List';
 
+import { useSnackBar } from '../../context/useSnackbarContext';
 import AddList from '../../components/AddList/AddList';
 
+import { List } from '../../interface/List';
 import { getAllLists } from '../../helpers/APICalls/lists';
-import { useSnackBar } from '../../context/useSnackbarContext';
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
@@ -102,15 +102,7 @@ export default function Dashboard(): JSX.Element {
             spacing={2}
           >
             {lists.map((list: List) => {
-              return (
-                <ShoppingListCard
-                  key={list._id}
-                  title={list.name}
-                  itemCount={list.products?.length || 0}
-                  image={list.imageUrl || ClothesImage}
-                  list={list}
-                />
-              );
+              return <ShoppingListCard key={list._id} list={list} updateLists={getListsData} />;
             })}
 
             {/* Add new list button */}

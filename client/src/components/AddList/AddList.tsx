@@ -9,18 +9,38 @@ import Container from '@material-ui/core/Container';
 import { Icon, DialogActions, Grid, CssBaseline, Paper, IconButton } from '@material-ui/core';
 import { addNewList } from '../../helpers/APICalls/lists';
 import * as Yup from 'yup';
+import ImageUloader from '../ImageUploader/ImageUploader';
+import { useState } from 'react';
+import { uploadImage } from '../../helpers/APICalls/imageUpload';
+
+interface Props {
+  handleSubmit: () => void;
+}
 
 export default function AddList({ onClose }: any): JSX.Element {
   const classes = useStyles();
-
-  const handleSubmit = (data: any) => {
-    addNewList(data);
-    onClose();
-  };
+  const [currentImages, setCurrentImages] = useState<File[]>();
 
   const nameSchema = Yup.object().shape({
     name: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
   });
+
+  const handleSubmit = async (data: any) => {
+    //upload image
+    const response = await uploadImage(currentImages);
+
+    // get the url of image
+    const url = response.images[0].secure_url;
+
+    const listData = {
+      name: data.name,
+      url: url,
+    };
+
+    //add to object
+    addNewList(listData);
+    onClose();
+  };
 
   const renderModalContent = () => {
     return (
