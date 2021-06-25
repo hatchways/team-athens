@@ -28,7 +28,6 @@ import { List } from '../../interface/List';
 
 import AddList from '../../components/AddList/AddList';
 
-import { List } from '../../interface/List';
 import { getAllLists } from '../../helpers/APICalls/lists';
 import { useSnackBar } from '../../context/useSnackbarContext';
 
@@ -84,7 +83,7 @@ export default function Dashboard(): JSX.Element {
       <CssBaseline />
       <NavBar />
 
-      <AddProduct />
+      {/* <AddProduct /> */}
 
       <Grid className={classes.pageContent} md={11} lg={10} xl={9}>
         <AddLinkForm listData={lists} updateLists={getListsData} />
@@ -102,7 +101,6 @@ export default function Dashboard(): JSX.Element {
             alignItems="flex-start"
             spacing={2}
           >
-
             {lists.map((list: List) => {
               return (
                 <ShoppingListCard
