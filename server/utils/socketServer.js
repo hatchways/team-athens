@@ -58,11 +58,6 @@ const initSocketServer = (server, req) => {
         connectedUsers.online.push(userData);
       }
 
-      sendNotification(socket, {
-        message: `${user.username}: This is a notification from the api socket`,
-        title: "Notification test",
-      });
-
       console.log(connectedUsers);
     }
 

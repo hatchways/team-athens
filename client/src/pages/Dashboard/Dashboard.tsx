@@ -25,6 +25,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import AddLinkForm from './AddLinkForm/AddLinkForm';
 import ShoppingListCard from './ShoppingListCard/ShoppingListCard';
 
+import { useSnackBar } from '../../context/useSnackbarContext';
 import AddList from '../../components/AddList/AddList';
 
 import { List } from '../../interface/List';
@@ -32,6 +33,7 @@ import { getAllLists } from '../../helpers/APICalls/lists';
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
+  const { updateSnackBarMessage } = useSnackBar();
 
   const { loggedInUser } = useAuth();
   const { initSocket } = useSocket();
@@ -60,8 +62,12 @@ export default function Dashboard(): JSX.Element {
   }
 
   const getListsData = async () => {
-    const data = await getAllLists();
-    setLists(data.lists);
+    const result = await getAllLists();
+    if (result.success) {
+      setLists(result.lists);
+    } else {
+      updateSnackBarMessage('Failed to update lists');
+    }
   };
 
   const handleModalClose = () => {
@@ -76,6 +82,8 @@ export default function Dashboard(): JSX.Element {
     <Grid container component="main" className={`${classes.root} ${classes.dashboard}`}>
       <CssBaseline />
       <NavBar />
+
+      {/* <AddProduct /> */}
 
       <Grid className={classes.pageContent} md={11} lg={10} xl={9}>
         <AddLinkForm listData={lists} updateLists={getListsData} />
@@ -114,10 +122,6 @@ export default function Dashboard(): JSX.Element {
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-      <Grid>
-        <Button onClick={openAddProductModal}>Add Product</Button>
-        <AddProduct showAddProductModal={showAddProductModal} setShowAddProductModal={setShowAddProductModal} />
       </Grid>
       <Modal open={addListModalOpen} onClose={handleModalClose}>
         <AddList onClose={handleModalClose} />

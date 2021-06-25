@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     width: '270px',
     height: '380px',
     borderRadius: '0.8rem',
+    position: 'relative',
   },
   shoppingListsTitle: {
     fontWeight: 700,
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
   shoppingListButton: {
     height: '100%',
     textAlign: 'center',
+    zIndex: 1,
   },
 }));
 

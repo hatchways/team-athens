@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
+const List = require("../models/List");
 
 // @route POST /auth/register
 // @desc Register user
@@ -32,6 +33,22 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     const token = generateToken(user._id);
     const secondsInWeek = 604800;
 
+    // create default lists
+    List.create({
+      name: 'Shopping',
+      creator: user._id,
+      products: [],
+      userIds: [],
+      imageUrl: 'https://res.cloudinary.com/coop-image-cloud/image/upload/v1624121069/shopping-cart_lcdic8.jpg'
+    });
+    List.create({
+      name: 'Wishlist',
+      creator: user._id,
+      products: [],
+      userIds: [],
+      imageUrl: 'https://res.cloudinary.com/coop-image-cloud/image/upload/v1624121075/wishllist_rwtcat.jpg'
+    });
+
     res.cookie("token", token, {
       httpOnly: true,
       maxAge: secondsInWeek * 1000
@@ -57,6 +74,8 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
 // @access Public
 exports.loginUser = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
+
+  console.log("connecting ...")
 
   const user = await User.findOne({ email });
 

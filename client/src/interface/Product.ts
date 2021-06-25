@@ -4,5 +4,10 @@ export interface Product {
   description?: string;
   url: string;
   price: number;
-  pictureUrl?: string;
+  pictureUrl: string;
+}
+
+export interface ListProductApiData {
+  success?: { message: string; products: Product[] };
+  error?: { message: string };
 }

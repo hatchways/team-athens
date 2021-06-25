@@ -10,6 +10,7 @@ import Modal from '@material-ui/core/Modal';
 import { useState } from 'react';
 import { List } from '../../../interface/List';
 import ListContent from '../../../components/ListContent/ListContent';
+import EditList from '../../../components/EditList/EditList';
 
 interface CardProps {
   list: List;
@@ -33,6 +34,7 @@ export default function shoppingListCard({ list, updateLists }: CardProps): JSX.
     <Grid item>
       <Card className={classes.shoppingListCard}>
         <CardActionArea className={classes.shoppingListButton} onClick={handleClick}>
+          <EditList list={list} />
           <CardMedia className={classes.media} image={list.imageUrl} title="Card image" />
           <CardContent>
             <Typography gutterBottom variant="h6" component="h2" align={'center'}>

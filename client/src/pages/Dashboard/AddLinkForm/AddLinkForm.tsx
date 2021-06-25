@@ -34,6 +34,7 @@ export default function AddLinkForm({ listData, updateLists }: Props): JSX.Eleme
       url: urlInput,
       name: 'temp name',
       price: 0,
+      pictureUrl: 'https://res.cloudinary.com/coop-image-cloud/image/upload/v1624619785/placeholder_gnwlre.webp',
     };
     await createProduct(productDetails, selectInput);
     await updateLists();
