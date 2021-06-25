@@ -95,9 +95,9 @@ const createScrapingJob = ({
       cron: cron,
     }
   }).catch((error) => {
+    console.log("Something went wront with redis server");
+    console.error(error);
     return;
-    // console.log("Something went wront with redis server");
-    // console.error(error);
   });
 }
 
