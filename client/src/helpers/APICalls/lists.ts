@@ -54,4 +54,3 @@ const updateList = async (list: List): Promise<{ success: boolean; msg: string }
 };
 
 export { getAllLists, addNewList, updateList };
-
