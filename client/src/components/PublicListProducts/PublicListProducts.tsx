@@ -6,6 +6,7 @@ import { Product } from '../../interface/Product';
 import { List } from '../../interface/List';
 import { getListProducts } from '../../helpers/APICalls/publicProfile';
 import ProductTemplate from './ProductTemplate/ProductTemplate';
+import { v4 as uuid } from 'uuid';
 
 interface Props {
   list: List;
@@ -66,8 +67,8 @@ const PublicListProducts = ({ list, showModal, setShowModal }: Props): JSX.Eleme
             <Grid item xs>
               <Grid>
                 {listProducts &&
-                  listProducts.map((product, index) => {
-                    return <ProductTemplate product={product} key={index} />;
+                  listProducts.map((product) => {
+                    return <ProductTemplate product={product} key={uuid()} />;
                   })}
               </Grid>
 

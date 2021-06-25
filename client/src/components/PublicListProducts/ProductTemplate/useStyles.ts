@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     width: '100%',
-    // transform: 'translate(0px, 30px)',
   },
   description: {
     marginLeft: '10px',

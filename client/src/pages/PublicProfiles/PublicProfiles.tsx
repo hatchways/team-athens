@@ -9,6 +9,7 @@ import { getPubicLists } from '../../helpers/APICalls/publicProfile';
 import { List } from '../../interface/List';
 import PublicListTemplate from './PublicListTemplate/PublicListTemplate';
 import useStyles from './useStyles';
+import { v4 as uuid } from 'uuid';
 
 const PublicProfiles = (): JSX.Element => {
   const classes = useStyles();
@@ -55,8 +56,8 @@ const PublicProfiles = (): JSX.Element => {
             spacing={2}
           >
             {publicLists.length > 0 &&
-              publicLists.map(function (list, index) {
-                return <PublicListTemplate key={index} list={list} handleClick={selectList} />;
+              publicLists.map(function (list) {
+                return <PublicListTemplate key={uuid()} list={list} handleClick={selectList} />;
               })}
 
             {publicLists.length == 0 && <Typography variant="h4">Public lists unavailable at this moment</Typography>}

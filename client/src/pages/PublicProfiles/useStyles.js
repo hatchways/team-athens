@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
       margin: '4rem 1rem',
     },
   },
-  // duplicate styling here
   shoppingListButton: {
     height: '100%',
     textAlign: 'center',
