@@ -60,9 +60,8 @@ export default function Dashboard(): JSX.Element {
   }
 
   const getListsData = async () => {
-    getAllLists().then((data) => {
-      setLists(data.lists);
-    });
+    const data = await getAllLists();
+    setLists(data.lists);
   };
 
   const handleModalClose = () => {
@@ -95,14 +94,7 @@ export default function Dashboard(): JSX.Element {
             spacing={2}
           >
             {lists.map((list: List) => {
-              return (
-                <ShoppingListCard
-                  key={list._id}
-                  title={list.name}
-                  itemCount={list.products.length}
-                  image={list.imageUrl}
-                />
-              );
+              return <ShoppingListCard key={list._id} list={list} updateLists={getListsData} />;
             })}
 
             {/* Add new list button */}

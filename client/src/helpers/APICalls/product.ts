@@ -18,4 +18,30 @@ const createProduct = async (product: Product, listID: string): Promise<Product>
     }));
 };
 
-export { createProduct };
+const getAllProductsFromList = async (listID: string): Promise<any> => {
+  const fetchOptions: FetchOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  };
+  return await fetch(`/products/${listID}`, fetchOptions)
+    .then((res) => res.json())
+    .catch(() => ({
+      error: { message: 'Unable to connect to server. Please try again' },
+    }));
+};
+
+const deleteProduct = async (listID: string, productId: string): Promise<any> => {
+  const fetchOptions: FetchOptions = {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  };
+  return await fetch(`/products/${listID}/${productId}`, fetchOptions)
+    .then((res) => res.json())
+    .catch(() => ({
+      error: { message: 'Unable to connect to server. Please try again' },
+    }));
+};
+
+export { createProduct, getAllProductsFromList, deleteProduct };
