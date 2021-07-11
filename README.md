@@ -63,7 +63,7 @@ Make sure to duplicate and rename the `server/sample.env` to `server/.env` and f
 
 2. Dashboard. The user will be able to add links to their lists, inspect their lists and create a new list
 
-![Dashboard](demo/images/dashboard.png)
+![Dashboard](demo/images/dashboard2.png)
 
 3. Add new Item. User can add a link to a list 
 
